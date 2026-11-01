@@ -1,0 +1,13 @@
+{
+  "checks": 5,
+  "passed": 5,
+  "failed": 0,
+  "skipped": [],
+  "details": [
+    "CLI config schedule equals interactive intervention",
+    "browser demo equals CLI demo",
+    "engine JSON replay equals source result",
+    "step advances to Q17",
+    "step applies requested LTV policy"
+  ]
+}

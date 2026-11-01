@@ -1,0 +1,51 @@
+
+> ai-finance-sandbox@0.3.0 test
+> node --test tests/engine.test.js tests/labor.test.js
+
+✔ clearing: fully funded payments (1.163708ms)
+✔ clearing: analytic two-step contagion (0.081167ms)
+✔ clearing: pro rata and no overpayment (0.068ms)
+✔ clearing: greatest fixed point in an unanchored cycle (0.057375ms)
+✔ clearing: a cycle with external leakage cannot create cash (0.2175ms)
+✔ clearing: invalid inputs fail loudly (0.1125ms)
+✔ setup: all internal funded claims mirror liabilities (1.104334ms)
+✔ commitments: future service payments are not funded debt (0.314959ms)
+✔ regulation: new LTV ceiling does not rewrite existing loans (1.222041ms)
+✔ determinism: same seed produces the same full path (13.8365ms)
+✔ policy comparisons use the same exogenous innovations (6.317209ms)
+✔ null shock: zero-severity disappointment equals baseline (7.189292ms)
+✔ baseline: no forced financial catastrophe in the seed example (3.707375ms)
+✔ technical success can coexist with failed companies (3.715667ms)
+✔ stagnation is not hard-coded as financial collapse (3.271041ms)
+✔ guarantee: capped cash transfer, no new original debt, no duplicate recovery (0.26325ms)
+✔ fiscal: injections respect budget and create equity claims (4.202ms)
+✔ liquidity: lending remains a repayable balance-sheet claim (3.375625ms)
+✔ private bank equity is paid for by an identified investor (0.60025ms)
+✔ quarterly default principal is not written off twice (3.336209ms)
+✔ saved policy intervention replay is exact (7.1405ms)
+✔ bad policies, saves and inputs are rejected (0.372708ms)
+✔ stress grid reports finite coverage, not probability or global proof (24.34325ms)
+✔ fuzz: cash, debts, bounds and solver residuals across scenario-policy combinations (655.801459ms)
+✔ individual cash ledgers reconcile and fiscal taxes have identified payers (2.13425ms)
+✔ labor definitions: E+U+N=P, LF=E+U; fixed 16–64 denominator (0.748333ms)
+✔ a person leaving search stays in population and non-employment (0.075709ms)
+✔ 100 percent unemployment and zero employment are representable, not capped at 30 (0.482667ms)
+✔ no labor force means undefined U3, not a fabricated zero (0.122542ms)
+✔ halving working hours changes total hours, not employment count (0.066625ms)
+✔ support effects require actual spending, not a promised budget (0.075042ms)
+✔ new-job complementarity can reverse employment loss (17.357958ms)
+✔ strong demo exceeds old unemployment ceiling using population transitions (3.350625ms)
+✔ rapid exits can hide employment loss in unemployment, not in E/P (9.064333ms)
+✔ labor config and full path survive export/replay (12.469959ms)
+✔ engine accepts valid full-loss state without nonfinite audit failure (1.721667ms)
+✔ labor rejects invalid and unknown parameters (0.197333ms)
+✔ old engine saves are not silently reinterpreted (0.318583ms)
+✔ wide labor grid preserves people and finite bounded ratios for 48 quarters (244.411959ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 814.04925

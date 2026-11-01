@@ -1,0 +1,22 @@
+{
+  "scenario": "disappointment",
+  "seed": 42,
+  "severity": 1.5,
+  "bankBuffer": 0.04,
+  "quarters": 16,
+  "policySchedule": {
+    "7": {
+      "capexPace": 1,
+      "ltv": 0.8,
+      "capitalTarget": 0.1,
+      "concentration": 2.5,
+      "guaranteeLimit": 1,
+      "liquidityLine": 80,
+      "recapBudget": 80,
+      "workerSupport": 3,
+      "approvalLag": 1,
+      "bufferRelease": 0.025,
+      "taxRate": 0.1
+    }
+  }
+}

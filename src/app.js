@@ -2,7 +2,7 @@
 'use strict';
 const RESEARCH=window.AIFinanceResearch;
 const E=window.AIFinance,$=id=>document.getElementById(id),fmt=(x,d=1)=>x===null||x===undefined?'—':Number(x).toFixed(d),esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const colors={teal:'#087f82',blue:'#3c64bd',orange:'#c47b24',red:'#c74635',purple:'#8564ad',gray:'#a8b5bc'};
+const colors={teal:'#4cd8bf',blue:'#77acff',orange:'#f7b56a',red:'#ff7e95',purple:'#bd9cff',gray:'#71869f'};
 let world,control,branch=null,selectedNode='cloud',pendingLate=false,toastTimer;
 let playing=false,playTimer=null;
 const ART=window.AIFinanceArt;document.documentElement.style.setProperty('--portrait-atlas','url("'+ART.dataUri+'")');
@@ -25,9 +25,9 @@ function toast(msg){$('toast').textContent=msg;$('toast').style.display='block';
 function guard(fn){try{$('error').style.display='none';fn();return true;}catch(e){stopPlayback();console.error(e);window.__reportSandboxError(e.message);return false;}}
 function updateRuntime(){
   if(!world)return;
-  const valid=Boolean(E.auditWorld(world).ok);
+  let valid=true;try{valid=Boolean(E.auditWorld(world).ok);}catch(_){valid=false;}
   $('runtimeStatus').className='runtime-status '+(valid?'ready':'failed');
-  $('runtimeText').textContent=(valid?'JS 已启动':'账务检查未通过')+' · Q'+world.quarter+' · '+(playing?'自动播放中':'已暂停，可点击下一季度')+' · v0.2.0';
+  $('runtimeText').textContent=(valid?'JS 已启动':'账务检查未通过')+' · Q'+world.quarter+' · '+(playing?'自动播放中':'已暂停，可点击下一季度')+' · v0.3.0';
   $('playBtn').textContent=playing?'暂停':'自动播放';
   $('playBtn').classList.toggle('playing',playing);
   $('playBtn').setAttribute('aria-pressed',String(playing));
@@ -67,10 +67,10 @@ function showLabor(c){for(const [k]of laborFields){$('l_'+k).value=c[k];$('lv_'+
 function config(){return {laborConfig:laborConfig(),scenario:$('scenario').value,severity:Number($('severity').value),seed:Number($('seed').value),bankBuffer:Number($('bankBuffer').value)};}
 function showInputLabels(){ $('severityVal').textContent=fmt(Number($('severity').value),1)+'×';$('bankBufferVal').textContent=fmt(Number($('bankBuffer').value)*100,1)+'%';$('scenarioHelp').textContent=E.SCENARIOS[$('scenario').value].description; }
 function reset(){stopPlayback();const opts=config(),p=policyValues();pendingLate=$('preset').value==='late';world=E.createWorld({...opts,policy:pendingLate?E.DEFAULT_POLICY:p});control=E.createWorld({...opts,policy:E.DEFAULT_POLICY});showInputLabels();render();}
-function savedRun(){const data=E.exportRun(world);data.ui={pendingLate,preset:$('preset').value};return data;}
+function savedRun(){const data=E.exportRun(world);data.ui={pendingLate,preset:$('preset').value,moodPreview:$('moodPreview').value,characterOverrides:{...characterOverrides}};return data;}
 function restoreRun(data){
   stopPlayback();
-  world=E.replay(data);importedLaborConfig={...world.labor.config};showLabor(world.labor.config);
+  world=E.replay(data);Object.keys(characterOverrides).forEach(k=>delete characterOverrides[k]);for(const [k,v] of Object.entries(data.ui&&data.ui.characterOverrides||{})){if(CAST.some(c=>c.id===k)&&MOODS[v])characterOverrides[k]=v;}$('moodPreview').value=data.ui&&MOODS[data.ui.moodPreview]?data.ui.moodPreview:'auto';importedLaborConfig={...world.labor.config};showLabor(world.labor.config);
   control=E.run({...data.config,policy:E.DEFAULT_POLICY,quarters:world.quarter});
   for(const k of ['scenario','severity','seed','bankBuffer'])$(k).value=world[k];
   pendingLate=Boolean(data.ui&&data.ui.pendingLate&&world.quarter<4);
@@ -84,7 +84,7 @@ function metric(label,value,sub,css=''){return `<section class="card metric"><di
 function renderMetrics(){const h=world.history.at(-1),base=control.history.at(-1);$('metrics').innerHTML=
  metric('美股大盘代理',fmt(h.sp500),'非真实标普500；初始100')+metric('科技股代理',fmt(h.nasdaq),'非真实纳斯达克；初始100')+metric('累计进入清算',h.defaults+' 家','其中银行 '+h.bankDefaults+' 家',h.bankDefaults?'bad':'')+metric('债权净本金减记','$'+fmt(h.cumulativeCreditLoss)+'B','担保及财团回款后的债权损失',h.cumulativeCreditLoss>0?'bad':'')+
  metric('GDP 指数',fmt(h.gdp),'原有规则 '+fmt(base.gdp),h.gdp<95?'bad':'')+metric('人类总工时',fmt(h.humanWorkIndex),'初始100；含工时缩短',h.humanWorkIndex<90?'bad':'')+metric('美元指数代理',fmt(h.dollar),'含避险与利差通道；示意')+metric('AI 技术进度',fmt(h.technology,2)+'×','技术增长不等于股东盈利','good');}
-function chart(id,series,height=220,domain=null){const W=520,H=height,L=43,R=15,T=14,B=29;let vals=series.flatMap(s=>s.data.map(p=>p.v)).filter(v=>v!==null&&Number.isFinite(v));if(!vals.length)vals=[0,100];let min=Math.min(...vals),max=Math.max(...vals);if(max-min<.2){min-=.5;max+=.5;}const pad=(max-min)*.12;min-=pad;max+=pad;if(domain){min=domain[0];max=domain[1];}const end=Math.max(4,world.quarter);const x=q=>L+q/end*(W-L-R),y=v=>H-B-(v-min)/(max-min)*(H-T-B);let svg='';for(let i=0;i<5;i++){const v=min+(max-min)*i/4,Y=y(v);svg+=`<line x1="${L}" x2="${W-R}" y1="${Y}" y2="${Y}" stroke="#e7edef"/><text x="${L-8}" y="${Y+4}" text-anchor="end" font-size="10" fill="#77868e">${fmt(v,Math.abs(max-min)<10?1:0)}</text>`;}for(let i=0;i<=4;i++){const q=Math.round(end*i/4),X=x(q);svg+=`<text x="${X}" y="${H-8}" text-anchor="middle" font-size="10" fill="#77868e">Q${q}</text>`;}if(end>=4)svg+=`<line x1="${x(4)}" x2="${x(4)}" y1="${T}" y2="${H-B}" stroke="#cdd6da" stroke-dasharray="3 5"/>`;for(const s of series){const valid=s.data.filter(p=>p.v!==null&&Number.isFinite(p.v));if(!valid.length)continue;const pts=valid.map(p=>`${x(p.q)},${y(p.v)}`).join(' ');svg+=`<polyline fill="none" stroke="${s.color}" stroke-width="${s.dash?1.5:2.5}" ${s.dash?'stroke-dasharray="5 4"':''} points="${pts}"/>`;const last=valid.at(-1);svg+=`<circle cx="${x(last.q)}" cy="${y(last.v)}" r="${s.dash?2:3}" fill="${s.color}"/>`;}$(id).setAttribute('viewBox',`0 0 ${W} ${H}`);$(id).innerHTML=svg;}
+function chart(id,series,height=220,domain=null){const W=520,H=height,L=43,R=15,T=14,B=29;let vals=series.flatMap(s=>s.data.map(p=>p.v)).filter(v=>v!==null&&Number.isFinite(v));if(!vals.length)vals=[0,100];let min=Math.min(...vals),max=Math.max(...vals);if(max-min<.2){min-=.5;max+=.5;}const pad=(max-min)*.12;min-=pad;max+=pad;if(domain){min=domain[0];max=domain[1];}const end=Math.max(4,world.quarter);const x=q=>L+q/end*(W-L-R),y=v=>H-B-(v-min)/(max-min)*(H-T-B);let svg='';for(let i=0;i<5;i++){const v=min+(max-min)*i/4,Y=y(v);svg+=`<line x1="${L}" x2="${W-R}" y1="${Y}" y2="${Y}" stroke="#2a4057"/><text x="${L-8}" y="${Y+4}" text-anchor="end" font-size="10" fill="#90a6bf">${fmt(v,Math.abs(max-min)<10?1:0)}</text>`;}for(let i=0;i<=4;i++){const q=Math.round(end*i/4),X=x(q);svg+=`<text x="${X}" y="${H-8}" text-anchor="middle" font-size="10" fill="#90a6bf">Q${q}</text>`;}if(end>=4)svg+=`<line x1="${x(4)}" x2="${x(4)}" y1="${T}" y2="${H-B}" stroke="#50637a" stroke-dasharray="3 5"/>`;for(const s of series){const valid=s.data.filter(p=>p.v!==null&&Number.isFinite(p.v));if(!valid.length)continue;const pts=valid.map(p=>`${x(p.q)},${y(p.v)}`).join(' ');svg+=`<polyline fill="none" stroke="${s.color}" stroke-width="${s.dash?1.5:2.5}" ${s.dash?'stroke-dasharray="5 4"':''} points="${pts}"/>`;const last=valid.at(-1);svg+=`<circle cx="${x(last.q)}" cy="${y(last.v)}" r="${s.dash?2:3}" fill="${s.color}"/>`;}$(id).setAttribute('viewBox',`0 0 ${W} ${H}`);$(id).innerHTML=svg;}
 function line(key,color,base=false){return {data:(base?control:world).history.map(h=>({q:h.quarter,v:h[key]})),color,dash:base};}
 const positions={domestic:[95,70],foreign:[95,200],fed:[95,330],gov:[95,445],bankA:[335,90],bankB:[335,230],credit:[335,380],hyper:[590,70],cloud:[590,245],legacy:[590,420],labA:[850,80],labB:[850,220],chip:[850,390]};
 function renderNetwork(){let s='<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#8ca2ac"/></marker></defs>';
@@ -93,15 +93,15 @@ function edge(a,b,color,width,dash,opacity,title){const A=positions[a],B=positio
 for(const e of Object.values(groups))s+=edge(e.from,e.to,'#8ca2ac',Math.min(5,.8+Math.sqrt(e.amount)/8),'',e.amount>0?.48:.1,`${e.from} → ${e.to}: $${fmt(e.amount)}B`)||'';
 for(const c of world.contracts){const active=world.quarter<=c.end&&world.nodes.every(n=>![c.payer,c.payee].includes(n.id)||!n.closed);s+=edge(c.payer,c.payee,colors.teal,1.5,'6 5',active?.6:.1,`每季算力款 $${c.quarterly}B（不是已借入债务）`)||'';}
 for(const g of world.guarantees){const l=world.loans.find(l=>l.id===g.loanId)||world.initialLoans.find(l=>l.id===g.loanId);if(l)s+=edge(g.guarantor,l.lender,colors.purple,1.5,'2 4',g.remaining>0?.65:.12,`剩余担保上限 $${fmt(g.remaining)}B`)||'';}
-for(const n of world.history.at(-1).nodes){const [x,y]=positions[n.id],c=n.closed?colors.red:n.kind==='bank'?colors.blue:n.kind==='government'||n.kind==='centralbank'?colors.purple:colors.teal;const selected=n.id===selectedNode;s+=`<g class="node" data-node="${n.id}" tabindex="0" role="button" aria-label="${esc(n.name)}"><rect x="${x-76}" y="${y-24}" width="152" height="49" rx="8" fill="${n.closed?'#fff0ed':'#fff'}" stroke="${selected?c:'#cbd7dd'}" stroke-width="${selected?2:1}"/><text x="${x}" y="${y-3}" text-anchor="middle" font-size="12" fill="${c}" font-weight="650">${esc(n.name)}</text><text x="${x}" y="${y+14}" text-anchor="middle" font-size="10" fill="#788891">${n.closed?'已进入清算':'现金 '+fmt(n.cash)+' · 净资产 '+fmt(n.equity)}</text></g>`;}
+for(const n of world.history.at(-1).nodes){const [x,y]=positions[n.id],c=n.closed?colors.red:n.kind==='bank'?colors.blue:n.kind==='government'||n.kind==='centralbank'?colors.purple:colors.teal;const selected=n.id===selectedNode;s+=`<g class="node" data-node="${n.id}" tabindex="0" role="button" aria-label="${esc(n.name)}"><rect x="${x-76}" y="${y-24}" width="152" height="49" rx="8" fill="${n.closed?'#3b2331':'#102239'}" stroke="${selected?c:'#3c5673'}" stroke-width="${selected?2:1}"/><text x="${x}" y="${y-3}" text-anchor="middle" font-size="12" fill="${c}" font-weight="650">${esc(n.name)}</text><text x="${x}" y="${y+14}" text-anchor="middle" font-size="10" fill="#a3b8d0">${n.closed?'已进入清算':'现金 '+fmt(n.cash)+' · 净资产 '+fmt(n.equity)}</text></g>`;}
 $('networkGraph').innerHTML=s;$('networkGraph').querySelectorAll('[data-node]').forEach(el=>{el.onclick=()=>{selectedNode=el.dataset.node;renderNetwork();renderDetail();};el.onkeydown=e=>{if(e.key==='Enter')el.onclick();};});renderDetail();}
 function renderDetail(){const n=world.history.at(-1).nodes.find(n=>n.id===selectedNode);const lenders=world.loans.filter(l=>l.borrower===n.id).map(l=>`${world.nodes.find(x=>x.id===l.lender).name} $${fmt(l.principal)}B`);const commitments=world.contracts.filter(c=>c.payer===n.id).reduce((s,c)=>s+c.quarterly*Math.max(0,c.end-Math.max(world.quarter,c.start-1)),0);const actor=CAST.find(c=>c.node===n.id);$('nodeDetail').innerHTML=(actor?portrait(actor,characterState(actor).mood,'detail-portrait'):'')+`<strong>${esc(n.name)}</strong> <span class="muted">${n.closed?'已清算；历史合同不代表仍需全额履行':'模型状态'}</span><br>现金 $${fmt(n.cash)}B · 资产 $${fmt(n.assets)}B · 债务 $${fmt(n.debt)}B · 净资产 $${fmt(n.equity)}B<br>债权人：${esc(lenders.join('；')||'无未偿借款')}<br><span class="muted">原始算力合同剩余名义付款 $${fmt(commitments)}B（不含在上述债务；违约可改变履约状态）。</span>`;}
 function render(){const h=world.history.at(-1);$('quarter').innerHTML=`Q${world.quarter} <span>${world.quarter===0?'初始状态':'已推进 '+world.quarter+' 季'}</span>`;renderCast();renderLabor();renderMetrics();chart('priceChart',[line('sp500',colors.teal),line('nasdaq',colors.blue),line('gpuPrice',colors.orange)]);chart('rateChart',[line('treasuryYield',colors.teal),line('policyRate',colors.blue),line('spread',colors.red)]);chart('gdpChart',[line('gdp',colors.gray,true),line('gdp',colors.teal)],190);chart('jobsChart',[line('nonEmploymentRate',colors.orange),line('unemployment',colors.red)],190,[0,100]);renderNetwork();$('balanceTable').innerHTML=h.nodes.map(n=>`<tr><td>${esc(n.name)}</td><td>${fmt(n.cash)}</td><td>${fmt(n.assets)}</td><td>${fmt(n.debt)}</td><td style="color:${n.equity<0?colors.red:'inherit'}">${fmt(n.equity)}</td><td><span class="status ${n.closed?'bad':''}">${n.closed?'已清算':'存续'}</span></td></tr>`).join('');
 const ev=world.events.slice().reverse();$('events').innerHTML=ev.length?ev.map(e=>`<div class="event ${e.type}"><span class="q">Q${e.quarter}</span><span>${esc(e.text)}${e.amount>0?' <strong>$'+fmt(e.amount)+'B</strong>':''}</span></div>`).join(''):'<p class="muted small">尚无事件。推进季度，或点击“一键完整演示”。</p>';
 $('publicCost').innerHTML=`<table><tbody><tr><td>财政累计股权注资</td><td>$${fmt(h.recapSpent)}B</td></tr><tr><td>政府持有股权的模型市值</td><td>$${fmt(h.govEquityValue)}B</td></tr><tr><td>累计就业支持支出</td><td>$${fmt(h.workerSpent)}B</td></tr><tr><td>本模型财政新增债务</td><td>$${fmt(h.govDebt)}B</td></tr><tr><td>央行贷款未偿本金</td><td>$${fmt(h.liquidityOutstanding)}B</td></tr><tr><td>央行贷款已发生本金损失</td><td>$${fmt(h.liquidityLoss)}B</td></tr><tr><td>海外投资者总资产</td><td>$${fmt(h.foreignWealth)}B</td></tr></tbody></table>`;
-const a=E.auditWorld(world);$('audit').innerHTML=`现金边界误差：${a.cashError.toExponential(2)}<br>债权 / 债务镜像误差：${a.loanMirrorError.toExponential(2)}<br>主清算最大残差：${a.clearingResidual.toExponential(2)}<br>人口守恒误差：${a.laborPopulationError.toExponential(2)}<br>已检查季度：${world.audit.length} / ${world.quarter}<br><strong>${a.ok?'账务与数值检查通过':'检查未通过'}</strong><br><span class="muted">数值通过 ≠ 现实预测有效。</span>`;$('stepBtn').disabled=world.quarter>=48;$('runBtn').textContent=world.quarter<16?'运行至 Q16':'再运行 4 季';window.__sandbox={world,control,engine:E,uiVersion:'0.2.0',isPlaying:()=>playing,render,characterState};updateRuntime();}
-function compare(){stopPlayback();const rows=E.compare({...config(),quarters:16});$('comparisonResult').className='';$('comparisonResult').innerHTML=`<div class="table-wrap"><table><thead><tr><th>政策</th><th>清算 / 银行</th><th>债权净减记 $B</th><th>GDP</th><th>最低就业人口比</th><th>最高未就业占比</th><th>求职失业峰值</th><th>总工时</th><th>AI 技术</th><th>注资＋就业支出 $B</th></tr></thead><tbody>${rows.map(r=>{const x=r.summary;return `<tr><td>${esc(r.label)}</td><td>${x.defaults} / ${x.bankDefaults}</td><td>${fmt(x.netCreditLoss)}</td><td>${fmt(x.gdp)}</td><td>${fmt(x.minEmploymentRate)}%</td><td>${fmt(x.peakNonEmploymentRate)}%</td><td>${fmt(x.peakUnemployment)}%</td><td>${fmt(x.humanWorkIndex)}</td><td>${fmt(x.technology,2)}×</td><td>${fmt(x.recapSpent+x.workerSpent)}</td></tr>`;}).join('')}</tbody></table></div><p class="help">Q16 · 种子 ${world.seed} · 冲击 ${world.severity}× · 初始银行缓冲 ${fmt(world.bankBuffer*100)}%。危机中突然收紧方案在 Q4 生效；其他方案从 Q1 起实施。财政支出不是净财政损失，担保人的损失也不包括在债权净减记中。</p>`;tab('comparison');toast('六组同情景对照已完成。');}
-function stress(){stopPlayback();const r=E.stressGrid({...config(),policy:policyValues(),quarters:16});$('stressResult').innerHTML=`<h3>有限网格压力扫描</h3><div class="callout">冲击强度 0.0 至 1.5，步长 0.1，共 16 条路径。<br>${r.firstBreached===null?'测试范围内没有出现银行清算。不能据此推断更强冲击或遗漏机制也安全。':'首个出现银行清算的测试点：'+r.firstBreached.toFixed(1)+'×。这不是精确阈值，也不是发生概率。'}</div><div class="table-wrap"><table><thead><tr><th>冲击</th><th>清算主体</th><th>银行清算</th><th>净减记 $B</th><th>GDP</th></tr></thead><tbody>${r.results.map(x=>`<tr><td>${fmt(x.severity)}</td><td>${x.defaults}</td><td>${x.bankDefaults}</td><td>${fmt(x.netCreditLoss)}</td><td>${fmt(x.gdp)}</td></tr>`).join('')}</tbody></table></div>`;tab('comparison');toast('16 条路径扫描完成；不代表全扰动覆盖。');}
+const a=E.auditWorld(world);$('audit').innerHTML=`现金边界误差：${a.cashError.toExponential(2)}<br>债权 / 债务镜像误差：${a.loanMirrorError.toExponential(2)}<br>主清算最大残差：${a.clearingResidual.toExponential(2)}<br>人口守恒误差：${a.laborPopulationError.toExponential(2)}<br>已检查季度：${world.audit.length} / ${world.quarter}<br><strong>${a.ok?'账务与数值检查通过':'检查未通过'}</strong><br><span class="muted">数值通过 ≠ 现实预测有效。</span>`;$('stepBtn').disabled=world.quarter>=48;$('runBtn').textContent=world.quarter<16?'运行至 Q16':'再运行 4 季';window.__sandbox={world,control,engine:E,uiVersion:'0.3.0',isPlaying:()=>playing,render,characterState};renderExtras();updateRuntime();}
+function compare(){stopPlayback();const rows=E.compare({...actualConfig(),quarters:16});$('comparisonResult').className='';$('comparisonResult').innerHTML=`<div class="table-wrap"><table><thead><tr><th>政策</th><th>清算 / 银行</th><th>债权净减记 $B</th><th>GDP</th><th>最低就业人口比</th><th>最高未就业占比</th><th>求职失业峰值</th><th>总工时</th><th>AI 技术</th><th>注资＋就业支出 $B</th></tr></thead><tbody>${rows.map(r=>{const x=r.summary;return `<tr><td>${esc(r.label)}</td><td>${x.defaults} / ${x.bankDefaults}</td><td>${fmt(x.netCreditLoss)}</td><td>${fmt(x.gdp)}</td><td>${fmt(x.minEmploymentRate)}%</td><td>${fmt(x.peakNonEmploymentRate)}%</td><td>${fmt(x.peakUnemployment)}%</td><td>${fmt(x.humanWorkIndex)}</td><td>${fmt(x.technology,2)}×</td><td>${fmt(x.recapSpent+x.workerSpent)}</td></tr>`;}).join('')}</tbody></table></div><p class="help">Q16 · 种子 ${world.seed} · 冲击 ${world.severity}× · 初始银行缓冲 ${fmt(world.bankBuffer*100)}%。危机中突然收紧方案在 Q4 生效；其他方案从 Q1 起实施。财政支出不是净财政损失，担保人的损失也不包括在债权净减记中。</p>`;tab('comparison');$('comparison').scrollIntoView({block:'start',behavior:'smooth'});toast('六组同情景对照已完成。');}
+function stress(){stopPlayback();const r=E.stressGrid({...actualConfig(),policy:world.policy,quarters:16});$('stressResult').innerHTML=`<h3>有限网格压力扫描</h3><div class="callout">冲击强度 0.0 至 1.5，步长 0.1，共 16 条路径。<br>${r.firstBreached===null?'测试范围内没有出现银行清算。不能据此推断更强冲击或遗漏机制也安全。':'首个出现银行清算的测试点：'+r.firstBreached.toFixed(1)+'×。这不是精确阈值，也不是发生概率。'}</div><div class="table-wrap"><table><thead><tr><th>冲击</th><th>清算主体</th><th>银行清算</th><th>净减记 $B</th><th>GDP</th></tr></thead><tbody>${r.results.map(x=>`<tr><td>${fmt(x.severity)}</td><td>${x.defaults}</td><td>${x.bankDefaults}</td><td>${fmt(x.netCreditLoss)}</td><td>${fmt(x.gdp)}</td></tr>`).join('')}</tbody></table></div>`;tab('comparison');$('comparison').scrollIntoView({block:'start',behavior:'smooth'});toast('16 条路径扫描完成；不代表全扰动覆盖。');}
 function demo(){ importedLaborConfig=null;showLabor(E.Labor.DEFAULTS);$('moodPreview').value='auto';$('scenario').value='disappointment';$('severity').value='1.5';$('bankBuffer').value='.04';$('seed').value=42;$('preset').value='market';showPolicy(E.PRESETS.market.policy);reset();while(world.quarter<6)next(false);E.setPolicy(world,E.PRESETS.stabilization.policy);showPolicy(E.PRESETS.stabilization.policy);$('preset').value='stabilization';while(world.quarter<16)next(false);render();tab('network');toast('完成 Q1–Q16：Q4 冲击，Q6 后引入干预，与不干预路径比较。');}
 function download(name,text,type='application/json'){const blob=new Blob([text],{type}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000);}
 const CAST=[
@@ -111,7 +111,7 @@ const CAST=[
  {id:'grok',name:'xAI / Grok',sub:'行业观察员 · 未建独立财务主体',col:3,node:null,tint:'#f4dfd9'},
  {id:'gemini',name:'Google / Gemini',sub:'综合科技集团 · 虚拟角色皮肤',col:4,node:'hyper',tint:'#e8e2ff'}
 ];
-const MOODS={calm:{row:0,label:'平静'},happy:{row:1,label:'开心'},worried:{row:2,label:'担忧'},defeated:{row:3,label:'吃瘪 · 蹙眉'}};
+const MOODS={calm:{row:0,label:'平静'},happy:{row:1,label:'开心'},worried:{row:2,label:'蹙眉'},defeated:{row:3,label:'吃瘪'}};
 function characterState(c){
  const h=world.history.at(-1);let mood='calm',reason='先看看下一季。',value='观察情景，不是公司预测';
  if(c.node){const n=h.nodes.find(x=>x.id===c.node),base=world.history[0].nodes.find(x=>x.id===c.node);const ratio=n.sharePrice/base.sharePrice;
@@ -129,7 +129,7 @@ function characterState(c){
   else if(h.nasdaq<85||h.nonEmploymentRate>50){mood='worried';reason='技术成功，不等于所有人受益。';}
   else if(h.nasdaq>110){mood='happy';reason='行业上涨，也别忘了现金流。';}
  }
- const preview=$('moodPreview').value;if(preview!=='auto'){mood=preview;reason='表情预览：不改变财务和就业计算。';}
+ const preview=$('moodPreview').value!=='auto'?$('moodPreview').value:(characterOverrides[c.id]||'auto');if(preview!=='auto'){mood=preview;reason='表情预览：不改变财务和就业计算。';}
  return {mood,reason,value};
 }
 function portrait(c,mood,extra=''){return `<div class="portrait ${extra}" role="img" aria-label="${esc(c.name+' '+MOODS[mood].label)}" style="--sprite-x:${c.col*25}%;--sprite-y:${MOODS[mood].row*100/3}%"></div>`;}
@@ -156,6 +156,57 @@ function laborDemo(exitOnly){
  $('laborSection').scrollIntoView({block:'start',behavior:'smooth'});toast(exitOnly?'Q24：退出求职也纳入人口分母，不能只看求职失业率。':'Q16：90% 原岗位替代上限、10% 新岗位补回的极端假设；不是现实预测。');
 }
 
+// UI rewrite 0.3.0. Financial and labor engine remain at 0.2.0.
+const characterOverrides={};
+function renderCastV3(){
+ const titles={deepseek:'DeepSeek',openai:'OpenAI',anthropic:'Anthropic',grok:'Grok',gemini:'Gemini'};
+ const roles={deepseek:'外部竞争观察员',openai:'虚拟模型公司 A',anthropic:'虚拟模型公司 B',grok:'行业观察员',gemini:'虚拟综合科技集团'};
+ const accents={deepseek:'#59abff',openai:'#c1afff',anthropic:'#f4af74',grok:'#dbad78',gemini:'#b392fa'};
+ const h=world.history.at(-1),first=world.history[0];
+ $('castGrid').innerHTML=CAST.map(c=>{
+  const st=characterState(c);let label='模型指标',value=st.value;
+  if(c.node){const n=h.nodes.find(x=>x.id===c.node),n0=first.nodes.find(x=>x.id===c.node);const index=n0.sharePrice?100*n.sharePrice/n0.sharePrice:0;label='虚拟股价指数';value=fmt(index);}
+  else if(c.id==='deepseek'){label='算力价格代理';value=fmt(h.computePrice);}else {label='科技股代理';value=fmt(h.nasdaq);}
+  return `<article class="actor" data-mood="${st.mood}" style="--accent:${accents[c.id]}"><button class="character-card mood-${st.mood}" data-character="${c.id}" data-mood="${st.mood}" aria-pressed="${c.node===selectedNode}" title="${esc(c.node?'查看对应虚拟主体，不是实际企业财报':'观察员，没有独立债务账户')}"><div class="character-title"><span class="character-name">${titles[c.id]}</span><span class="mood-badge">${MOODS[st.mood].label}</span></div><div class="character-role">${roles[c.id]}</div><div class="portrait-stage" style="--tint:${accents[c.id]}">${portrait(c,st.mood)}</div><div class="character-copy"><div class="character-reaction">${esc(st.reason)}</div><div class="character-value"><span>${label}</span><b>${value}</b></div></div></button><div class="expression-bar">${Object.keys(MOODS).map(m=>`<button data-face="${c.id}:${m}" title="预览 ${titles[c.id]}：${MOODS[m].label}" aria-label="${titles[c.id]} ${MOODS[m].label}" aria-pressed="${characterOverrides[c.id]===m}">${portrait(c,m,'mini')}<span>${{calm:'平静',happy:'开心',worried:'蹙眉',defeated:'吃瘪'}[m]}</span></button>`).join('')}<button data-face="${c.id}:auto" aria-pressed="${!characterOverrides[c.id]}">跟随<br>模型</button></div></article>`;
+ }).join('');
+ $('castGrid').querySelectorAll('[data-character]').forEach(el=>el.onclick=()=>{const c=CAST.find(x=>x.id===el.dataset.character);if(c.node){selectedNode=c.node;tab('network');renderNetwork();renderCast();$('nodeDetail').scrollIntoView({block:'center',behavior:'smooth'});}else toast(c.name+' 是情景观察员，没有为它虚构公司财务数据。');});
+ $('castGrid').querySelectorAll('[data-face]').forEach(el=>el.onclick=()=>{const [id,m]=el.dataset.face.split(':');$('moodPreview').value='auto';if(m==='auto')delete characterOverrides[id];else characterOverrides[id]=m;renderCast();renderDetail();});
+}
+renderCast=renderCastV3;
+function actualConfig(){return E.exportRun(world).config;}
+function policyStatus(){
+ if(!world)return;
+ const changed=fields.some(([k])=>Math.abs(Number($('p_'+k).value)-world.policy[k])>1e-8);
+ $('policyStatus').className='policy-status'+(changed?' dirty':'');
+ $('policyStatus').textContent=changed?'已修改，尚未应用；点击下方按钮才会改变后续季度。':`当前政策已记录 · Q${world.quarter} 后的决定`;
+}
+function renderExtras(){
+ const h=world.history.at(-1);
+ // Largest-remainder rounding preserves exactly 100 glyphs.
+ const real=[h.employed,h.unemployedPersons,h.notInLaborForce].map(v=>100*v/h.workingAgePopulation);
+ const counts=real.map(Math.floor);let rest=100-counts.reduce((a,b)=>a+b,0);
+ const order=real.map((v,i)=>({i,f:v-counts[i]})).sort((a,b)=>b.f-a.f);
+ for(let k=0;k<rest;k++)counts[order[k%3].i]++;
+ $('populationPeople').innerHTML=counts.map((v,i)=>Array(v).fill(`<i class="${['e','u','n'][i]}"></i>`).join('')).join('');
+ $('quarterTrack').style.width=(100*world.quarter/48)+'%';
+ $('scenarioCurrent').textContent=E.SCENARIOS[world.scenario].label+' · 种子 '+world.seed;
+ document.querySelectorAll('[data-start]').forEach(el=>el.classList.toggle('current',el.dataset.start===world.scenario));
+ document.documentElement.dataset.gameVersion='0.3.0';
+ policyStatus();
+}
+function compactRun(){const d=savedRun();return {schema:d.schema,version:d.version,config:d.config,quarter:d.quarter,policyLog:d.policyLog,ui:d.ui};}
+function initExtras(){
+ $('artCredit').textContent=ART.credit;
+ document.querySelectorAll('[data-jump]').forEach(el=>el.onclick=()=>{const id=el.dataset.jump;if(id==='network')tab('network');$(id).scrollIntoView({block:'start',behavior:'smooth'});});
+ document.querySelectorAll('[data-start]').forEach(el=>el.onclick=()=>guard(()=>{stopPlayback();importedLaborConfig=null;showLabor(E.Labor.DEFAULTS);$('scenario').value=el.dataset.start;$('severity').value=1;$('bankBuffer').value=.105;$('preset').value='market';showPolicy(E.DEFAULT_POLICY);$('moodPreview').value='auto';Object.keys(characterOverrides).forEach(k=>delete characterOverrides[k]);reset();toast('已重开：'+E.SCENARIOS[world.scenario].label+'。点击下一季度开始。');}));
+ for(const [k]of fields)$('p_'+k).addEventListener('input',policyStatus);
+ $('preset').addEventListener('change',policyStatus);
+ $('moodPreview').addEventListener('change',()=>{Object.keys(characterOverrides).forEach(k=>delete characterOverrides[k]);renderCast();});
+ $('saveLocalBtn').onclick=()=>guard(()=>{stopPlayback();localStorage.setItem('ai-finance-game-v030',JSON.stringify(compactRun()));toast('已保存 Q'+world.quarter+'；关闭网页后也可读取。只保存在当前浏览器。');});
+ $('loadLocalBtn').onclick=()=>guard(()=>{const raw=localStorage.getItem('ai-finance-game-v030');if(!raw){toast('本浏览器还没有保存的进度。');return;}restoreRun(JSON.parse(raw));toast('已从初始条件重算并恢复 Q'+world.quarter+'。');});
+ window.__sandboxActions={savedRun,compactRun,restoreRun,next,runTo,render,characterState};
+}
+
 function init(){
 $('laborFields').innerHTML=laborFields.map(([k,label,min,max,step])=>`<label class="field"><span class="field-head">${label}<span class="value" id="lv_${k}"></span></span><input type="range" id="l_${k}" min="${min}" max="${max}" step="${step}"></label>`).join('');showLabor(E.Labor.DEFAULTS);
 for(const [k] of laborFields)$('l_'+k).oninput=()=>{$('lv_'+k).textContent=fmt(Number($('l_'+k).value)*100,0)+'%';};
@@ -177,7 +228,7 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
 $('moreBtn').onclick=()=>{const expanded=$('extraControls').classList.toggle('expanded');$('moreBtn').setAttribute('aria-expanded',String(expanded));$('moreBtn').textContent=expanded?'收起':'更多';};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing){stopPlayback();toast('已暂停，返回后点击“自动播放”继续。');}});
 window.addEventListener('pagehide',stopPlayback);
-const facts=RESEARCH.verified_examples;$('facts').innerHTML='<h3>已核验的独立数据样例（尚未校准进游戏）</h3><div class="table-wrap"><table><thead><tr><th>主体 / 口径</th><th>金额 $B</th><th>时点</th><th>来源</th></tr></thead><tbody>'+facts.map(f=>`<tr><td class="left">${esc(f.entity)}<br><span class="muted">${esc(f.type)}</span></td><td>${fmt(f.amount_usd_bn,3)}</td><td>${esc(f.as_of)}</td><td>${esc(f.source_id)}</td></tr>`).join('')+'</tbody></table></div>';
-$('sources').innerHTML=RESEARCH.sources.map(s=>`<div class="source"><div class="small muted">${s.id} · ${esc(s.organization)} · ${esc(s.date)}</div><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a><p>${esc(s.finding)}</p></div>`).join('');$('dataGaps').innerHTML=RESEARCH.not_verified_or_not_loaded.map(x=>'<p>'+esc(x)+'</p>').join('');reset();}
+const facts=RESEARCH.verified_examples;$('facts').innerHTML='<h3>继承的资料样例（本轮未重新核验，不参与计算）</h3><div class="table-wrap"><table><thead><tr><th>主体 / 口径</th><th>金额 $B</th><th>时点</th><th>来源</th></tr></thead><tbody>'+facts.map(f=>`<tr><td class="left">${esc(f.entity)}<br><span class="muted">${esc(f.type)}</span></td><td>${fmt(f.amount_usd_bn,3)}</td><td>${esc(f.as_of)}</td><td>${esc(f.source_id)}</td></tr>`).join('')+'</tbody></table></div>';
+$('sources').innerHTML=RESEARCH.sources.map(s=>`<div class="source"><div class="small muted">${s.id} · ${esc(s.organization)} · ${esc(s.date)}</div><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a><p>${esc(s.finding)}</p></div>`).join('');$('dataGaps').innerHTML=RESEARCH.not_verified_or_not_loaded.map(x=>'<p>'+esc(x)+'</p>').join('');reset();initExtras();}
 guard(init);
 })();
