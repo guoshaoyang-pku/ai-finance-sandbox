@@ -1,0 +1,98 @@
+{
+  "url": "https://guoshaoyang-pku.github.io/ai-finance-sandbox/?v=0.1.2",
+  "time": "2026-11-01T08:42:24.663Z",
+  "browser": "156.0.8078.74",
+  "environment": "Mac Chrome, desktop and touch emulation; not physical iPhone Safari",
+  "passed": 15,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "HTTPS 200 and exact tested artifact",
+      "passed": true
+    },
+    {
+      "name": "Five characters and 25 expression controls",
+      "passed": true
+    },
+    {
+      "name": "Embedded character atlas decodes",
+      "passed": true
+    },
+    {
+      "name": "All five frown previews",
+      "passed": true
+    },
+    {
+      "name": "All five frustrated previews",
+      "passed": true
+    },
+    {
+      "name": "Expressions do not mutate financial state",
+      "passed": true
+    },
+    {
+      "name": "Next quarter",
+      "passed": true
+    },
+    {
+      "name": "Autoplay advances and pauses",
+      "passed": true
+    },
+    {
+      "name": "Branch restores expression preview",
+      "passed": true
+    },
+    {
+      "name": "Q16 numerical result unchanged",
+      "passed": true
+    },
+    {
+      "name": "Auto expressions reflect simulated pressure",
+      "passed": true
+    },
+    {
+      "name": "Model accounting audit",
+      "passed": true
+    },
+    {
+      "name": "Mobile layout and horizontal character swipe",
+      "passed": true
+    },
+    {
+      "name": "Mobile controls and facial preview",
+      "passed": true
+    },
+    {
+      "name": "No JavaScript errors",
+      "passed": true,
+      "errors": []
+    }
+  ],
+  "summary": {
+    "scenario": "disappointment",
+    "seed": 42,
+    "severity": 1.5,
+    "quarters": 16,
+    "defaults": 3,
+    "bankDefaults": 0,
+    "netCreditLoss": 41.20458006684301,
+    "grossCreditLoss": 63.235528133290934,
+    "sp500": 75.74102027480023,
+    "nasdaq": 60.96785369249375,
+    "gdp": 99.70367002503485,
+    "gdpChange": -0.2963299749651469,
+    "peakUnemployment": 5.31990199490625,
+    "gpuPrice": 17.94755030089051,
+    "technology": 1.359186628542084,
+    "cumulativeCapex": 321.15857554632026,
+    "recapSpent": 17.04790142866345,
+    "workerSpent": 30,
+    "incrementalGovDebt": 0,
+    "govEquityValue": 10.634761193943648,
+    "liquidityOutstanding": 80,
+    "liquidityLoss": 0,
+    "foreignWealthChange": -3.8340250180668334,
+    "maxCashError": 1.8189894035458565e-12,
+    "maxClearingResidual": 0
+  }
+}
