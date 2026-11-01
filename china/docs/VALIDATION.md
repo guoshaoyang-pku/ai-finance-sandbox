@@ -9,3 +9,5 @@
 测试不是经济预测有效性的证明。
 
 部署前真实 Chrome + HTTP 检查：52项通过，0页面脚本错误，包含浏览器保存/读取；详见 `tests/browser-report-predeploy.json`。
+
+线上 GitHub Pages 再检查：52项通过，0页面脚本错误，线上HTML与本地构建一致。原美国版入口及390px/1440px布局正常，旧季度版独立运行。详见 `tests/browser-report-live.json`。
