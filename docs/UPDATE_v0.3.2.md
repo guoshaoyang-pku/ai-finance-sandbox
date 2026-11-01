@@ -37,3 +37,7 @@ OpenAI：前沿模型与应用；Anthropic：模型与企业服务；CoreWeave�
 浏览器为 Mac Chrome 无头模式和手机触屏模拟，不是实体 iPhone Safari。有限测试只验证所覆盖路径、账务与操作，不证明现实因果正确、危机必然或政策绝对安全。真实金融资料未在本次重新核验，不输入这些虚拟账本。
 
 复现：npm test；npm run build；node tests/browser-v032.cjs；node tests/cli_smoke.js。测试脚本可通过 PLAYWRIGHT_MODULE 和 CHROME_PATH 指定本地安装。
+
+## 已完成线上验收
+
+原 GitHub Pages 地址已返回与本地构建完全相同的 HTML（SHA256：1122faae75bdb57ff3df5cf183e04d139aba5b1b908334fc4b523219c03d7fee）。真实 HTTPS 网页 58 项检查全部通过；记录见 test-results/v0.3.2/live-report.json。包括公司名称、裁剪素材、Q48/Q96 暂停继续、快速冲击、保存重放、桌面与手机触屏模拟。
