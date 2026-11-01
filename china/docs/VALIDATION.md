@@ -10,6 +10,8 @@
 
 ## 浏览器
 
+线上 GitHub Pages 复测：43项通过，0个页面脚本错误；线上HTML与本地构建SHA-256一致。报告见 `tests/browser-report-live.json`。
+
 部署前真实 Chrome 检查：43项通过，0个页面脚本错误；包含1440px桌面和390px手机布局。报告见 `tests/browser-report-predeploy.json`。
 
 `tests/browser.test.cjs` 检查真实按钮、下一季度、自动播放、六个情景、政策应用、存档、分支、图表、六政策对照、九组参数敏感性、CSV、JSON、手机布局及十五年延长。

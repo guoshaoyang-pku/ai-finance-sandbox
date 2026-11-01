@@ -1,0 +1,181 @@
+{
+  "url": "https://guoshaoyang-pku.github.io/ai-finance-sandbox/china/?v=cn-0.1.0",
+  "version": "cn-0.1.0",
+  "checks": [
+    {
+      "name": "runtime version",
+      "passed": true
+    },
+    {
+      "name": "initial quarter",
+      "passed": true
+    },
+    {
+      "name": "official loan anchor",
+      "passed": true
+    },
+    {
+      "name": "six scenario choices",
+      "passed": true
+    },
+    {
+      "name": "four companies, no invented ByteDance",
+      "passed": true
+    },
+    {
+      "name": "desktop layout fits",
+      "passed": true
+    },
+    {
+      "name": "quarter advances",
+      "passed": true
+    },
+    {
+      "name": "choosing preset alone does not activate",
+      "passed": true
+    },
+    {
+      "name": "policy applied",
+      "passed": true
+    },
+    {
+      "name": "applying policy does not rewrite history",
+      "passed": true
+    },
+    {
+      "name": "policy next-quarter settlement",
+      "passed": true
+    },
+    {
+      "name": "branch restore exact",
+      "passed": true
+    },
+    {
+      "name": "network node firms",
+      "passed": true
+    },
+    {
+      "name": "network node ai",
+      "passed": true
+    },
+    {
+      "name": "network node bank",
+      "passed": true
+    },
+    {
+      "name": "network node jobs",
+      "passed": true
+    },
+    {
+      "name": "network node demand",
+      "passed": true
+    },
+    {
+      "name": "network node local",
+      "passed": true
+    },
+    {
+      "name": "ten-year simulation",
+      "passed": true
+    },
+    {
+      "name": "extreme GDP gap emerges",
+      "passed": true
+    },
+    {
+      "name": "30T external loss recorded once",
+      "passed": true
+    },
+    {
+      "name": "accounting audit",
+      "passed": true
+    },
+    {
+      "name": "chart populated gdpChart",
+      "passed": true
+    },
+    {
+      "name": "chart populated jobsChart",
+      "passed": true
+    },
+    {
+      "name": "chart populated lossChart",
+      "passed": true
+    },
+    {
+      "name": "chart populated fiscalChart",
+      "passed": true
+    },
+    {
+      "name": "six policy comparison rows",
+      "passed": true
+    },
+    {
+      "name": "comparison preserves game",
+      "passed": true
+    },
+    {
+      "name": "nine parameter combinations",
+      "passed": true
+    },
+    {
+      "name": "JSON export",
+      "passed": true
+    },
+    {
+      "name": "CSV has 41 quarters",
+      "passed": true
+    },
+    {
+      "name": "CSV distinguishes external loss",
+      "passed": true
+    },
+    {
+      "name": "native browser storage restore",
+      "passed": true
+    },
+    {
+      "name": "JSON import replays scenario",
+      "passed": true
+    },
+    {
+      "name": "malformed import does not change state",
+      "passed": true
+    },
+    {
+      "name": "12 source links",
+      "passed": true
+    },
+    {
+      "name": "sources are direct links",
+      "passed": true
+    },
+    {
+      "name": "mobile fits viewport",
+      "passed": true
+    },
+    {
+      "name": "mobile policy shortcut visible",
+      "passed": true
+    },
+    {
+      "name": "autoplay pauses",
+      "passed": true
+    },
+    {
+      "name": "mobile one-click horizon",
+      "passed": true
+    },
+    {
+      "name": "15-year extension",
+      "passed": true
+    },
+    {
+      "name": "zero JS errors",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": 43,
+  "ok": true
+}
