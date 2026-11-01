@@ -1,3 +1,7 @@
+# 当前版本 0.3.2
+
+入口：https://guoshaoyang-pku.github.io/ai-finance-sandbox/?v=0.3.2 。公司/机构名代表群体，保留清楚的模拟标注。角色按真实网格边界裁剪；每 48 季暂停后可继续；冲击开始与扩散时长可设。详细变更与测试见 docs/UPDATE_v0.3.2.md。以下早期记录按其版本理解，旧的匿名标签与 48 季终点不再适用。
+
 # AI 金融风险沙盘 · 可玩版 0.3.0
 
 [打开游戏](https://guoshaoyang-pku.github.io/ai-finance-sandbox/?v=0.3.0) · [本版更新](docs/UPDATE_v0.3.0.md)

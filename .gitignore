@@ -4,3 +4,11 @@ ui.payload*.b64
 ui-extra.js
 apply-ui-v030.py
 .DS_Store
+
+# Local transfer and patch intermediates
+art*.b64
+patch_v*.py
+ui.payload*.b64
+test-results/**/saved-game.json
+test-results/**/history.csv
+test-results/**/failure.png

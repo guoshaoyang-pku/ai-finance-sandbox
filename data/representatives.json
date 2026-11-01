@@ -1,0 +1,64 @@
+{
+  "version": "0.3.2",
+  "notice": "名称代表一类企业或机构；金额、价格、合同连线和清算事件均为模拟，不是对应公司的财报、真实交易或预测。",
+  "groups": {
+    "labA": {
+      "name": "OpenAI",
+      "group": "前沿模型与应用企业"
+    },
+    "labB": {
+      "name": "Anthropic",
+      "group": "模型与企业服务公司"
+    },
+    "cloud": {
+      "name": "CoreWeave",
+      "group": "独立算力云运营商"
+    },
+    "chip": {
+      "name": "NVIDIA",
+      "group": "AI 芯片与设备供应商"
+    },
+    "hyper": {
+      "name": "Google",
+      "group": "综合科技与云平台"
+    },
+    "legacy": {
+      "name": "Salesforce",
+      "group": "受 AI 影响的软件与企业服务"
+    },
+    "bankA": {
+      "name": "JPMorgan Chase",
+      "group": "大型商业银行"
+    },
+    "bankB": {
+      "name": "Bank of America",
+      "group": "其他大型商业银行"
+    },
+    "credit": {
+      "name": "Apollo",
+      "group": "私募信贷机构"
+    },
+    "domestic": {
+      "name": "Vanguard",
+      "group": "美国长期投资者"
+    },
+    "foreign": {
+      "name": "挪威主权基金",
+      "group": "全球长期投资者"
+    },
+    "gov": {
+      "name": "美国财政部",
+      "group": "财政政策账户"
+    },
+    "fed": {
+      "name": "美联储",
+      "group": "央行政策工具账户"
+    }
+  },
+  "role_sources": {
+    "CoreWeave": "https://www.coreweave.com/about-us",
+    "Apollo": "https://www.apollo.com/strategies/asset-management/credit",
+    "挪威主权基金": "https://www.nbim.no/en/about-us/norges-bank-investment-management"
+  },
+  "source_scope": "Role descriptions only, not evidence of the simulated contracts or financial amounts."
+}

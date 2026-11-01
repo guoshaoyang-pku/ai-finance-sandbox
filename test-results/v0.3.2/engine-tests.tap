@@ -1,0 +1,66 @@
+
+> ai-finance-sandbox@0.3.2 test
+> node --test tests/engine.test.js tests/labor.test.js tests/continuation.test.js tests/representatives.test.js
+
+✔ Q48 is not an engine limit and Q49 keeps prior history (158.7325ms)
+✔ extended shocks exactly continue the original seeded RNG stream (170.427375ms)
+✔ all six scenarios can continue 240 quarters with valid accounts (2527.119667ms)
+✔ extended save and policy changes replay exactly (260.127042ms)
+✔ default timing preserves historical model outputs (7.330375ms)
+✔ old engine 0.2.0 save imports with default timing (81.518417ms)
+✔ earlier shock changes the actual path, not just labels or playback speed (25.919833ms)
+✔ timing validates integer limits and unknown keys (0.585791ms)
+✔ late policy follows selected shock onset in comparisons (47.141625ms)
+✔ fiscal support follows chosen shock onset plus approval delay (2.624625ms)
+✔ clearing: fully funded payments (14.074167ms)
+✔ clearing: analytic two-step contagion (0.88625ms)
+✔ clearing: pro rata and no overpayment (0.207625ms)
+✔ clearing: greatest fixed point in an unanchored cycle (0.160833ms)
+✔ clearing: a cycle with external leakage cannot create cash (9.203417ms)
+✔ clearing: invalid inputs fail loudly (0.362833ms)
+✔ setup: all internal funded claims mirror liabilities (20.310042ms)
+✔ commitments: future service payments are not funded debt (0.819333ms)
+✔ regulation: new LTV ceiling does not rewrite existing loans (10.081875ms)
+✔ determinism: same seed produces the same full path (126.887292ms)
+✔ policy comparisons use the same exogenous innovations (66.74575ms)
+✔ null shock: zero-severity disappointment equals baseline (56.219291ms)
+✔ baseline: no forced financial catastrophe in the seed example (24.380875ms)
+✔ technical success can coexist with failed companies (30.142125ms)
+✔ stagnation is not hard-coded as financial collapse (31.414625ms)
+✔ guarantee: capped cash transfer, no new original debt, no duplicate recovery (3.465625ms)
+✔ fiscal: injections respect budget and create equity claims (33.14475ms)
+✔ liquidity: lending remains a repayable balance-sheet claim (21.069167ms)
+✔ private bank equity is paid for by an identified investor (4.845ms)
+✔ quarterly default principal is not written off twice (21.703625ms)
+✔ saved policy intervention replay is exact (79.0305ms)
+✔ bad policies, saves and inputs are rejected (0.946167ms)
+✔ stress grid reports finite coverage, not probability or global proof (286.083125ms)
+✔ fuzz: cash, debts, bounds and solver residuals across scenario-policy combinations (3405.98675ms)
+✔ individual cash ledgers reconcile and fiscal taxes have identified payers (5.554458ms)
+✔ labor definitions: E+U+N=P, LF=E+U; fixed 16–64 denominator (8.088541ms)
+✔ a person leaving search stays in population and non-employment (0.264791ms)
+✔ 100 percent unemployment and zero employment are representable, not capped at 30 (0.48975ms)
+✔ no labor force means undefined U3, not a fabricated zero (18.165459ms)
+✔ halving working hours changes total hours, not employment count (0.205417ms)
+✔ support effects require actual spending, not a promised budget (0.179916ms)
+✔ new-job complementarity can reverse employment loss (178.119ms)
+✔ strong demo exceeds old unemployment ceiling using population transitions (40.070166ms)
+✔ rapid exits can hide employment loss in unemployment, not in E/P (67.78625ms)
+✔ labor config and full path survive export/replay (110.021958ms)
+✔ engine accepts valid full-loss state without nonfinite audit failure (12.440166ms)
+✔ labor rejects invalid and unknown parameters (0.571167ms)
+✔ old engine saves are not silently reinterpreted (2.680458ms)
+✔ wide labor grid preserves people and finite bounded ratios for 48 quarters (2176.230958ms)
+✔ all sector nodes use concrete representative names and group metadata (21.172583ms)
+✔ snapshots and exported records retain group context and simulation notice (110.075959ms)
+✔ changing representative labels never changes numeric default paths (868.81425ms)
+✔ liquidation logs carry representative names, never anonymous company A or B (33.49675ms)
+✔ label mapping has one distinct representative per modeled group (0.296167ms)
+ℹ tests 54
+ℹ suites 0
+ℹ pass 54
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4556.964542

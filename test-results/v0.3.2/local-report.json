@@ -1,0 +1,552 @@
+{
+  "url": "local-built-index.html",
+  "time": "2026-11-01T12:27:35.722Z",
+  "browser": "156.0.8078.74",
+  "environment": "Mac Chrome headless; desktop and mobile touch emulation, not physical Safari",
+  "uiVersion": "0.3.2",
+  "engineVersion": "0.3.2",
+  "passed": 56,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "New game boots at Q0",
+      "passed": true
+    },
+    {
+      "name": "Five interactive character cards",
+      "passed": true
+    },
+    {
+      "name": "All thirteen representatives appear in accounts",
+      "passed": true
+    },
+    {
+      "name": "All thirteen representatives appear in funding network",
+      "passed": true
+    },
+    {
+      "name": "Anonymous company and bank aliases removed from game accounts",
+      "passed": true
+    },
+    {
+      "name": "Sector descriptions accompany concrete companies",
+      "passed": true
+    },
+    {
+      "name": "Brand display is explicitly a simulation, not company filings",
+      "passed": true
+    },
+    {
+      "name": "Export carries representative-group provenance",
+      "passed": true
+    },
+    {
+      "name": "Twenty expression previews and five auto buttons",
+      "passed": true
+    },
+    {
+      "name": "Real embedded sprite atlas decodes",
+      "passed": true,
+      "detail": [
+        1280,
+        1136
+      ]
+    },
+    {
+      "name": "Each character can independently display worried",
+      "passed": true
+    },
+    {
+      "name": "Each character can independently display defeated",
+      "passed": true
+    },
+    {
+      "name": "Expression previews do not change economy",
+      "passed": true
+    },
+    {
+      "name": "Global happy expression",
+      "passed": true
+    },
+    {
+      "name": "Next quarter advances Q0 to Q1",
+      "passed": true
+    },
+    {
+      "name": "Autoplay advances and stops without stray tick",
+      "passed": true,
+      "detail": {
+        "q": 4
+      }
+    },
+    {
+      "name": "Branch restores quarter and expression",
+      "passed": true
+    },
+    {
+      "name": "Browser save survives reload and replays",
+      "passed": true
+    },
+    {
+      "name": "Quick start starts a new actual scenario",
+      "passed": true
+    },
+    {
+      "name": "Draft policy does not silently change simulation",
+      "passed": true
+    },
+    {
+      "name": "Policy apply records decision without advancing time",
+      "passed": true
+    },
+    {
+      "name": "Policy spending is settled after Q4 and approval lag",
+      "passed": true
+    },
+    {
+      "name": "Financial demo executes actual 16-quarter intervention",
+      "passed": true
+    },
+    {
+      "name": "Strong automation is not capped at 30 percent",
+      "passed": true,
+      "detail": {
+        "quarter": 16,
+        "gdp": 78.48273970554938,
+        "unemployment": 61.96334938664359,
+        "inflation": 0.7404697420056547,
+        "policyRate": 0,
+        "treasuryYield": 1.806,
+        "spread": 4.168,
+        "dollar": 91.70413698527747,
+        "sp500": 71.95957917565978,
+        "nasdaq": 113.15965837846409,
+        "creditSupply": 0,
+        "politicalSupport": 5,
+        "workingAgePopulation": 100,
+        "employed": 13.921147790215633,
+        "unemployedPersons": 22.678152005459026,
+        "notInLaborForce": 63.40070020432535,
+        "laborForce": 36.59929979567466,
+        "employmentRate": 13.921147790215633,
+        "nonEmploymentRate": 86.07885220978439,
+        "participationRate": 36.59929979567466,
+        "employmentIndex": 19.18041855912873,
+        "humanWorkIndex": 15.059614015382724,
+        "hoursPerWorker": 29.835914728366525,
+        "automationShare": 85.937739701405,
+        "laborIncomeIndex": 15.059614015382724,
+        "employmentLossPP": 58.658852209784364,
+        "technology": 2.839858947790652,
+        "adoption": 1.4985482087836657,
+        "gpuPrice": 52.52955129448933,
+        "computePrice": 66.03336518803154,
+        "capacity": 1070.5075239021812,
+        "confidence": 0.5092471327981454,
+        "defaults": 1,
+        "bankDefaults": 0,
+        "cumulativeCreditLoss": 0,
+        "cumulativeGrossCreditLoss": 0,
+        "recapSpent": 0,
+        "workerSpent": 0,
+        "govDebt": 0,
+        "govEquityValue": 0,
+        "liquidityOutstanding": 0,
+        "liquidityLoss": 0,
+        "foreignWealth": 1990.0424480980905,
+        "domesticWealth": 3540.791859132708,
+        "capex": 28.475021860114058,
+        "nodes": [
+          {
+            "id": "labA",
+            "name": "OpenAI",
+            "group": "前沿模型与应用企业",
+            "kind": "lab",
+            "cash": 58.19952696365324,
+            "assets": 92.28188570607318,
+            "debt": 4.371516769466384,
+            "equity": 87.9103689366068,
+            "capitalRatio": 0.9526286579861395,
+            "closed": false,
+            "marketCap": 102.60750367340053,
+            "sharePrice": 0.8646739888296522,
+            "gpu": 22.876024275392062,
+            "loss": 0
+          },
+          {
+            "id": "labB",
+            "name": "Anthropic",
+            "group": "模型与企业服务公司",
+            "kind": "lab",
+            "cash": 41.787561127010164,
+            "assets": 68.6935470623508,
+            "debt": 3.2507605161697555,
+            "equity": 65.44278654618105,
+            "capitalRatio": 0.9526773524561318,
+            "closed": false,
+            "marketCap": 70.06979687567856,
+            "sharePrice": 0.4766522649888805,
+            "gpu": 21.466250627658546,
+            "loss": 0
+          },
+          {
+            "id": "cloud",
+            "name": "CoreWeave",
+            "group": "独立算力云运营商",
+            "kind": "cloud",
+            "cash": 8,
+            "assets": 211.49028342477806,
+            "debt": 6.815545634872818,
+            "equity": 204.67473778990524,
+            "capitalRatio": 0.9677737174280305,
+            "closed": false,
+            "marketCap": 189.52903576741977,
+            "sharePrice": 1.6520902347180872,
+            "gpu": 367.2569200290338,
+            "loss": 0
+          },
+          {
+            "id": "chip",
+            "name": "NVIDIA",
+            "group": "AI 芯片与设备供应商",
+            "kind": "chip",
+            "cash": 392.61385031382787,
+            "assets": 532.627002844172,
+            "debt": 0,
+            "equity": 532.627002844172,
+            "capitalRatio": 1,
+            "closed": false,
+            "marketCap": 517.3555375611625,
+            "sharePrice": 5.173555375611625,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "hyper",
+            "name": "Google",
+            "group": "综合科技与云平台",
+            "kind": "hyper",
+            "cash": 7.999999999999986,
+            "assets": 580.6903633873229,
+            "debt": 10.816457466551814,
+            "equity": 569.8739059207711,
+            "capitalRatio": 0.9813731066528184,
+            "closed": false,
+            "marketCap": 704.2102337227299,
+            "sharePrice": 6.408022148674952,
+            "gpu": 658.9083289700967,
+            "loss": 0
+          },
+          {
+            "id": "legacy",
+            "name": "Salesforce",
+            "group": "受 AI 影响的软件与企业服务",
+            "kind": "legacy",
+            "cash": 0,
+            "assets": 0,
+            "debt": 0,
+            "equity": 0,
+            "capitalRatio": 0,
+            "closed": true,
+            "marketCap": 0,
+            "sharePrice": 0,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "bankA",
+            "name": "JPMorgan Chase",
+            "group": "大型商业银行",
+            "kind": "bank",
+            "cash": 0,
+            "assets": 115.69978901031068,
+            "debt": 265.1443167271934,
+            "equity": -149.44452771688276,
+            "capitalRatio": -1.291657737626167,
+            "closed": false,
+            "marketCap": 34.07777881705859,
+            "sharePrice": 0.0922950272730253,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "bankB",
+            "name": "Bank of America",
+            "group": "其他大型商业银行",
+            "kind": "bank",
+            "cash": 0,
+            "assets": 60.162586511850435,
+            "debt": 179.16195411301547,
+            "equity": -118.99936760116503,
+            "capitalRatio": -1.9779629583865266,
+            "closed": false,
+            "marketCap": 24.812193788539396,
+            "sharePrice": 0.04176115676575617,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "credit",
+            "name": "Apollo",
+            "group": "私募信贷机构",
+            "kind": "credit",
+            "cash": 19.405912928178928,
+            "assets": 86.03283696374223,
+            "debt": 0,
+            "equity": 86.03283696374223,
+            "capitalRatio": 1,
+            "closed": false,
+            "marketCap": 66.77561836657165,
+            "sharePrice": 0.6677561836657165,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "domestic",
+            "name": "Vanguard",
+            "group": "美国长期投资者",
+            "kind": "investor",
+            "cash": 1428.8333296966232,
+            "assets": 3540.791859132708,
+            "debt": 0,
+            "equity": 3540.791859132708,
+            "capitalRatio": 1,
+            "closed": false,
+            "marketCap": 0,
+            "sharePrice": 0,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "foreign",
+            "name": "挪威主权基金",
+            "group": "全球长期投资者",
+            "kind": "foreign",
+            "cash": 815.4484486039178,
+            "assets": 1990.0424480980905,
+            "debt": 0,
+            "equity": 1990.0424480980905,
+            "capitalRatio": 1,
+            "closed": false,
+            "marketCap": 0,
+            "sharePrice": 0,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "gov",
+            "name": "美国财政部",
+            "group": "财政政策账户",
+            "kind": "government",
+            "cash": 104.17280561980374,
+            "assets": 104.17280561980374,
+            "debt": 0,
+            "equity": 104.17280561980374,
+            "capitalRatio": 1,
+            "closed": false,
+            "marketCap": 0,
+            "sharePrice": 0,
+            "gpu": 0,
+            "loss": 0
+          },
+          {
+            "id": "fed",
+            "name": "美联储",
+            "group": "央行政策工具账户",
+            "kind": "centralbank",
+            "cash": 200,
+            "assets": 200,
+            "debt": 0,
+            "equity": 200,
+            "capitalRatio": 1,
+            "closed": false,
+            "marketCap": 0,
+            "sharePrice": 0,
+            "gpu": 0,
+            "loss": 0
+          }
+        ],
+        "labor": {
+          "config": {
+            "automationCeiling": 0.9,
+            "newJobsOffset": 0.1,
+            "transitionSpeed": 0.22,
+            "exitRate": 0.12,
+            "reentryRate": 0.01425,
+            "hiringRate": 0.4,
+            "separationRate": 0.5,
+            "hoursReduction": 0.25,
+            "demandFeedback": 0.2
+          },
+          "ageScope": "US civilian noninstitutional ages 16–64; synthetic fixed cohort",
+          "population": 100,
+          "employed": 13.921147790215633,
+          "unemployed": 22.678152005459026,
+          "inactive": 63.40070020432535,
+          "automation": 0.8593773970140499,
+          "hours": 29.835914728366525,
+          "baseEmployment": 72.58,
+          "baseHours": 38,
+          "previousIncomeIndex": 16.225978842770196,
+          "incomeIndex": 15.059614015382724,
+          "flows": {
+            "separations": 1.0236689298914978,
+            "hires": 0,
+            "exits": 3.092475273471685,
+            "reentries": 0.2697596823792079,
+            "slots": 12.897478860324135
+          }
+        },
+        "result": {
+          "grossLoss": 0,
+          "netLoss": 0,
+          "estateRecovery": 0,
+          "guaranteePaid": 0,
+          "fireSales": 26.951064719570002,
+          "newDefaults": [],
+          "clearingRounds": 0,
+          "losses": [],
+          "guaranteeRecords": [],
+          "creditFunding": 1.8311890473216599,
+          "equityFunding": 29.44113265478052
+        }
+      }
+    },
+    {
+      "name": "Strong demo exactly matches unchanged engine",
+      "passed": true
+    },
+    {
+      "name": "Population conserved in displayed data",
+      "passed": true
+    },
+    {
+      "name": "All 100 people remain represented",
+      "passed": true
+    },
+    {
+      "name": "Population ratios and hours displayed",
+      "passed": true
+    },
+    {
+      "name": "Auto expressions follow different outcomes",
+      "passed": true
+    },
+    {
+      "name": "Exits remain in denominator even when unemployment falls",
+      "passed": true,
+      "detail": {
+        "employment": 12.506762769651493,
+        "nonEmployment": 87.4932372303485,
+        "unemployment": 2.86866498046245,
+        "hours": 13.592603050584913
+      }
+    },
+    {
+      "name": "Both charts use population metrics not a fake U-6",
+      "passed": true
+    },
+    {
+      "name": "Six real policy comparisons generated",
+      "passed": true
+    },
+    {
+      "name": "Comparison leaves current branch unchanged",
+      "passed": true
+    },
+    {
+      "name": "Stress scan computes sixteen paths",
+      "passed": true
+    },
+    {
+      "name": "Character opens its actual synthetic account",
+      "passed": true
+    },
+    {
+      "name": "Export and import restore numerical path",
+      "passed": true
+    },
+    {
+      "name": "CSV contains population labor and hours series",
+      "passed": true
+    },
+    {
+      "name": "Cash debt clearing and population audits pass",
+      "passed": true
+    },
+    {
+      "name": "Desktop has no whole-page horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "Q48 automatically pauses, preserving continue controls",
+      "passed": true
+    },
+    {
+      "name": "Continue after Q48 enters Q49 without reset",
+      "passed": true
+    },
+    {
+      "name": "Next checkpoint is Q96",
+      "passed": true
+    },
+    {
+      "name": "Automatic playback also resumes beyond Q96",
+      "passed": true
+    },
+    {
+      "name": "Extended save reload preserves result and quarter",
+      "passed": true
+    },
+    {
+      "name": "Fast shock uses Q1 onset and Q8 horizon",
+      "passed": true
+    },
+    {
+      "name": "First-stress timestamps displayed in quarters and months",
+      "passed": true
+    },
+    {
+      "name": "Timing control changes numerical config and restarts",
+      "passed": true
+    },
+    {
+      "name": "Every independent portrait is a decoded image",
+      "passed": true
+    },
+    {
+      "name": "Phone touch next-quarter button works",
+      "passed": true
+    },
+    {
+      "name": "Phone autoplay pauses",
+      "passed": true
+    },
+    {
+      "name": "Phone whole page does not overflow",
+      "passed": true
+    },
+    {
+      "name": "Phone character roster can swipe",
+      "passed": true
+    },
+    {
+      "name": "Phone expressions are interactive",
+      "passed": true
+    },
+    {
+      "name": "Phone more menu reveals persistence tools",
+      "passed": true
+    },
+    {
+      "name": "Phone strong scenario shows nonemployment above 60",
+      "passed": true
+    },
+    {
+      "name": "No JavaScript page errors",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": []
+}

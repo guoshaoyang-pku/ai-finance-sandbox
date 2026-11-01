@@ -9,7 +9,7 @@
   else if (root) root.AIFinance = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function() {
   'use strict';
-  const VERSION='0.2.0', EPS=1e-8;
+  const VERSION='0.3.2', EPS=1e-8;
   const Labor=typeof module==='object'&&module.exports?require('./labor'):globalThis.AILabor;
   const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
   const sum=a=>a.reduce((s,x)=>s+x,0);
@@ -42,8 +42,8 @@
 
   const SCENARIOS={
     baseline:{label:'温和发展',description:'需求与能力逐步提高，无额外危机冲击。'},
-    stagnation:{label:'能力停滞，应用继续扩散',description:'第4季起前沿能力增速归零或接近零；现有技术仍可继续应用。'},
-    disappointment:{label:'商业化不及预期',description:'第4季起需求、再融资意愿和GPU残值同时下降。'},
+    stagnation:{label:'能力停滞，应用继续扩散',description:'从设定冲击季度起前沿能力增速归零或接近零；现有技术仍可继续应用。'},
+    disappointment:{label:'商业化不及预期',description:'从设定冲击季度起需求、再融资意愿和GPU残值同时下降。'},
     competition:{label:'技术成功，利润被竞争压低',description:'能力进步更快，但价格下降，第二家模型公司失去份额。'},
     displacement:{label:'技术成功，就业调整滞后',description:'AI需求增长，同时传统行业收入与就业受到冲击。'},
     rates:{label:'通胀与融资成本冲击',description:'利率与期限溢价上升；不能假定危机中美债一定上涨。'}
@@ -64,10 +64,26 @@
     for(const [k,[a,b]] of Object.entries(ranges))if(!Number.isFinite(out[k])||out[k]<a||out[k]>b)throw Error(`Policy ${k} must be in [${a},${b}]`);
     out.approvalLag=Math.round(out.approvalLag);return out;
   }
+  const REPRESENTATIVES={"labA":{"name":"OpenAI","group":"前沿模型与应用企业"},"labB":{"name":"Anthropic","group":"模型与企业服务公司"},"cloud":{"name":"CoreWeave","group":"独立算力云运营商"},"chip":{"name":"NVIDIA","group":"AI 芯片与设备供应商"},"hyper":{"name":"Google","group":"综合科技与云平台"},"legacy":{"name":"Salesforce","group":"受 AI 影响的软件与企业服务"},"bankA":{"name":"JPMorgan Chase","group":"大型商业银行"},"bankB":{"name":"Bank of America","group":"其他大型商业银行"},"credit":{"name":"Apollo","group":"私募信贷机构"},"domestic":{"name":"Vanguard","group":"美国长期投资者"},"foreign":{"name":"挪威主权基金","group":"全球长期投资者"},"gov":{"name":"美国财政部","group":"财政政策账户"},"fed":{"name":"美联储","group":"央行政策工具账户"}};
+  const REPRESENTATION_NOTICE="名称代表一类企业或机构；金额、价格、合同连线和清算事件均为模拟，不是对应公司的财报、真实交易或预测。";
   function makeNode(id,name,kind,cash,gpu,other,treasury,rev,cost,capex) {
-    return {id,name,kind,cash,gpu,other,treasury,baseOther:other,baseRevenue:rev,baseCost:cost,baseCapex:capex,
+    return {id,name:REPRESENTATIVES[id].name,group:REPRESENTATIVES[id].group,kind,cash,gpu,other,treasury,baseOther:other,baseRevenue:rev,baseCost:cost,baseCapex:capex,
       closed:false,defaultQuarter:null,defaultReason:null,grossCreditLoss:0,guaranteeRecovery:0,guaranteePaid:0,
       cumulativeCapex:0,lastRevenue:rev,lastProfit:0,lastCapex:0,shares:100,marketCap:0,baseMarketCap:0,dividends:0};
+  }
+  const DEFAULT_TIMING={shockStart:4,rampQuarters:2};
+  function validateTiming(t={}) {
+    const out={...DEFAULT_TIMING,...t};
+    for(const [k,v] of Object.entries(out))if(!Object.hasOwn(DEFAULT_TIMING,k)||!Number.isSafeInteger(v)||v<1||v>10000)throw Error('Invalid timing '+k);
+    return out;
+  }
+  function ensureShocks(w,q) {
+    // Continue the original Mulberry32 stream; no reset/repeat at Q48.
+    while(w.shocks.length<=q){
+      const offset=Math.imul(w.shocks.length*6,0x6D2B79F5);
+      const random=rng(((w.seed>>>0)+offset)>>>0);
+      w.shocks.push(Array.from({length:6},()=>random()*2-1));
+    }
   }
   function createWorld(opts={}) {
     const scenario=opts.scenario||'disappointment';if(!SCENARIOS[scenario])throw Error('Unknown scenario');
@@ -89,7 +105,7 @@
       makeNode('gov','财政部门','government',5,0,0,0,0,0,0),
       makeNode('fed','美联储工具账户','centralbank',200,0,0,0,0,0,0)
     ];
-    const w={version:VERSION,seed:opts.seed===undefined?42:opts.seed,scenario,severity,quarter:0,nodes,loans:[],contracts:[],guarantees:[],equityHoldings:[],policy:validatePolicy(opts.policy||{}),policyLog:[],history:[],events:[],audit:[],
+    const w={version:VERSION,seed:opts.seed===undefined?42:opts.seed,scenario,severity,timing:validateTiming(opts.timing),quarter:0,nodes,loans:[],contracts:[],guarantees:[],equityHoldings:[],policy:validatePolicy(opts.policy||{}),policyLog:[],history:[],events:[],audit:[],
       shocks:Array.from({length:49},()=>Array.from({length:6},()=>random()*2-1)),
       params:{fireSaleElasticity:.7,creditFeedback:.7,adoptionElasticity:1,rateDuration:5,...opts.params},
       macro:{gdp:100,unemployment:4.5,inflation:2.5,policyRate:4.0,treasuryYield:4.3,spread:1.8,dollar:100,sp500:100,nasdaq:100,creditSupply:1,politicalSupport:60},
@@ -179,7 +195,7 @@
     if(!h){h={holder,issuer,shares:0};w.equityHoldings.push(h);}h.shares+=shares;
   }
   function drivers(w) {
-    const q=w.quarter,s=w.severity,active=q>=4?Math.min(1,(q-3)/2):0,noise=w.shocks[q];
+    const q=w.quarter,s=w.severity,active=q>=w.timing.shockStart?Math.min(1,(q-w.timing.shockStart+1)/w.timing.rampQuarters):0,noise=w.shocks[q];
     let demandShock=0,competition=0,displacement=0,rateShock=0,obsolescence=0,confidenceShock=0,techBoost=0;
     if(w.scenario==='stagnation'){demandShock=.25*s*active;confidenceShock=.35*s*active;techBoost=-.04*s*active;}
     if(w.scenario==='disappointment'){demandShock=.62*s*active;obsolescence=.42*s*active;confidenceShock=.75*s*active;}
@@ -222,7 +238,7 @@
   }
   function governmentActions(w,d) {
     const p=w.policy;
-    if(w.quarter<Math.max(4,w.fiscalActionQuarter||0)+p.approvalLag)return;
+    if(w.quarter<Math.max(w.timing.shockStart,w.fiscalActionQuarter||0)+p.approvalLag)return;
     if(p.workerSupport>0){const amount=Math.min(p.workerSupport,Math.max(0,48-w.workerSpent));if(raiseFiscalCash(w,amount)){cashTransfer(w,'gov',null,amount,'worker_support');w.workerSpent+=amount;}}
     for(const b of w.nodes.filter(n=>n.kind==='bank'&&!n.closed)) {
       const target=(p.capitalTarget-p.bufferRelease)*assets(w,b.id),gap=Math.max(0,(target-netWorth(w,b.id))/(1-(p.capitalTarget-p.bufferRelease)));
@@ -510,7 +526,7 @@
       cumulativeCreditLoss:w.cumulativeCreditLoss,cumulativeGrossCreditLoss:w.cumulativeGrossCreditLoss,recapSpent:w.recapSpent,workerSpent:w.workerSpent,
       govDebt:liabilities(w,'gov'),govEquityValue:w.govEquityValue,liquidityOutstanding:sum(w.loans.filter(l=>l.lender==='fed').map(l=>l.principal)),liquidityLoss:w.liquidityLoss,
       foreignWealth:assets(w,foreign.id),domesticWealth:assets(w,'domestic'),capex:sum(w.nodes.map(n=>n.lastCapex||0)),
-      nodes:w.nodes.map(n=>({id:n.id,name:n.name,kind:n.kind,cash:n.cash,assets:assets(w,n.id),debt:liabilities(w,n.id),equity:netWorth(w,n.id),capitalRatio:capitalRatio(w,n.id),closed:n.closed,marketCap:n.marketCap,sharePrice:n.marketCap/n.shares,gpu:n.gpu,loss:n.grossCreditLoss-n.guaranteeRecovery})),
+      nodes:w.nodes.map(n=>({id:n.id,name:n.name,group:n.group,kind:n.kind,cash:n.cash,assets:assets(w,n.id),debt:liabilities(w,n.id),equity:netWorth(w,n.id),capitalRatio:capitalRatio(w,n.id),closed:n.closed,marketCap:n.marketCap,sharePrice:n.marketCap/n.shares,gpu:n.gpu,loss:n.grossCreditLoss-n.guaranteeRecovery})),
       labor:clone(w.labor),result:clone(result)};
   }
   function auditWorld(w){
@@ -536,7 +552,8 @@
     if(problems.length)throw Error('Audit failed: '+problems.join(', '));return r;
   }
   function step(w,policyPatch){
-    if(w.quarter>=48)throw Error('Prototype horizon is 48 quarters');
+    if(!Number.isSafeInteger(w.quarter)||w.quarter<0||w.quarter>=Number.MAX_SAFE_INTEGER-1)throw Error('Invalid quarter');
+    ensureShocks(w,w.quarter+1);
     if(policyPatch)setPolicy(w,policyPatch);w.quarter++;
     const d=drivers(w);w.nodes.forEach(n=>{n.lastCapex=0;if(!n.closed)n.gpu*=.98;});
     w.ai.confidence=clamp(1-d.confidenceShock-.04*w.nodes.filter(n=>n.closed).length+.015*d.noise[2],.03,1.05);
@@ -567,7 +584,7 @@
     const result={...settleQuarter(w,bills,d),...funding};
     updateMacro(w,d,result);w.audit.push(auditWorld(w));w.history.push(snapshot(w,result));return w.history[w.history.length-1];
   }
-  function run(opts={}){const w=createWorld(opts),quarters=opts.quarters===undefined?16:opts.quarters;if(!Number.isInteger(quarters)||quarters<0||quarters>48)throw Error('Invalid quarters');for(let t=0;t<quarters;t++){if(opts.policySchedule&&opts.policySchedule[t+1])setPolicy(w,opts.policySchedule[t+1]);step(w);}return w;}
+  function run(opts={}){const w=createWorld(opts),quarters=opts.quarters===undefined?16:opts.quarters;if(!Number.isSafeInteger(quarters)||quarters<0||quarters>4000)throw Error('Invalid quarters');for(let t=0;t<quarters;t++){if(opts.policySchedule&&opts.policySchedule[t+1])setPolicy(w,opts.policySchedule[t+1]);step(w);}return w;}
   function summarize(w){const first=w.history[0],last=w.history[w.history.length-1];return {scenario:w.scenario,seed:w.seed,severity:w.severity,quarters:w.quarter,
     defaults:last.defaults,bankDefaults:last.bankDefaults,netCreditLoss:last.cumulativeCreditLoss,grossCreditLoss:last.cumulativeGrossCreditLoss,
     sp500:last.sp500,nasdaq:last.nasdaq,gdp:last.gdp,gdpChange:last.gdp-100,peakUnemployment:Math.max(...w.history.map(x=>x.unemployment===null?0:x.unemployment)),
@@ -576,20 +593,20 @@
     gpuPrice:last.gpuPrice,technology:last.technology,cumulativeCapex:sum(w.nodes.map(n=>n.cumulativeCapex)),recapSpent:w.recapSpent,workerSpent:w.workerSpent,
     incrementalGovDebt:last.govDebt,govEquityValue:w.govEquityValue,liquidityOutstanding:last.liquidityOutstanding,liquidityLoss:w.liquidityLoss,
     foreignWealthChange:100*(last.foreignWealth/first.foreignWealth-1),maxCashError:Math.max(0,...w.audit.map(x=>Math.abs(x.cashError))),maxClearingResidual:w.maxClearingResidual};}
-  function compare(opts={}){return Object.entries(PRESETS).map(([id,p])=>({id,label:p.label,summary:summarize(run({...opts,policy:id==='late'?DEFAULT_POLICY:p.policy,policySchedule:id==='late'?{4:p.policy}:undefined}))}));}
+  function compare(opts={}){return Object.entries(PRESETS).map(([id,p])=>({id,label:p.label,summary:summarize(run({...opts,policy:id==='late'?DEFAULT_POLICY:p.policy,policySchedule:id==='late'?{[(opts.timing||DEFAULT_TIMING).shockStart||4]:p.policy}:undefined}))}));}
   function stressGrid(opts={}){
     const results=[];for(let i=0;i<=15;i++){const w=run({...opts,severity:i/10});results.push(summarize(w));}
     return {criterion:'at least one bank default by the horizon',testedStep:.1,range:[0,1.5],firstBreached:results.find(r=>r.bankDefaults>0)?.severity??null,results,
       warning:'A finite scenario grid, not a proof of robustness or a default probability; non-monotonicity is allowed.'};
   }
-  function exportRun(w){return {schema:'ai-finance-run-v1',version:VERSION,config:{scenario:w.scenario,seed:w.seed,severity:w.severity,bankBuffer:w.bankBuffer,params:clone(w.params),laborConfig:clone(w.labor.config),policy:clone(w.initialPolicy)},quarter:w.quarter,policyLog:clone(w.policyLog),summary:summarize(w),history:clone(w.history),events:clone(w.events),audit:clone(w.audit),loans:clone(w.loans),guarantees:clone(w.guarantees),contracts:clone(w.contracts),ledger:clone(w.ledger)};}
+  function exportRun(w){return {schema:'ai-finance-run-v1',version:VERSION,representation:{mode:'named-sector-representatives',notice:REPRESENTATION_NOTICE,groups:clone(REPRESENTATIVES)},config:{scenario:w.scenario,seed:w.seed,severity:w.severity,bankBuffer:w.bankBuffer,params:clone(w.params),timing:clone(w.timing),laborConfig:clone(w.labor.config),policy:clone(w.initialPolicy)},quarter:w.quarter,policyLog:clone(w.policyLog),summary:summarize(w),history:clone(w.history),events:clone(w.events),audit:clone(w.audit),loans:clone(w.loans),guarantees:clone(w.guarantees),contracts:clone(w.contracts),ledger:clone(w.ledger)};}
   function replay(data){
-    if(data.schema!=='ai-finance-run-v1'||data.version!==VERSION||!Number.isInteger(data.quarter)||data.quarter<0||data.quarter>48||!Array.isArray(data.policyLog)||data.policyLog.length>1000)throw Error('存档版本不兼容或格式错误；0.2.0 新就业模型不能精确复现旧版存档，请保留旧版页面回放。');
+    if(data.schema!=='ai-finance-run-v1'||!['0.2.0','0.3.1',VERSION].includes(data.version)||!Number.isInteger(data.quarter)||data.quarter<0||data.quarter>4000||!Array.isArray(data.policyLog)||data.policyLog.length>10000)throw Error('存档版本不兼容或格式错误；支持 0.2.0 及当前引擎存档；单次重放最多 4000 季，避免损坏文件耗尽浏览器资源。');
     for(const e of data.policyLog){if(!Number.isInteger(e.quarter)||e.quarter<0||e.quarter>data.quarter)throw Error('Invalid policy time');validatePolicy(e.policy);}
     const w=createWorld(data.config);
     for(let q=0;q<data.quarter;q++){for(const e of data.policyLog.filter(e=>e.quarter===q))setPolicy(w,e.policy);step(w);}
     for(const e of data.policyLog.filter(e=>e.quarter===data.quarter))setPolicy(w,e.policy);
     return w;
   }
-  return {Labor,VERSION,SCENARIOS,DEFAULT_POLICY,PRESETS,createWorld,step,run,compare,summarize,stressGrid,clearPayments,auditWorld,setPolicy,netWorth,capitalRatio,assets,liabilities,settleGuarantees,validatePolicy,exportRun,replay,clone,rng};
+  return {Labor,VERSION,REPRESENTATIVES,REPRESENTATION_NOTICE,DEFAULT_TIMING,validateTiming,SCENARIOS,DEFAULT_POLICY,PRESETS,createWorld,step,run,compare,summarize,stressGrid,clearPayments,auditWorld,setPolicy,netWorth,capitalRatio,assets,liabilities,settleGuarantees,validatePolicy,exportRun,replay,clone,rng};
 });

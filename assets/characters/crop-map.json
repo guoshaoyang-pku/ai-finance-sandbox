@@ -1,0 +1,225 @@
+{
+  "source_sha256": "d041a1a3e1528afdcb942914ddba8025528f9bae062fa9e0154792cdfbb1ed05",
+  "cell": [
+    256,
+    284
+  ],
+  "source_boundaries_x": [
+    0,
+    304,
+    571,
+    833,
+    1121,
+    1402
+  ],
+  "source_boundaries_y": [
+    0,
+    305,
+    595,
+    884,
+    1122
+  ],
+  "method": "Largest connected alpha>40 component with one-pixel dilation, trim, contain within 232x258, transparent padded cell 256x284; AVIF quality28. No generated new face detail.",
+  "crops": [
+    {
+      "character": "deepseek",
+      "mood": "calm",
+      "source_box": [
+        0,
+        0,
+        303,
+        303
+      ]
+    },
+    {
+      "character": "openai",
+      "mood": "calm",
+      "source_box": [
+        305,
+        0,
+        570,
+        303
+      ]
+    },
+    {
+      "character": "anthropic",
+      "mood": "calm",
+      "source_box": [
+        572,
+        0,
+        832,
+        303
+      ]
+    },
+    {
+      "character": "grok",
+      "mood": "calm",
+      "source_box": [
+        834,
+        0,
+        1120,
+        303
+      ]
+    },
+    {
+      "character": "gemini",
+      "mood": "calm",
+      "source_box": [
+        1122,
+        0,
+        1401,
+        303
+      ]
+    },
+    {
+      "character": "deepseek",
+      "mood": "happy",
+      "source_box": [
+        0,
+        307,
+        303,
+        593
+      ]
+    },
+    {
+      "character": "openai",
+      "mood": "happy",
+      "source_box": [
+        305,
+        307,
+        570,
+        593
+      ]
+    },
+    {
+      "character": "anthropic",
+      "mood": "happy",
+      "source_box": [
+        572,
+        307,
+        832,
+        593
+      ]
+    },
+    {
+      "character": "grok",
+      "mood": "happy",
+      "source_box": [
+        834,
+        307,
+        1120,
+        593
+      ]
+    },
+    {
+      "character": "gemini",
+      "mood": "happy",
+      "source_box": [
+        1122,
+        307,
+        1401,
+        593
+      ]
+    },
+    {
+      "character": "deepseek",
+      "mood": "worried",
+      "source_box": [
+        0,
+        597,
+        303,
+        882
+      ]
+    },
+    {
+      "character": "openai",
+      "mood": "worried",
+      "source_box": [
+        305,
+        597,
+        570,
+        882
+      ]
+    },
+    {
+      "character": "anthropic",
+      "mood": "worried",
+      "source_box": [
+        572,
+        597,
+        832,
+        882
+      ]
+    },
+    {
+      "character": "grok",
+      "mood": "worried",
+      "source_box": [
+        834,
+        597,
+        1120,
+        882
+      ]
+    },
+    {
+      "character": "gemini",
+      "mood": "worried",
+      "source_box": [
+        1122,
+        597,
+        1401,
+        882
+      ]
+    },
+    {
+      "character": "deepseek",
+      "mood": "defeated",
+      "source_box": [
+        0,
+        886,
+        303,
+        1120
+      ]
+    },
+    {
+      "character": "openai",
+      "mood": "defeated",
+      "source_box": [
+        305,
+        886,
+        570,
+        1120
+      ]
+    },
+    {
+      "character": "anthropic",
+      "mood": "defeated",
+      "source_box": [
+        572,
+        886,
+        832,
+        1120
+      ]
+    },
+    {
+      "character": "grok",
+      "mood": "defeated",
+      "source_box": [
+        834,
+        886,
+        1120,
+        1120
+      ]
+    },
+    {
+      "character": "gemini",
+      "mood": "defeated",
+      "source_box": [
+        1122,
+        886,
+        1401,
+        1120
+      ]
+    }
+  ]
+}
