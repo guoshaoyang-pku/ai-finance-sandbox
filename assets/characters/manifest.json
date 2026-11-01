@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "atlas": "assets/characters/atlas.avif",
+  "columns": 5,
+  "rows": 4,
+  "cell": [
+    160,
+    180
+  ],
+  "moods": [
+    "calm",
+    "happy",
+    "worried",
+    "defeated"
+  ],
+  "characters": [
+    "deepseek",
+    "openai",
+    "anthropic",
+    "grok",
+    "gemini"
+  ],
+  "source": "Conversation-generated image 五列四行动漫角色表情精灵图.png",
+  "source_sha256": "bd39b35c186db9ba0b3b7ad7ecd9d85a31fc901ed07fd6ea2953415dfbe23d7b",
+  "credit": "本对话生成的衍生素材，社区形象参考 ZipZipPipe 等；非官方角色，不是作者原图。未核实上游商用授权；代码 MIT 不涵盖角色形象。",
+  "scope": "仅作为虚拟模型的角色皮肤/观察员；不能解释为真实企业的财务或违约预测。",
+  "fallback_atlas": "assets/characters/atlas.webp"
+}

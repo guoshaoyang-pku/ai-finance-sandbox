@@ -1,0 +1,13 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..');
+let html=fs.readFileSync(path.join(__dirname,'index.template.html'),'utf8');
+html=html.replace('/*LABOR*/',()=>fs.readFileSync(path.join(__dirname,'labor.js'),'utf8'));
+const art=JSON.parse(fs.readFileSync(path.join(root,'assets/characters/manifest.json'),'utf8'));
+art.dataUri='data:image/'+(art.atlas.endsWith('.avif')?'avif':'webp')+';base64,'+fs.readFileSync(path.join(root,art.atlas)).toString('base64');
+html=html.replace('/*ART*/',()=>JSON.stringify(art).replace(/</g,'\\u003c'));
+html=html.replace('/*ENGINE*/',()=>fs.readFileSync(path.join(__dirname,'engine.js'),'utf8'));
+html=html.replace('/*RESEARCH*/',()=>JSON.stringify(JSON.parse(fs.readFileSync(path.join(root,'data/sources.json'),'utf8'))).replace(/</g,'\\u003c'));
+html=html.replace('/*APP*/',()=>fs.readFileSync(path.join(__dirname,'app.js'),'utf8'));
+fs.writeFileSync(path.join(root,'index.html'),html);
+console.log('Built offline index.html:',Buffer.byteLength(html),'bytes');

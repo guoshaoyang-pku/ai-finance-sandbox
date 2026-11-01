@@ -1,0 +1,35 @@
+{
+  "checked_on": "2026-10-31",
+  "usage": "Research references and separately verified disclosure examples. None of these dollar amounts calibrate the synthetic game automatically.",
+  "sources": [
+    {"id":"S01","organization":"Eisenberg & Noe / Management Science","date":"2001","title":"Systemic Risk in Financial Systems","url":"https://pubsonline.informs.org/doi/10.1287/mnsc.47.2.236.9835","finding":"支付清算可写成固定点；原型只在无担保的主清算子问题中直接采用此结构。不能把其唯一性结论外推到整个游戏。"},
+    {"id":"S02","organization":"Federal Reserve","date":"2026-02-04","title":"2026 Stress Test Scenarios","url":"https://www.federalreserve.gov/publications/2026-stress-test-scenarios.htm","finding":"宏观情景含28个变量；还使用市场冲击与对手方违约模块。情景不是预测，也不是对全部可能扰动的穷举。"},
+    {"id":"S03","organization":"Bank of England","date":"2024-11-29","title":"System-wide exploratory scenario — final report","url":"https://www.bankofengland.co.uk/financial-stability/boe-system-wide-exploratory-scenario-exercise/boe-swes-exercise-final-report","finding":"跨银行与非银行机构分析共同反应、流动性需求和相互放大，不只做单家银行压力测试。"},
+    {"id":"S04","organization":"European Central Bank","date":"2025-11","title":"Simulating dynamic balance sheet reactions and macroprudential policy","url":"https://www.ecb.europa.eu/press/financial-stability-publications/macroprudential-bulletin/html/ecb.mpbu202511_02.en.html","finding":"BEAST把银行调整资产负债表和宏观反馈连接起来。监管缓冲的建立与释放存在时间上的取舍。"},
+    {"id":"S05","organization":"IMF","date":"2026-10","title":"Global Financial Markets Face Rising Risks From AI, Bond Yields, and Cyberattacks","url":"https://www.imf.org/en/blogs/articles/2026/10/12/global-financial-markets-face-rising-risks-from-ai-bond-yields-and-cyberattacks","finding":"其14笔循环交易样本分别涉及约3000亿美元股权、6500亿美元债务、1.4万亿美元未来收入承诺。不同口径不可直接合并成债务余额，也不是所有AI融资的完整普查。"},
+    {"id":"S06","organization":"BIS","date":"2026-10-27","title":"Building AI on credit: structures and spillovers","url":"https://www.bis.org/publications/bulletin-140-building-ai-credit--structures-and-spillovers","finding":"关注项目载体、租约、有限担保以及银行对项目和债务持有者的双重敞口；截至其研究时点，债券市场外溢仍较小且短暂，不支持宣称危机必然发生。"},
+    {"id":"S07","organization":"CoreWeave","date":"2026-08-10","title":"CoreWeave Closes $2.6 Billion Loan Facility","url":"https://investors.coreweave.com/news/news-details/2026/CoreWeave-Closes-2-6-Billion-Loan-Facility-Expanding-Financing-Flexibility-for-AI-Infrastructure/default.aspx","finding":"26亿美元延迟提款贷款安排，约5年期限，底层客户合同平均约3年。说明合同与融资期限需要分别建模；额度不等于已提款余额。"},
+    {"id":"S08","organization":"CoreWeave / SEC","date":"2026-08-11","title":"Second-quarter 2026 earnings release","url":"https://www.sec.gov/Archives/edgar/data/1769628/000176962826000362/coreweave2q26earningspress.htm","finding":"截至2026年6月30日，四项有追索/无追索流动与非流动债务合计350.68亿美元；租赁负债另列，不能混成同一个债务口径。"},
+    {"id":"S09","organization":"Anthropic / SEC","date":"2026-10-26","title":"Form S-1","url":"https://www.sec.gov/Archives/edgar/data/2130357/000162828026067168/anthropicpbc-sx1.htm","finding":"披露一项五年设备租赁约1252亿美元不含利息租金，以及可按条件发行最高420亿美元可转本票的安排。起租、提款和违约加速条件不能省略。"},
+    {"id":"S10","organization":"NVIDIA","date":"2025-09-22","title":"OpenAI and NVIDIA strategic partnership","url":"https://nvidianews.nvidia.com/news/openai-and-nvidia-announce-strategic-partnership-to-deploy-10gw-of-nvidia-systems/","finding":"公告是随部署逐步投资、最高1000亿美元的意向安排。该公告本身不能证明已经交付该金额，也不能证明存在等额贷款担保。"},
+    {"id":"S11","organization":"Alphabet / SEC","date":"2026-06-01","title":"Proposed $80 Billion Equity Capital Raise","url":"https://www.sec.gov/Archives/edgar/data/1652044/000119312526257724/d83560dex991.htm","finding":"800亿美元计划包含400亿美元ATM安排，其中预计约300亿美元用于员工股权归属相关2026年税款；不能把全部计划金额都描述成新增AI借款。"},
+    {"id":"S12","organization":"Meta / SEC","date":"2026-10-26","title":"Free Writing Prospectus — equity offerings","url":"https://www.sec.gov/Archives/edgar/data/1326801/000119312526431036/d116268dfwp.htm","finding":"这份10月26日初始文件列225亿美元普通股及250百万份优先股存托凭证，并另述未来600亿美元ATM计划。不能当作当日已收到全部现金；后续定价或增额须单独取证。"},
+    {"id":"S13","organization":"Federal Reserve","date":"2026-05-08","title":"Financial Stability Report — Near-Term Risks","url":"https://www.federalreserve.gov/publications/2026-may-financial-stability-report-near-term-risks.htm","finding":"市场联系人提及AI估值、债务融资资本开支及劳动力影响；这些访谈观点不等于美联储的确定性预测。"},
+    {"id":"S14","organization":"Basel Committee / BIS","date":"2026","title":"Stress testing principles","url":"https://www.bis.org/committees/bcbs/basel-consolidated-guidelines/module/rma/30","finding":"压力测试是风险管理工具，不是对所有未来状态的安全证明。"}
+  ],
+  "verified_examples": [
+    {"id":"F01","entity":"CoreWeave","type":"funded_debt_stock","as_of":"2026-06-30","amount_usd_bn":35.068,"source_id":"S08","calculation":"6.235 + 1.278 + 25.170 + 2.385","status":"disclosed_balance","excludes":"Operating and finance lease liabilities; later issuance","used_in_game":false},
+    {"id":"F02","entity":"CoreWeave","type":"delayed_draw_facility_limit","as_of":"2026-08-10","amount_usd_bn":2.6,"drawn_usd_bn":null,"source_id":"S07","maturity_years":5,"underlying_contract_years_approx":3,"status":"facility_closed_drawn_unknown","used_in_game":false},
+    {"id":"F03","entity":"Anthropic","counterparty":"Broadcom / designated partner","type":"future_equipment_lease_rent","as_of":"2026-10-26","amount_usd_bn":125.2,"source_id":"S09","term_years":5,"excludes":"Interest","start_condition":"Equipment ready for service; quarterly payments","status":"contractual_commitment","used_in_game":false},
+    {"id":"F04","entity":"Anthropic","counterparty":"Broadcom / designated financial partner","type":"conditional_convertible_note_capacity","as_of":"2026-10-26","amount_usd_bn":42,"drawn_usd_bn":null,"source_id":"S09","status":"capacity_not_assumed_drawn","overlap_group":"F03-financing-source-not-additive-spending","used_in_game":false},
+    {"id":"F05","entity":"NVIDIA / OpenAI","type":"equity_investment_intent","as_of":"2025-09-22","amount_usd_bn":100,"drawn_usd_bn":null,"source_id":"S10","status":"historical_announced_intent_not_current_outstanding","used_in_game":false},
+    {"id":"F06","entity":"Alphabet","type":"equity_financing_plan","as_of":"2026-06-01","amount_usd_bn":80,"source_id":"S11","status":"historical_proposed_plan_not_current_cash_received","notes":"Includes 40 ATM; around 30 expected for employee-equity tax obligations in 2026","used_in_game":false}
+  ],
+  "not_verified_or_not_loaded": [
+    "不能从已读文件直接得出全行业完整债务、担保或白条总额。",
+    "未把Anthropic约4500亿美元承诺的口头总数作为已去重余额导入。",
+    "没有把Meta约975亿美元计划当作单次已完成融资或债务。",
+    "未验证前面对Alphabet截至9月底已融资620亿美元、发债800多亿美元的口头数字。",
+    "真实违约优先级、追索权、质押范围和对冲头寸仍需逐份合同采集。"
+  ]
+}

@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),E=require('./engine');
+const ROOT=path.resolve(__dirname,'..');
+function save(file,value){const p=path.resolve(file);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,typeof value==='string'?value:JSON.stringify(value,null,2));return p;}
+function parse(argv){const command=argv.shift()||'help',flags={};for(let i=0;i<argv.length;i++){const k=argv[i];if(!k.startsWith('--')||argv[i+1]===undefined)throw Error('Expected --flag value');flags[k.slice(2)]=argv[++i];}return {command,flags};}
+function options(f){let opts=f.config?JSON.parse(fs.readFileSync(f.config,'utf8')):{};if(f.scenario)opts.scenario=f.scenario;for(const k of ['seed','severity','quarters'])if(f[k]!==undefined)opts[k]=Number(f[k]);if(f['bank-buffer']!==undefined)opts.bankBuffer=Number(f['bank-buffer']);if(f.policy){if(!E.PRESETS[f.policy])throw Error('Unknown policy preset');opts.policy=E.PRESETS[f.policy].policy;if(f.policy==='late'){opts.policy=E.DEFAULT_POLICY;opts.policySchedule={4:E.PRESETS.late.policy};}}if(f['policy-file'])opts.policy=JSON.parse(fs.readFileSync(f['policy-file'],'utf8'));return opts;}
+function compact(w){return E.summarize(w);}
+function demo(out){const config={scenario:'disappointment',seed:42,severity:1.5,bankBuffer:.04};const intervention=E.createWorld(config),control=E.createWorld(config);for(let q=0;q<16;q++){if(q===6)E.setPolicy(intervention,E.PRESETS.stabilization.policy);E.step(intervention);E.step(control);}const result={notice:'Synthetic mechanism demonstration, not a prediction or calibrated policy evaluation.',interventionAt:'after Q6, affects Q7 onward; fiscal approval lag applies',config,control:compact(control),intervention:compact(intervention),difference:{gdpIndex:compact(intervention).gdp-compact(control).gdp,netCreditLoss:compact(intervention).netCreditLoss-compact(control).netCreditLoss,peakUnemployment:compact(intervention).peakUnemployment-compact(control).peakUnemployment}};
+const dir=out||path.join(ROOT,'results');save(path.join(dir,'demo_summary.json'),result);save(path.join(dir,'demo_intervention.json'),E.exportRun(intervention));save(path.join(dir,'demo_control.json'),E.exportRun(control));
+const keys=['quarter','gdp','unemployment','sp500','nasdaq','treasuryYield','spread','gpuPrice','technology','defaults','bankDefaults','cumulativeCreditLoss','recapSpent','workerSpent','govDebt'];let csv=keys.map(k=>k==='quarter'?k:`control_${k},intervention_${k}`).join(',')+'\n';for(let q=0;q<=16;q++)csv+=keys.map(k=>k==='quarter'?q:`${control.history[q][k]},${intervention.history[q][k]}`).join(',')+'\n';save(path.join(dir,'demo_timeseries.csv'),csv);return result;}
+function batch(out){
+ const records=[];const paramCases=[{name:'low_feedback',params:{fireSaleElasticity:.35,creditFeedback:.4,adoptionElasticity:.7,rateDuration:3}},{name:'central',params:{fireSaleElasticity:.7,creditFeedback:.7,adoptionElasticity:1,rateDuration:5}},{name:'high_feedback',params:{fireSaleElasticity:1.2,creditFeedback:1.3,adoptionElasticity:1.3,rateDuration:7}}];
+ for(const scenario of Object.keys(E.SCENARIOS))for(const severity of [.7,1.3,1.9])for(const bankBuffer of [.04,.105])for(const pc of paramCases)for(const id of ['market','preventive','stabilization']){
+   const w=E.run({scenario,severity,bankBuffer,seed:42,params:pc.params,policy:E.PRESETS[id].policy,quarters:16});records.push({policy:id,bankBuffer,parameterCase:pc.name,...E.summarize(w)});
+ }
+ const report={notice:'Designed finite sensitivity grid. Scenario counts are NOT real-world probabilities. No probability distribution was fitted.',runs:records.length,failedAudits:records.filter(r=>r.maxCashError>1e-6||r.maxClearingResidual>1e-8).length,pathsWithBankResolution:records.filter(r=>r.bankDefaults>0).length,maxCashError:Math.max(...records.map(r=>r.maxCashError)),maxClearingResidual:Math.max(...records.map(r=>r.maxClearingResidual)),records};save(out||path.join(ROOT,'results/sensitivity_grid.json'),report);return {runs:report.runs,failedAudits:report.failedAudits,pathsWithBankResolution:report.pathsWithBankResolution,maxCashError:report.maxCashError,maxClearingResidual:report.maxClearingResidual};
+}
+try{const {command,flags:f}=parse(process.argv.slice(2));let result;
+ if(command==='run'){const w=E.run(options(f));result=compact(w);if(f.out)save(f.out,E.exportRun(w));}
+ else if(command==='compare'){result=E.compare(options(f));if(f.out)save(f.out,result);}
+ else if(command==='stress'){result=E.stressGrid(options(f));if(f.out)save(f.out,result);}
+ else if(command==='demo')result=demo(f.out);
+ else if(command==='batch')result=batch(f.out);
+ else if(command==='step'){if(!f.input)throw Error('step requires --input saved.json');const w=E.replay(JSON.parse(fs.readFileSync(f.input,'utf8')));if(f['policy-file'])E.setPolicy(w,JSON.parse(fs.readFileSync(f['policy-file'],'utf8')));const count=Number(f.quarters||1);if(!Number.isInteger(count)||count<1||count>48)throw Error('Invalid step count');for(let i=0;i<count;i++)E.step(w);result=compact(w);if(!f.out)throw Error('step requires --out destination.json');save(f.out,E.exportRun(w));}
+ else if(command==='help'){console.log(`AI Finance Sandbox ${E.VERSION}\n\nnode src/cli.js demo\nnode src/cli.js run --scenario competition --seed 42 --quarters 16 --out results/run.json\nnode src/cli.js compare --scenario disappointment --severity 1.5 --bank-buffer 0.04\nnode src/cli.js stress --scenario disappointment --policy preventive\nnode src/cli.js batch\nnode src/cli.js step --input results/demo_intervention.json --quarters 1 --out results/continued.json\n\nOptions: --config JSON --policy PRESET --policy-file JSON\nAll monetary values and macro coefficients in the simulation are synthetic.`);process.exit(0);}
+ else throw Error('Unknown command: '+command);
+ console.log(JSON.stringify(result,null,2));
+}catch(err){console.error('ERROR:',err.message);process.exit(1);}

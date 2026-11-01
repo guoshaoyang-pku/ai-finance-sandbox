@@ -1,0 +1,17 @@
+{
+  "name": "ai-finance-sandbox",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Offline educational AI-finance stress sandbox; synthetic calibration",
+  "scripts": {
+    "test": "node --test tests/engine.test.js tests/labor.test.js",
+    "simulate": "node src/cli.js demo",
+    "build": "node src/build.js",
+    "serve": "node server.cjs",
+    "start": "node server.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
