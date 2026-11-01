@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1420"><meta name="description" content="以公开财报与宏观统计为起点，模拟中国AI投资、地方债、信用和就业在不同监管下的十年压力情景。条件推演，不是预测。">
+<title>中国 AI 压力沙盘 · 社会如何演化</title>
+<style>:root{color-scheme:dark;--bg:#0b1420;--panel:#111f2e;--panel2:#162536;--line:#2a3b4d;--text:#e5edf4;--muted:#91a6b8;--teal:#68d9ba;--amber:#efbb74;--red:#ef8a8c;--blue:#8ab6f5;--purple:#baa8e7;--gray:#698094}*{box-sizing:border-box}body{margin:0;font:14px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text)}button,input,select{font:inherit}button,a,input,select,summary{-webkit-tap-highlight-color:transparent}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}button{cursor:pointer;border:1px solid var(--line);border-radius:7px;padding:8px 13px;background:#1a2a3c;color:var(--text);transition:border-color .15s,background .15s}button:hover{border-color:#65809b;background:#22364b}button:disabled{opacity:.35;cursor:default}button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--teal);outline-offset:3px}.primary{background:#a3e3ce;border-color:#a3e3ce;color:#10291f;font-weight:700}.primary:hover{background:#b5eedc;border-color:#d3fff0}.outline{background:transparent;border-color:#598e86;color:#b6eadb}.quiet{background:transparent}.full{width:100%}.plain{padding:0;border:0;background:transparent;color:var(--muted)}.subtle,.help,.footnote{color:var(--muted)}.help{font-size:12px;line-height:1.85}.footnote{font-size:10px;line-height:1.8;margin:12px 0 0}.eyebrow{display:block;font-size:10px;color:var(--teal);letter-spacing:1.2px;margin-bottom:5px}.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;border:1px solid}.tag.fact{color:#9ddac5;border-color:#417264;background:#214b4022}.tag.assume{color:#dbc28e;border-color:#75613f;background:#56431f22}.masthead{padding:16px 30px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:16px}.brand{display:flex;align-items:center;gap:11px;color:var(--text)}.brand:hover{text-decoration:none}.brand-mark{font:44px/1 Georgia,serif;color:var(--teal);display:grid;place-items:center;width:40px;height:40px;border:1px solid #395a5b;border-radius:11px}.brand strong{font-size:18px;letter-spacing:.5px}.brand small{display:block;font-size:9px;color:var(--muted);letter-spacing:1.5px}.head-links{display:flex;gap:20px;align-items:center;font-size:12px}.version{font:10px ui-monospace,monospace;color:var(--muted);padding:4px 7px;border:1px solid var(--line);border-radius:5px}.notice{padding:10px 30px;background:#142128;color:#aebdbb;font-size:11px;border-bottom:1px solid var(--line);line-height:1.8}.notice strong{font-weight:500}.notice-sep{padding:0 10px;color:#557268}.toolbar{position:sticky;top:0;z-index:30;padding:12px 30px;background:#0c1724f5;backdrop-filter:blur(16px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:22px}.time-block{min-width:112px}.time-block strong{font:700 21px ui-monospace,monospace;letter-spacing:-.7px}.time-block small{display:block;font-size:9px;color:var(--muted);margin-top:3px}.toolbar-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.toolbar .primary span{margin-left:12px}.audit-badge{font-size:10px;color:var(--teal);margin-left:auto;white-space:nowrap}.audit-badge:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;margin-right:6px}.more-menu{position:relative;font-size:11px}.more-menu summary{cursor:pointer;padding:9px;color:var(--muted)}.more-menu>div{position:absolute;top:100%;right:0;width:180px;padding:8px;border:1px solid var(--line);border-radius:8px;background:#132234;box-shadow:0 12px 30px #0006;display:grid;gap:5px}.more-menu button{text-align:left;font-size:11px}.progress{height:2px;background:#1a2937}.progress i{display:block;width:0;height:100%;background:var(--teal);transition:width .15s}main{max-width:1570px;padding:26px 30px 18px;margin:auto}.intro{display:flex;justify-content:space-between;align-items:center;gap:20px}.intro h1{font-size:28px;font-weight:650;letter-spacing:-.7px;line-height:1.5;margin:0 0 7px}.intro p{font-size:12px;color:var(--muted);margin:0}.mobile-break{display:none}.scenario-strip{display:flex;gap:7px;margin:22px 0 20px;flex-wrap:wrap}.scenario-strip button{font-size:11px;background:#111e2d;color:var(--muted);padding:8px 12px}.scenario-strip button.selected{border-color:#6aa78f;background:#1b3e37;color:#cbefe2}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}.main-column,.sidebar{min-width:0;display:flex;flex-direction:column;gap:16px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:20px;min-width:0}.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.panel-heading h2{margin:0}.panel-heading .subtle{font-size:10px;white-space:nowrap}h2{font-size:15px;line-height:1.6;font-weight:600;margin:0 0 12px}h3{font-size:13px;margin:18px 0 9px;font-weight:600}p{margin:0 0 10px}.metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.metric{padding:16px 12px;border:1px solid var(--line);border-radius:9px;background:#122131;min-width:0}.metric-label{font-size:10px;color:var(--muted);display:flex;gap:4px;align-items:center}.metric strong{display:block;font:600 26px/1.7 ui-monospace,SFMono-Regular,monospace;letter-spacing:-1px;color:var(--text)}.metric strong.negative{color:var(--red)}.metric strong.positive{color:var(--teal)}.metric small{display:block;font-size:9px;line-height:1.6;color:var(--muted)}.phase{font-size:11px;padding:4px 9px;border:1px solid #527b70;border-radius:5px;color:#9cdcc8;white-space:nowrap}.phase.warn{color:var(--amber);border-color:#877249}.phase.bad{color:var(--red);border-color:#835253}.society-panel{background:radial-gradient(ellipse at 40% 45%,#1c3b3b55,transparent 65%),var(--panel)}.society-map{width:100%;height:auto;display:block}.map-node{cursor:pointer;outline:none}.map-node:focus-visible .node-body,.map-node:hover .node-body{stroke:#92cbb9;stroke-width:2}.map-node.selected .node-body{stroke:#b1edd8;stroke-width:2}.node-body{fill:#152739;stroke:#354e62}.map-node.bad .node-body{fill:#3a222a;stroke:#ad666a}.map-node.warn .node-body{fill:#332e25;stroke:#8e7956}.map-node .node-title{font-size:15px;fill:#edf5fa;font-weight:650}.map-node .node-sub{font-size:11px;fill:#9fb3c4}.map-node .node-value{font:600 20px ui-monospace,monospace;fill:var(--teal)}.map-node.warn .node-value{fill:var(--amber)}.map-node.bad .node-value{fill:var(--red)}.map-edge{fill:none;stroke:#466277;stroke-width:1.5;marker-end:url(#arrow)}.map-edge.pulse{stroke:#b56c6c;stroke-dasharray:4 5;animation:flow 6s linear infinite}.edge-label{font-size:10px;fill:#8499aa}.map-legend{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:10px;color:var(--muted);margin-top:12px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;background:var(--gray)}.dot.green{background:var(--teal)}.dot.amber{background:var(--amber)}.dot.red{background:var(--red)}.dot.gray{background:#43586d}.node-detail{border-top:1px solid #344759;padding-top:13px;font-size:12px;line-height:1.8;min-height:67px;color:#b7c9d8}.node-detail strong{color:var(--text);margin-right:6px}.story-panel{border-left:3px solid var(--teal);padding:16px 18px;background:#12282f}.story-head{display:flex;justify-content:space-between;color:var(--muted);font-size:10px}.story-panel .eyebrow{margin-bottom:8px}.story-panel p{font-size:12px;margin:0;line-height:1.85}.story-panel .muted{color:var(--muted);margin-top:5px;font-size:10px}.labor-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.labor-metric span{font-size:10px;color:var(--muted)}.labor-metric strong{display:block;font:600 24px/1.8 ui-monospace,monospace}.people-grid{display:grid;grid-template-columns:repeat(25,1fr);gap:4px;margin:12px 0}.person{height:9px;border-radius:2px;background:#43586d}.person.e{background:var(--teal)}.person.u{background:var(--amber)}.chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.chart-panel{padding:16px 15px}.chart-panel .panel-heading{margin-bottom:5px}.chart-panel h2{font-size:13px}.chart{width:100%;height:auto;display:block;overflow:visible;touch-action:pan-y}.chart .grid{stroke:#2b3c4d;stroke-width:1}.chart .axis-label{fill:#89a0b3;font:10px -apple-system,sans-serif}.chart-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:9px;color:var(--muted);margin:8px 0 0}.key{display:inline-flex;align-items:center;gap:5px}.key:before{content:'';display:inline-block;width:13px;height:2px;background:var(--muted)}.key.teal:before{background:var(--teal)}.key.blue:before{background:var(--blue)}.key.red:before{background:var(--red)}.key.amber:before{background:var(--amber)}.key.purple:before{background:var(--purple)}.key.dashed:before{height:0;border-top:2px dashed var(--gray);background:none}.key.blue.dashed:before{border-color:var(--blue)}.events{max-height:260px;overflow:auto}.event{display:grid;grid-template-columns:58px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid #283b4c;font-size:11px}.event:last-child{border-bottom:0}.event time{font:10px/1.8 ui-monospace,monospace;color:var(--muted)}.event strong{display:block;font-size:11px;margin-bottom:3px;color:#d5e3ed;font-weight:600}.event p{color:var(--muted);font-size:10px;margin:0;line-height:1.8}.event.bad strong{color:var(--red)}.event.policy strong{color:var(--teal)}.sidebar .panel{padding:19px 17px}.policy-panel{border-color:#41645d}.sidebar h2{font-size:14px}.select-label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px}select{width:100%;padding:9px;background:#0d1b2a;border:1px solid var(--line);color:var(--text);border-radius:6px;font-size:12px}.field{display:block;margin:15px 0}.field-heading{display:flex;justify-content:space-between;gap:8px;font-size:11px;margin-bottom:7px;align-items:center}.field-heading output{color:var(--teal);font:11px ui-monospace,monospace;white-space:nowrap}.field input[type=range]{display:block;width:100%;accent-color:#8bd1ba;height:4px;cursor:pointer;margin:10px 0}.field .field-help{font-size:9px;color:#8fa5b5;line-height:1.6;display:block;margin-top:5px}.field input[type=number]{width:100%;padding:7px 10px;color:var(--text);background:#0c1a29;border:1px solid var(--line);border-radius:5px}.policy-status{font-size:10px;line-height:1.7;padding:9px;margin-top:11px;border-radius:5px;background:#1d3937;color:#a5d8c5}.policy-status.dirty{color:var(--amber);background:#393127}.sidebar details{border-top:1px solid var(--line);margin:16px 0;padding-top:10px}summary{cursor:pointer;font-size:11px;color:#bfd1dd;line-height:1.8}.compact .help{font-size:11px}.compact button{margin-top:12px}.compact .subtle{font-size:10px}.tabs{display:flex;gap:8px;margin:28px 0 14px;flex-wrap:wrap;scroll-margin-top:100px}.tabs button{border-color:transparent;background:transparent;color:var(--muted);font-size:12px}.tabs button.active{border-color:#507a72;color:#c3efdf;background:#1b3834}.tab-panel{display:none}.tab-panel.active{display:block}.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:8px;margin:16px 0}table{width:100%;border-collapse:collapse;font-size:11px}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}th{color:#a8bfcd;background:#0c1926;font-weight:500;font-size:10px}td:first-child,th:first-child{text-align:left}tbody tr:last-child td{border-bottom:0}.firm-row{cursor:pointer}.firm-row:hover{background:#1b3043}td small{display:block;font-size:9px;color:var(--muted)}.negative{color:var(--red)}.positive{color:var(--teal)}.status-pill{padding:3px 6px;border-radius:4px;background:#25443e;color:#a1dac9;font-size:9px}.status-pill.bad{background:#4b2c33;color:#f2afb2}.callout{padding:13px 15px;background:#1c333b;border-left:2px solid #72b5a5;font-size:11px;line-height:1.9;color:#b8cbd6;margin:14px 0}.callout.warning{border-color:#ac8d55;background:#332e2477;color:#cfbd9c}.firm-details{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:15px}.firm-detail{padding:14px;border:1px solid var(--line);border-radius:8px;font-size:11px}.firm-detail h3{margin:0 0 7px}.firm-detail p{font-size:10px;color:var(--muted);line-height:1.8}.source-details{margin-top:18px}.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:8px;font-size:12px}.comparison-chart{max-height:340px}.divider{border-top:1px solid var(--line);margin:24px 0}.model-columns{display:grid;grid-template-columns:1fr 1fr;gap:30px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:11px/2 ui-monospace,SFMono-Regular,monospace;background:#0d1926;padding:15px;border-radius:7px;border:1px solid var(--line);color:#b8cbd5}.audit-details{font-size:12px;line-height:2;color:var(--teal);padding:15px;background:#14312e;border:1px solid #335e54;border-radius:7px}.source-card{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:17px 0;border-bottom:1px solid var(--line)}.source-meta{font-size:10px;color:var(--muted)}.source-meta span{display:block;margin-top:4px}.source-card h3{margin:0 0 6px;font-size:12px}.source-card p{font-size:11px;color:var(--muted);margin:0}.data-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}.data-kpis>div{padding:14px;background:#0c1b29;border:1px solid var(--line);border-radius:8px;font-size:10px;color:var(--muted)}.data-kpis strong{display:block;font:600 23px/1.8 ui-monospace,monospace;color:var(--text)}footer{display:flex;justify-content:space-between;gap:20px;margin:26px 0 8px;color:#7991a4;font-size:10px}.toast{position:fixed;z-index:100;left:50%;bottom:25px;transform:translateX(-50%);background:#25483f;color:#daf4eb;border:1px solid #6b9e8f;border-radius:8px;padding:11px 18px;max-width:90vw;box-shadow:0 8px 25px #0005;font-size:12px;display:none}.chart-tooltip{display:none;position:fixed;pointer-events:none;z-index:80;padding:10px 13px;background:#0a1726f5;border:1px solid #577388;box-shadow:0 5px 20px #0006;border-radius:6px;font-size:11px;line-height:1.9;color:var(--text)}.error{display:none;margin:15px 30px;padding:15px;border:1px solid #9c6165;background:#44232c;color:#ffd0d4;border-radius:8px}.error.visible{display:block}@keyframes flow{to{stroke-dashoffset:-50}}
+@media(min-width:1600px){main{padding-top:30px}.workspace{grid-template-columns:minmax(0,1fr) 320px}.metrics .metric{padding:17px 15px}.metric strong{font-size:29px}}
+@media(max-width:1180px){.workspace{grid-template-columns:minmax(0,1fr) 270px;gap:14px}main{padding:22px 18px}.masthead,.toolbar{padding-left:18px;padding-right:18px}.notice{padding:8px 18px}.metric{padding:13px 9px}.metric strong{font-size:22px}.metrics{gap:6px}.metric small{font-size:8px}.panel{padding:17px}.firm-details{grid-template-columns:repeat(2,minmax(0,1fr))}.intro h1{font-size:25px}.chart-grid{gap:10px}.head-links{gap:14px}.chart-legend{gap:9px}}
+@media(max-width:950px){.workspace{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:15px}.sidebar .compact{grid-column:1/-1}.metrics{gap:10px}.metric strong{font-size:27px}.metric small{font-size:9px}.metric{padding:16px 12px}.main-column{gap:15px}.society-map{max-height:430px}.intro .outline{font-size:11px}.toolbar{gap:15px}.head-links .plain{display:none}.field-help{max-width:100%}}
+@media(max-width:600px){body{font-size:13px}.masthead{padding:13px 13px}.brand{gap:8px}.brand-mark{width:32px;height:32px;font-size:35px;border-radius:8px}.brand strong{font-size:16px}.brand small{font-size:8px;letter-spacing:.8px}.head-links{gap:10px;font-size:10px}.version{display:none}.notice{font-size:9px;padding:8px 13px}.notice .notice-sep{padding:0 4px}.notice strong{display:block;margin-top:4px}.tag{font-size:9px}.toolbar{padding:10px 12px;gap:10px;flex-wrap:wrap}.time-block{min-width:95px}.time-block strong{font-size:19px}.toolbar-actions{gap:5px;flex:1;justify-content:flex-end}.toolbar button{font-size:11px;padding:8px 9px}.toolbar #runBtn{display:none}.toolbar .primary span{margin-left:4px}.more-menu summary{font-size:10px;padding:5px}.audit-badge{flex-basis:100%;font-size:9px;margin-top:-5px}.toolbar .quiet{padding:8px 6px}main{padding:20px 12px 10px}.intro{display:block}.intro h1{font-size:25px;line-height:1.45}.intro p{font-size:11px;line-height:1.9}.intro .outline{margin-top:14px;font-size:11px}.mobile-break{display:block}.scenario-strip{gap:6px;margin:16px 0}.scenario-strip button{font-size:10px;padding:7px 9px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{padding:12px 13px}.metric strong{font-size:26px}.metric:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;align-items:center;column-gap:10px}.metric:last-child strong{grid-column:2;grid-row:1/3;text-align:right}.metric-label{font-size:10px}.metric small{font-size:9px}.panel{padding:15px 13px}.panel-heading{gap:8px;align-items:start;margin-bottom:12px}.panel-heading h2{font-size:14px}.phase{font-size:9px;padding:3px 5px}.society-map{min-width:600px}.network-scroll{overflow:auto;padding-bottom:4px}.map-legend{gap:9px;font-size:9px}.node-detail{font-size:11px;min-height:90px}.story-panel p{font-size:11px}.labor-metrics{grid-template-columns:repeat(2,1fr);gap:9px}.labor-metric strong{font-size:25px}.people-grid{gap:3px}.person{height:7px}.chart-grid{grid-template-columns:1fr;gap:12px}.chart-panel{padding:15px 13px}.chart-panel .footnote{font-size:9px}.sidebar{display:flex;flex-direction:column;gap:13px}.sidebar .panel{width:100%;padding:18px 16px}.field{margin:17px 0}.field-heading{font-size:12px}.field .field-help{font-size:10px}.field-heading output{font-size:12px}.tabs{gap:2px;margin-top:22px}.tabs button{font-size:11px;padding:8px 9px}.firm-details{grid-template-columns:1fr}.model-columns{grid-template-columns:1fr;gap:15px}.table-scroll{margin:12px 0}td,th{padding:10px;font-size:10px}.source-card{grid-template-columns:1fr;gap:6px}.source-meta{display:flex;gap:8px;align-items:center}.source-meta span{margin:0}.data-kpis{grid-template-columns:repeat(2,1fr);gap:8px}.data-kpis strong{font-size:22px}.comparison-chart{min-height:150px}.panel-heading>a{font-size:10px;white-space:nowrap}.empty{font-size:11px;padding:18px}.callout{font-size:10px;padding:10px 12px}footer{display:block;font-size:9px;line-height:2}footer span{display:block}.toast{font-size:11px;padding:10px 14px}.error{margin:12px}.intro .eyebrow{font-size:9px}.more-menu>div{right:0;width:170px}.head-links a{white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.policy-jump{display:none}@media(max-width:600px){.policy-jump{display:block;position:fixed;right:13px;bottom:13px;z-index:25;border-color:#79b69e;background:#20483de8;color:#c4efdf;font-size:11px;box-shadow:0 5px 20px #0005;padding:9px 13px}.toast{bottom:65px}}
+</style>
+</head>
+<body>
+<header class="masthead"><a class="brand" href="#"><span class="brand-mark" aria-hidden="true">∿</span><span><strong>中国 AI 压力沙盘</strong><small>CHINA / FINANCE & SOCIETY</small></span></a><div class="head-links"><a href="../">美国版 ↗</a><button class="plain" data-tabgo="sources">数据与边界</button><span class="version">cn-0.1.0</span></div></header>
+<div class="notice"><span class="tag fact">真实起点</span> 公开财报 + 宏观统计 <span class="notice-sep">/</span> <span class="tag assume">假设传导</span> 可修改敞口、冲击和政策 <span class="notice-sep">/</span> <strong>这是压力测试，不是经济或公司破产预测。</strong></div>
+<div class="toolbar"><div class="time-block"><strong id="dateLabel">2026 Q4</strong><small id="qLabel">初始状态 · Q0 / 40</small></div><div class="toolbar-actions"><button class="primary" id="stepBtn">下一季度 <span>→</span></button><button id="playBtn">自动演化</button><button id="runBtn">推演十年</button><button id="resetBtn" class="quiet">重开</button><details class="more-menu"><summary>存档 / 分支</summary><div><button id="finishBtn">一键推演到终点</button><button id="branchBtn">保存分支起点</button><button id="restoreBtn" disabled>返回分支起点</button><button id="saveBtn">保存浏览器进度</button><button id="loadBtn">读取浏览器进度</button><button id="exportBtn">导出情景 JSON</button><button id="importBtn">导入情景 JSON</button><button id="csvBtn">导出季度 CSV</button></div></details><input id="importFile" type="file" accept=".json,application/json" hidden></div><div id="auditBadge" class="audit-badge">正在启动…</div></div><div class="progress"><i id="progressBar"></i></div>
+<noscript><div class="error visible">需要 JavaScript。请用浏览器打开此页，而不是禁止脚本的附件预览。</div></noscript><div id="errorBox" class="error" role="alert"></div>
+<main>
+<section class="intro"><div><span class="eyebrow">下行情景 / 十年演化</span><h1>当投入没有回报，<br class="mobile-break">风险会传到哪里？</h1><p>从企业资金链，到银行、地方财政和就业。改变规则，观察代价落在谁身上。</p></div><button id="compareTopBtn" class="outline">同一冲击，对比六种政策 ↗</button></section>
+<div class="scenario-strip" id="scenarioStrip" aria-label="初始情景"></div>
+<div class="workspace">
+<div class="main-column">
+<section class="metrics" id="metrics" aria-label="本季核心指标"></section>
+<section class="panel society-panel"><div class="panel-heading"><div><span class="eyebrow">01 / 经济与社会</span><h2>同一张网络，不同的承受者</h2></div><span id="phaseLabel" class="phase">冲击前</span></div><div class="network-scroll"><svg id="societyMap" class="society-map" viewBox="0 0 900 420" role="img" aria-label="企业、银行、地方财政和就业的风险传导图"></svg></div><div id="nodeDetail" class="node-detail" aria-live="polite"></div><div class="map-legend"><span><i class="dot green"></i>压力较低</span><span><i class="dot amber"></i>承压</span><span><i class="dot red"></i>严重承压</span><span>颜色由模型状态决定，不是现实评级。</span></div></section>
+<section class="panel story-panel"><div class="story-head"><span class="eyebrow">这一季发生了什么</span><span id="storyQuarter"></span></div><div id="story"></div></section>
+<section class="panel employment-panel"><div class="panel-heading"><div><span class="eyebrow">02 / 就业与分配</span><h2>失业率下降，也可能是人不再找工作</h2></div></div><div class="labor-metrics" id="laborMetrics"></div><div id="peopleGrid" class="people-grid" aria-hidden="true"></div><div class="map-legend"><span><i class="dot green"></i>就业 E</span><span><i class="dot amber"></i>求职失业 U</span><span><i class="dot gray"></i>未参与 N</span><span>每格约1人，始终 E + U + N = 100。</span></div><p class="footnote">固定100人的合成样本；初始就业人口比65%是假设，5.2%失业率为统计锚。不推算全国失业人数；未就业也不等于被迫失业。</p></section>
+<div class="chart-grid">
+<section class="panel chart-panel"><div class="panel-heading"><h2>产出路径</h2><span class="subtle">起点 = 100</span></div><svg id="gdpChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="经济产出与无冲击基线"></svg><div class="chart-legend"><span class="key teal">当前情景</span><span class="key gray dashed">无冲击基线</span><span class="key blue dashed">同冲击，不追加干预</span></div><p class="footnote">低于基线不等于GDP负增长。基线年增4%是假设。</p></section>
+<section class="panel chart-panel"><div class="panel-heading"><h2>就业与消费</h2><span class="subtle">起点 = 100</span></div><svg id="jobsChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="就业人数及消费相对起点变化"></svg><div class="chart-legend"><span class="key teal">就业人数</span><span class="key amber">消费</span></div><p class="footnote">高收入群体的消费偏好可调；不是由平均储蓄率直接估计。</p></section>
+<section class="panel chart-panel"><div class="panel-heading"><h2>信用损失从哪里来</h2><span class="subtle">累计 · 万亿元</span></div><svg id="lossChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="信用损失来源分解"></svg><div class="chart-legend"><span class="key red">总信用损失</span><span class="key amber">其他行业</span><span class="key blue">城投</span><span class="key teal">其他AI</span></div><p class="footnote">含外生施加的非AI损失，不能全归因于AI。股权损失另算。</p></section>
+<section class="panel chart-panel"><div class="panel-heading"><h2>公共部门承担的代价</h2><span class="subtle">新增 · 万亿元</span></div><svg id="fiscalChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="政策新增公共融资、取得金融资产和地方债增量"></svg><div class="chart-legend"><span class="key amber">政策公共融资</span><span class="key teal">取得金融资产</span><span class="key blue">地方增量债务</span></div><p class="footnote">政策支出≠最终损失；这里只计本轮压力新增融资，不是全部国债。</p></section>
+</div>
+<section class="panel"><div class="panel-heading"><h2>实际结算记录</h2><span class="subtle">不预写危机剧情</span></div><div id="eventLog" class="events" aria-live="polite"></div></section>
+</div>
+<aside class="sidebar">
+<section class="panel policy-panel"><span class="eyebrow">03 / 监管与财政</span><h2>改变下一季，而不是改历史</h2><label class="select-label" for="policyPreset">政策组合</label><select id="policyPreset"></select><p id="policyDescription" class="help"></p><div id="policyFields"></div><button id="applyPolicyBtn" class="primary full">应用到后续季度</button><div id="policyStatus" class="policy-status">当前：不追加干预</div><p class="footnote">限投只影响可调整部分；流动性不修复坏账；注资、补贴和财政支持都要融资。</p></section>
+<section class="panel settings-panel"><span class="eyebrow">04 / 外部压力</span><h2>哪些是你施加的假设？</h2><div id="mainConfigFields"></div><details><summary>敞口、分配与恢复速度</summary><div id="advancedConfigFields"></div></details><button id="applyConfigBtn" class="outline full">使用这些假设重新开始</button><p class="footnote">改初始假设会回到Q0。政策滑块则只改变后续季度。</p></section>
+<section class="panel compact"><h2>分支实验</h2><p class="help">推进到某一季 → 保存分支 → 采用救助 → 返回分支改成限投。相同种子下，外部扰动完全相同。</p><div id="branchStatus" class="subtle">尚未保存分支</div><button id="extendBtn" class="quiet full">延长到十五年</button></section>
+</aside>
+</div>
+<nav class="tabs" aria-label="研究面板"><button data-tab="companies" class="active">企业与账目</button><button data-tab="comparison">政策对照</button><button data-tab="model">模型与检验</button><button data-tab="sources">数据来源</button></nav>
+<section id="tab-companies" class="tab-panel active"><div class="panel"><div class="panel-heading"><div><span class="eyebrow">四家可核验样本</span><h2>现金不够还钱，与净资产归零分开看</h2></div><span class="tag assume">未来为条件推演</span></div><div class="callout">字节未披露可核验的完整资产负债表与经营现金流，本版不虚构其现金、净资产和破产时间。样本不会被当成全国企业全集。</div><div class="table-scroll"><table><thead><tr><th>公司</th><th>模拟资金池</th><th>模拟债务</th><th>模拟净资产</th><th>本季经营现金流</th><th>本季购建支出</th><th>模型状态</th></tr></thead><tbody id="firmTable"></tbody></table></div><p class="footnote">金额：亿元。初始资金池先乘可动用比例；购建支出不全属于AI。支付缺口触发后暂停该公司后续演算，不猜测法律重组。到期分摊为假设，日期不是真实违约预测。</p><div id="firmDetails" class="firm-details"></div><details class="source-details"><summary>展开四家公司原始数据、期间与口径</summary><div id="rawCompanyData"></div></details></div></section>
+<section id="tab-comparison" class="tab-panel"><div class="panel"><div class="panel-heading"><div><span class="eyebrow">同一随机种子 / 同一起点</span><h2>没有免费的政策</h2></div><button id="compareBtn" class="primary">重算六种政策</button></div><p class="help">从Q0开始，各政策同时遭遇完全相同的冲击。比较产出、就业、信用损失、财政融资与技术采用，不用单一“胜利分”掩盖取舍。</p><div id="comparisonResult" class="empty">点击重算；不会覆盖你正在玩的分支。</div><svg id="compareChart" class="chart comparison-chart" viewBox="0 0 1000 280" role="img" aria-label="六种政策的产出缺口对比"></svg><div id="compareLegend" class="chart-legend"></div><div class="divider"></div><div class="panel-heading"><h2>恢复速度到底有多不确定？</h2><button id="sensitivityBtn">扫描两个关键假设</button></div><p class="help">对“需求持续系数”和“冲击半衰期”做九种组合，保持当前政策不变。这里只是敏感性范围，不是概率分布或置信区间。</p><div id="sensitivityResult" class="empty">模型系数没有历史估计，必须同时看参数变化。</div></div></section>
+<section id="tab-model" class="tab-panel"><div class="panel"><div class="panel-heading"><h2>公开算法，不预设中国必然崩盘</h2><a href="docs/MODEL.md">完整模型 ↗</a></div><div class="model-columns"><div><h3>公司账</h3><pre>现金′ = 现金 + 经营现金流
+       − 投入 − 另列付息/租赁 − 到期本金
+       + 实际借款 + 出售资产回款
+
+净资产′ = 净资产 + 净利润 − 处置损失
+资本支出：先从现金转为资产，不直接扣权益。
+支付缺口 ≠ 净资产归零 ≠ 法律破产。</pre><h3>社会账</h3><pre>初始银行贷款 = 样本公司银行敞口
+             + 其他AI银行敞口
+             + 城投银行敞口 + 其他贷款
+
+信用损失 = 首次违约本金 × 未回收比例
+银行资本′ = 资本 + 留存利润 − 新损失 + 注资
+股权亏损不直接当成贷款坏账。</pre><h3>就业与需求</h3><pre>E + U + N = 100，所有季度保持。
+裁员：E → U；招聘：U → E
+退出：U → N；重新参与：N → U
+消费受就业、工时、分配和补贴影响。
+产出受消费、外需、投资、信贷和生产率影响。</pre></div><div><h3>本轮数值检查</h3><div id="auditDetails" class="audit-details"></div><h3>不能由这个游戏推断什么</h3><p class="help">不是统计识别出的中国宏观模型，没有估计危机概率。实名公司只用于现金和资产负债压力样本；违约损失率、债务期限、AI占比等均为假设。<br><br>初始时点混合：公司2026年6月，宏观存量2026年9月，GDP与财政流量2025年。资产值不按真实季度滚动补齐；2026Q4是合成模拟起点。<br><br>银行绝对资本、城投规模、全国AI投资与债务拆分不假装有完整审计数据。GDP、消费、股价均是代理指标，不含通胀、汇率、人口老龄化、完整税制或存款挤兑。<br><br>宏观传导是简化反馈模型，不是全经济每笔交易的存量—流量一致清算系统。严重危机后的国家级重组、汇率与资本管制未覆盖，极端尾部结果只能理解为压力失控的信号。</p><div class="callout warning">十万亿、百万亿的其他银行损失可以人为施加，但不能把结果说成“AI必然造成了这些损失”。</div><h3>三个不可混加的量</h3><p class="help">股票和基金估值下降；银行或债券最终本金损失；未来不可取消的支出承诺。地方债和城投相关贷款也不能与全国贷款总量再相加。</p></div></div></div></section>
+<section id="tab-sources" class="tab-panel"><div class="panel"><div class="panel-heading"><div><span class="eyebrow">查证日期 2026-11-01</span><h2>真实起点，不等于真实预测</h2></div><a href="data/baseline.json">原始数据 JSON ↗</a></div><div id="dataSummary"></div><div id="sourceList"></div><div class="callout warning">第三方具身融资统计仅作量级参考。模型累计0.2万亿元、年度新增0.16万亿元为工作假设，不宣称全部到账；地方基金、母基金和子基金不重复计入。</div><div id="assumptionsTable"></div></div></section>
+<footer><span>中国压力版 cn-0.1.0 · 单文件运行，无外部脚本依赖</span><span>公开模型 / 可复现 / 不构成投资建议</span></footer>
+</main>
+<button id="policyJump" class="policy-jump">调整政策 ↑</button><div id="toast" class="toast" role="status"></div><div id="chartTooltip" class="chart-tooltip"></div>
+<script>window.ChinaData={
+  "version": "cn-0.1.0",
+  "verifiedAt": "2026-11-01",
+  "simulationStart": "2026 Q4",
+  "currency": "CNY",
+  "engineUnit": "万亿元人民币（2026年价格近似）",
+  "sources": [
+    {
+      "id": "mof-debt",
+      "name": "财政部：2026年9月地方政府债券发行和债务余额",
+      "url": "https://zwgls.mof.gov.cn/tjsj/202610/t20261027_4003589.htm",
+      "date": "2026-09-30",
+      "kind": "官方统计",
+      "facts": "地方债60.6539万亿元；存量平均利率2.70%；前三季度付息1.2004万亿元。"
+    },
+    {
+      "id": "pbc",
+      "name": "人民银行贷款数据（中国政府网转载）",
+      "url": "https://english.www.gov.cn/archive/statistics/202610/14/content_WS6acf8766c6d00ca5f9a0db17.html",
+      "date": "2026-09-30",
+      "kind": "官方转载",
+      "facts": "金融机构人民币贷款余额283.44万亿元。"
+    },
+    {
+      "id": "nbs",
+      "name": "国家统计局：2025年国民经济和社会发展统计公报",
+      "url": "https://www.stats.gov.cn/sj/zxfb/202602/t20260228_1962662.html",
+      "date": "2025全年",
+      "kind": "官方统计",
+      "facts": "GDP 140.1879万亿元；固定资产投资48.5186万亿元；城镇调查失业率年均5.2%。"
+    },
+    {
+      "id": "mof-budget",
+      "name": "财政部：2025年财政收支情况",
+      "url": "https://gks.mof.gov.cn/tongjishuju/202601/t20260130_3982923.htm",
+      "date": "2025全年",
+      "kind": "官方统计",
+      "facts": "地方一般公共预算本级收入12.2082万亿元；土地出让收入4.1518万亿元。土地收入为毛额，不等于可自由支配财力。"
+    },
+    {
+      "id": "nfra",
+      "name": "金融监管总局：2026年二季度银行业主要监管指标",
+      "url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1268038&itemId=954",
+      "date": "2026-06-30",
+      "kind": "官方统计",
+      "facts": "商业银行资本充足率15.26%；上半年净利润1.2万亿元。模型绝对资本额使用另设的风险加权资产假设，不是将贷款余额直接当分母。"
+    },
+    {
+      "id": "alibaba",
+      "name": "阿里巴巴：2026年6月季度业绩",
+      "url": "https://data.alibabagroup.com/ecms-files/1532295521/fa5d65fc-9b3e-4e82-a8fc-4ce1c3e2c407/Alibaba%20Group%20Announces%20June%20Quarter%202026%20Results.pdf",
+      "date": "2026-06-30",
+      "kind": "公司财报",
+      "facts": "资产负债表第19—20页；现金流第21页。采用三个月流量；总权益含少数股东权益，夹层权益单列。"
+    },
+    {
+      "id": "alibaba-capex",
+      "name": "阿里巴巴官方中文业绩：现金资本支出",
+      "url": "https://home.alibabagroup.com/zh-CN/document-2026456290057781248",
+      "date": "2026年第二季度",
+      "kind": "公司披露",
+      "facts": "资本支出676.78亿元；不把多年AI计划再次叠加进已披露资本支出。"
+    },
+    {
+      "id": "tencent",
+      "name": "腾讯：2026年中期报告",
+      "url": "https://www.tencent.com/wp-content/uploads/2026/08/E700_IR.pdf",
+      "date": "2026-06-30",
+      "kind": "公司财报",
+      "facts": "资产负债表第26—28页，现金流第33—34页。资金池包括现金、定期存款及其他；利息和租赁现金另列。"
+    },
+    {
+      "id": "meituan",
+      "name": "美团：2026年中期报告（港交所）",
+      "url": "https://www.hkexnews.hk/listedco/listconews/sehk/2026/0929/2026092900008_c.pdf",
+      "date": "2026-06-30",
+      "kind": "公司财报",
+      "facts": "资产负债第58—59页；现金流第64—65页。资金池不包含受限制现金。"
+    },
+    {
+      "id": "xiaomi",
+      "name": "小米：2026年中期报告",
+      "url": "https://ir.mi.com/static-files/b903a881-8143-44a3-b759-703653bbb043",
+      "date": "2026-06-30",
+      "kind": "公司财报",
+      "facts": "印刷第59—60页、第63—64页。窄资金池为现金、流动存款及短期投资；不含长期存款和受限现金。"
+    },
+    {
+      "id": "imf",
+      "name": "IMF：Local Government Finances in China",
+      "url": "https://www.imf.org/en/publications/departmental-papers-policy-papers/issues/2026/09/24/local-government-finances-in-china-policy-options-to-tackle-the-debt-overhang-576484",
+      "date": "2026-09-25",
+      "kind": "研究资料",
+      "facts": "用于地方债、城投重组与中央协调机制的背景参考。默认城投债务70万亿元仅为可修改量级假设，不冒充审计统计。"
+    },
+    {
+      "id": "embodied",
+      "name": "第一财经：2026年第三季度具身融资（引用IT桔子）",
+      "url": "https://www.yicai.com/news/103402672.html",
+      "date": "2026年第三季度",
+      "kind": "第三方统计参考",
+      "facts": "融资统计会受企业范围、补录及估算影响。模拟的累计0.2万亿元、年新增0.16万亿元是量级情景，不是已实缴证明。"
+    }
+  ],
+  "firms": [
+    {
+      "id": "alibaba",
+      "name": "阿里巴巴",
+      "tag": "电商 · 云",
+      "source": "alibaba",
+      "unit": "亿元人民币",
+      "date": "2026-06-30",
+      "periodQuarters": 1,
+      "assets": 19621.09,
+      "liabilities": 8482.15,
+      "mezzanine": 75.84,
+      "equity": 11063.1,
+      "cash": 1429.14,
+      "liquid": 2975.67,
+      "debt": 2665.3,
+      "shortDebt": 306.14,
+      "revenue": 2689.53,
+      "ocf": 229.45,
+      "capex": 676.78,
+      "netIncome": 104.44,
+      "extraPayments": 0,
+      "liquidNote": "现金及现金等价物＋短期投资；未纳入公司口径的其他长期理财。",
+      "aiShare": 0.8,
+      "domestic": 0.85,
+      "fallThrough": 0.4,
+      "investmentShare": 0.2
+    },
+    {
+      "id": "tencent",
+      "name": "腾讯",
+      "tag": "社交 · 游戏 · 云",
+      "source": "tencent",
+      "unit": "亿元人民币",
+      "date": "2026-06-30",
+      "periodQuarters": 2,
+      "assets": 21593.94,
+      "liabilities": 9368.81,
+      "mezzanine": 0,
+      "equity": 12225.13,
+      "cash": 2069.3,
+      "liquid": 5111.54,
+      "debt": 4529.63,
+      "shortDebt": 862.92,
+      "revenue": 4012.43,
+      "ocf": 1540.61,
+      "capex": 1071.63,
+      "netIncome": 1173.69,
+      "extraPayments": 100.44,
+      "liquidNote": "公司披露现金＋定期存款及其他；与其他公司窄口径不完全可比。",
+      "aiShare": 0.65,
+      "domestic": 0.75,
+      "fallThrough": 0.5,
+      "investmentShare": 0.2
+    },
+    {
+      "id": "meituan",
+      "name": "美团",
+      "tag": "本地生活 · 配送",
+      "source": "meituan",
+      "unit": "亿元人民币",
+      "date": "2026-06-30",
+      "periodQuarters": 2,
+      "assets": 3846.81689,
+      "liabilities": 2155.32839,
+      "mezzanine": 0,
+      "equity": 1691.4885,
+      "cash": 1047.16797,
+      "liquid": 1683.1417,
+      "debt": 887.01255,
+      "shortDebt": 73.36717,
+      "revenue": 1956.8195,
+      "ocf": 27.19085,
+      "capex": 65.84447,
+      "netIncome": -46.72036,
+      "extraPayments": 30.21283,
+      "liquidNote": "现金及现金等价物＋短期理财；不含受限现金。",
+      "aiShare": 0.2,
+      "domestic": 0.95,
+      "fallThrough": 0.25,
+      "investmentShare": 0.1
+    },
+    {
+      "id": "xiaomi",
+      "name": "小米",
+      "tag": "手机 · 硬件 · 汽车",
+      "source": "xiaomi",
+      "unit": "亿元人民币",
+      "date": "2026-06-30",
+      "periodQuarters": 2,
+      "assets": 5160.40794,
+      "liabilities": 2462.21392,
+      "mezzanine": 0,
+      "equity": 2698.19402,
+      "cash": 372.52369,
+      "liquid": 1217.23553,
+      "debt": 392.76762,
+      "shortDebt": 97.06402,
+      "revenue": 2080.632,
+      "ocf": 20.50234,
+      "capex": 37.73539,
+      "netIncome": 141.97953,
+      "extraPayments": 34.23799,
+      "liquidNote": "现金＋流动定存＋短期投资；不含长期定存、受限现金。另列付款含财务费用、租赁、无形资产递延对价。",
+      "aiShare": 0.2,
+      "domestic": 0.55,
+      "fallThrough": 0.2,
+      "investmentShare": 0.15
+    }
+  ],
+  "macro": {
+    "gdp": 140.1879,
+    "loans": 283.44,
+    "localDebt": 60.6539,
+    "localRate": 0.027,
+    "localRevenue": 12.2082,
+    "landRevenue": 4.1518,
+    "bankCAR": 0.1526,
+    "bankProfitHalfYear": 1.2,
+    "unemployment": 0.052,
+    "fixedInvestment": 48.5186
+  },
+  "notes": [
+    "资料时点不完全同步：公司为2026-06，宏观存量为2026-09，GDP和财政流量为2025全年。模拟起点是合成的2026Q4，不是复原该日完整经济。",
+    "所有未来弹性、AI敞口、到期分摊、收入分配及政策反应均为公开可调假设，不是统计估计。",
+    "字节跳动缺少可核验的完整现金流和资产负债表，故不列入实名公司演算或财务合计。未具名AI行业参数可以覆盖其所在行业的压力，但不映射为字节真实债务。",
+    "公司现金流仅按报告季度数换算为季度起点；没有将季度乘四当作已知全年结果。",
+    "这是可复现压力测试，不是危机概率、投资建议或真实公司破产预测。"
+  ]
+};</script><script>/* China AI stress sandbox. All future paths are conditional assumptions, not forecasts. */
+(function(root,factory){if(typeof module==='object'&&module.exports)module.exports=factory(require('../data/baseline.json'));else root.ChinaEngine=factory(root.ChinaData);})(typeof globalThis!=='undefined'?globalThis:this,function(DATA){
+'use strict';
+const VERSION='cn-0.1.0', clone=x=>JSON.parse(JSON.stringify(x)), clamp=(v,a,b)=>Math.max(a,Math.min(b,v)), sum=a=>a.reduce((x,y)=>x+y,0);
+const CONFIG_FIELDS={
+ exportLoss:{label:'外需最大下降',min:0,max:.60,step:.01,unit:'%',value:.20,help:'相对无冲击出口需求路径。不是当前出口已经下降。'},
+ aiReturn:{label:'峰值AI回报兑现比例',min:0,max:1.5,step:.05,unit:'%',value:.25,help:'冲击峰值时的兑现比例，随冲击消退恢复；回报低不等于技术停止替代岗位。'},
+ fundingFreeze:{label:'市场续借收缩',min:0,max:1,step:.05,unit:'%',value:.50,help:'到期融资可得性的冲击，央行流动性可以缓解但不会抹掉本金损失。'},
+ landLoss:{label:'土地出让收入最大下降',min:0,max:.80,step:.05,unit:'%',value:.35,help:'土地毛收入减少只按可支配比例传入财政。'},
+ otherLoss:{label:'非AI额外银行本金损失',min:0,max:100,step:1,unit:'万亿元',value:5,help:'外生施加的全系统压力，分8季确认；不是模型从AI行业推算出的坏账。'},
+ replacement:{label:'暴露岗位中的可替代份额',min:0,max:1,step:.05,unit:'%',value:.45,help:'默认35%岗位暴露，随技术采用逐步替代；不是直接指定失业率。'},
+ newJobs:{label:'技术新增岗位补回比例',min:0,max:1.5,step:.05,unit:'%',value:.25,help:'新增岗位相对技术直接替代量，可以大于100%。'},
+ highMPC:{label:'高收入新增收入消费比例',min:0,max:1,step:.05,unit:'%',value:.10,help:'边际消费倾向假设，不能由观察到的平均储蓄率直接推定。普通群体默认85%。'},
+ aiInvestment:{label:'全国AI年度投入起点',min:0,max:6,step:.1,unit:'万亿元/年',value:1.6,help:'未知总量的情景输入，包含实名公司，不与其资本支出重复相加。'},
+ vcInitial:{label:'具身历史股权投入',min:0,max:2,step:.05,unit:'万亿元',value:.2,help:'工作情景，不是已核验实缴额。股权亏损与银行贷款损失分别记录。'},
+ vcAnnual:{label:'具身年度融资起点',min:0,max:1,step:.02,unit:'万亿元/年',value:.16,help:'融资不等于当期支出；受市场续融收缩影响，不与全国AI投资直接相加。'},
+ vcGrowth:{label:'具身融资年增速',min:-.3,max:.8,step:.05,unit:'%',value:.1,help:'前四年增长假设，此后计划融资额持平；用于测试累计万亿投入，不是机构预测。'},
+ aiDebt:{label:'其他AI项目初始债务',min:0,max:30,step:.5,unit:'万亿元',value:4,help:'可调敞口假设，不含四家样本公司的债务；65%归银行。'},
+ lgfvDebt:{label:'城投初始债务规模',min:0,max:100,step:5,unit:'万亿元',value:70,help:'研究量级假设；55%银行敞口已在贷款总量中，不与总贷款相加。'},
+ bankRWA:{label:'银行风险加权资产',min:160,max:350,step:10,unit:'万亿元',value:250,help:'规模假设；与已披露15.26%资本比率相乘得到模型资本，非真实资本总额。'},
+ cashUse:{label:'公司资金池可动用比例',min:.2,max:1,step:.05,unit:'%',value:.85,help:'对公开资金池统一折扣，模拟受限、期限、子公司资金隔离和营运预留。'},
+ persistence:{label:'需求冲击季度持续系数',min:.3,max:.95,step:.05,unit:'',value:.75,help:'关键未估计参数；越高恢复越慢，支持敏感性对比。'},
+ shockHalfLife:{label:'冲击消退半衰期',min:2,max:40,step:2,unit:'季度',value:16,help:'峰值后每经过这些季度，外部冲击减半。'},
+ initialEmployment:{label:'初始就业人口比（合成样本）',min:45,max:80,step:1,unit:'%',value:65,help:'固定100人的合成城市样本；失业率以官方5.2%作锚，不冒充官方就业人口比。'},
+ incomeRecovery:{label:'短期现金占用恢复程度',min:0,max:1,step:.1,unit:'%',value:.5,help:'8季后，现金流向净利润加近似折旧靠拢的比例。0表示机械维持最近一期现金流；不是财报预测。'},
+ seed:{label:'随机种子',min:1,max:999999,step:1,unit:'',value:42,help:'同一情景和种子使用完全相同的外部小扰动。'}
+};
+const POLICY_FIELDS={
+ capexCut:{label:'可调整AI投入削减',min:0,max:.8,step:.05,unit:'%',value:0,help:'只削减可调整部分；有短期订单和长期能力代价。'},
+ debtLimit:{label:'新增AI债务约束',min:0,max:1,step:.05,unit:'%',value:0,help:'限制新增融资，不追溯取消旧合同，不把旧债直接清零。'},
+ liquidity:{label:'续借与流动性支持',min:0,max:1,step:.05,unit:'%',value:0,help:'缓解融资冻结，不等于财政注资，也不能修复负净资产。'},
+ recap:{label:'银行注资年度上限',min:0,max:4,step:.25,unit:'万亿元/年',value:0,help:'只在资本低于模型目标12%时拨付；计入新增公共融资并取得金融资产。'},
+ transfers:{label:'收入补贴年度上限',min:0,max:.025,step:.0025,unit:'GDP%',value:0,help:'随就业恶化启动，直接增加可消费收入；需要财政融资。'},
+ training:{label:'转岗与就业支出',min:0,max:.005,step:.0005,unit:'GDP%',value:0,help:'有两季执行滞后；提高招聘，不会立即消除失业。'},
+ localAid:{label:'地方财政支持年度上限',min:0,max:4,step:.25,unit:'万亿元/年',value:0,help:'填补压力造成的新增缺口，未用额度不支出；中央融资相应增加。'}
+};
+const PRESETS={
+ none:{name:'不追加干预',desc:'维持投资与融资规则，让企业自行缩减支出。',policy:{}},
+ guardrails:{name:'提前限投限债',desc:'约束新增风险；可能减少订单、岗位和技术收益。',policy:{capexCut:.45,debtLimit:.7,liquidity:.15}},
+ rescue:{name:'续借与资本托底',desc:'缓解资金链、必要时补银行资本；公共融资上升。',policy:{liquidity:.9,recap:2,localAid:1}},
+ jobs:{name:'优先就业与消费',desc:'把资源用于收入、转岗和地方支出；不是免费刺激。',policy:{capexCut:.2,debtLimit:.35,liquidity:.35,recap:.5,transfers:.0125,training:.002,localAid:1}},
+ balanced:{name:'限新增风险＋托底',desc:'约束低回报扩张，同时补资本、保就业和地方服务。',policy:{capexCut:.4,debtLimit:.6,liquidity:.75,recap:1.5,transfers:.01,training:.002,localAid:1.5}},
+ abrupt:{name:'突然急刹车',desc:'强压投资与新融资而不托底，用来观察短期收缩代价。',policy:{capexCut:.8,debtLimit:1,liquidity:0}}
+};
+const SCENARIOS={
+ combined:{name:'多重冲击叠加',desc:'回报低、外需降、融资紧，加上非AI存量坏账。',config:{}},
+ ai:{name:'AI回报落空',desc:'不预埋外需、全市场融资冻结、土地或其他行业巨额亏损；允许次生传导。',config:{exportLoss:0,aiReturn:.1,fundingFreeze:0,landLoss:0,otherLoss:0,replacement:.25,newJobs:.5}},
+ demand:{name:'外需与就业恶化',desc:'技术继续落地，但新增收益集中、就业和消费修复慢。',config:{exportLoss:.35,aiReturn:.6,fundingFreeze:.3,landLoss:.2,otherLoss:2,replacement:.75,newJobs:.15,highMPC:.05}},
+ credit:{name:'十万亿存量信用损失',desc:'另外施加10万亿银行最终本金损失，检查承受和传染。',config:{otherLoss:10,fundingFreeze:.75,landLoss:.45,aiReturn:.2}},
+ tail:{name:'极端联合压力',desc:'30万亿外生损失、外需下降40%、长时间低回报；不是概率预测。',config:{otherLoss:30,exportLoss:.4,landLoss:.6,fundingFreeze:.9,replacement:.7,newJobs:.1,aiReturn:.1,shockHalfLife:32}},
+ mild:{name:'温和对照',desc:'不设外需或信贷突变，允许AI收益兑现与岗位补回。',config:{exportLoss:0,aiReturn:1,fundingFreeze:0,landLoss:0,otherLoss:0,replacement:.15,newJobs:1,highMPC:.4,shockHalfLife:8}}
+};
+function normalize(input,fields){const o={};for(const [k,f] of Object.entries(fields)){const v=input&&input[k];o[k]=clamp(typeof v==='number'&&Number.isFinite(v)?v:f.value,f.min,f.max);}return o;}
+function configFor(id){return normalize(SCENARIOS[id]?.config,CONFIG_FIELDS);}
+function policyFor(id){return normalize(PRESETS[id]?.policy,POLICY_FIELDS);}
+function random(seed,q){let x=(seed^Math.imul(q+17,0x45d9f3b))>>>0;x=Math.imul(x^(x>>>16),0x45d9f3b);x^=x>>>16;return (x>>>0)/4294967296;}
+function envelope(q,c){if(q<4)return 0;const d=q-3;return d<=6?d/6:Math.pow(.5,(d-6)/c.shockHalfLife);}
+function date(q){const v=2026*4+3+q;return `${Math.floor(v/4)} Q${v%4+1}`;}
+function create(config={},policy={}){
+ const c=normalize(config,CONFIG_FIELDS),p=normalize(policy,POLICY_FIELDS),m=DATA.macro;
+ const E=c.initialEmployment,U=E/(1-m.unemployment)-E,N=100-E-U;
+ const firms=DATA.firms.map(f=>{
+  const x={};for(const k of ['assets','liabilities','mezzanine','equity','cash','liquid','debt','shortDebt','revenue','ocf','capex','netIncome','extraPayments'])x[k]=f[k]/10000;
+  const cash=x.liquid*c.cashUse,aiK=Math.min((x.capex/f.periodQuarters)*6*f.aiShare,(x.assets-cash)*.35),mat=Array(121).fill(0);
+  for(let q=1;q<=4;q++)mat[q]=x.shortDebt/4;
+  for(let q=5;q<=24;q++)mat[q]=(x.debt-x.shortDebt)/20;
+  return {id:f.id,name:f.name,cash,debt:x.debt,otherL:x.liabilities-x.debt,mezz:x.mezzanine,equity:x.equity,aiK,otherA:x.assets-cash-aiK,maturities:mat,alive:true,firstGap:null,firstInsolvent:null,impairLevel:0,cumLoss:0,last:{ocf:0,capex:0,interest:0,due:0,newDebt:0,shortfall:0},base:{...x,cash,aiK},meta:{aiShare:f.aiShare,domestic:f.domestic,fallThrough:f.fallThrough,investmentShare:f.investmentShare,period:f.periodQuarters}};
+ });
+ const firmLoan=sum(firms.map(f=>f.debt))*.55,aiLoan=c.aiDebt*.65,lgLoan=c.lgfvDebt*.55;
+ const s={version:VERSION,q:0,config:c,policy:p,initialPolicy:clone(p),policyHistory:[{q:0,policy:clone(p)}],firms,
+  E,U,N,E0:E,U0:U,N0:N,adoption:.05,displaced:0,createdJobs:0,hours:1,consumption:1,gap:0,scar:0,gdpIndex:100,gdpGrowth:.04,peakJobless:m.unemployment,
+  loans:m.loans,bankCapital:c.bankRWA*m.bankCAR,bankRWA:c.bankRWA,car:m.bankCAR,creditGap:0,
+  aiDebt:c.aiDebt,lgfvDebt:c.lgfvDebt,otherLoans:Math.max(0,m.loans-firmLoan-aiLoan-lgLoan),firmLoans:firmLoan,
+  localDebt:m.localDebt,localCut:0,localPressure:0,publicDebt:0,publicAssets:0,publicOutlays:0,arrears:0,
+  losses:{ai:0,lgfv:0,other:0,firms:0},bankLosses:0,creditLosses:0,publicGuarantees:0,
+  vcOutstanding:c.vcInitial,vcCumulative:c.vcInitial,vcLoss:0,investment:0,cumInvestment:0,productivity:0,stockIndex:100,
+  otherShockRemaining:c.otherLoss,otherExogenousLoss:0,totalDefaulted:0,totalNewLending:0,previousStress:0,
+  last:{external:0,credit:0,consumption:0,investment:0,fiscal:0,productivity:0,loss:0,recap:0,transfers:0,training:0,localAid:0,guarantee:0,bankProfit:0,unfunded:0},
+  events:[{q:0,type:'info',title:'从公开数据出发',text:'四家财报与宏观存量作起点；未来冲击、传导系数和债务拆分是可调假设。'}],history:[]};
+ s.history.push(snapshot(s));return s;
+}
+function addEvent(s,type,title,text){s.events.push({q:s.q,type,title,text});}
+function snapshot(s){return {q:s.q,gdp:s.gdpIndex,baseline:100*Math.pow(1.04,s.q/4),gap:(Math.exp(s.gap)-1)*100,unemployment:100*s.U/(s.E+s.U||1),employment:s.E,participation:s.E+s.U,nonparticipation:s.N,hours:s.hours*100,consumption:s.consumption*100,car:s.car*100,creditGap:s.creditGap*100,loans:s.loans,loss:s.creditLosses,bankLoss:s.bankLosses,localDebt:s.localDebt,localCut:s.localCut*100,publicDebt:s.publicDebt,publicAssets:s.publicAssets,vc:s.vcCumulative,vcLoss:s.vcLoss,investment:s.cumInvestment,adoption:s.adoption*100,stock:s.stockIndex,lossAI:s.losses.ai,lossLGFV:s.losses.lgfv,lossOther:s.losses.other,lossOtherExogenous:s.otherExogenousLoss,lossFirms:s.losses.firms,transfers:s.last.transfers,training:s.last.training,fiscalSpending:s.publicOutlays,arrears:s.arrears,growth:s.gdpGrowth*100,firms:s.firms.map(f=>({id:f.id,cash:f.cash,equity:f.equity,debt:f.debt,status:f.alive?'active':'gap'}))};}
+function firmStep(f,s,ctx){
+ if(!f.alive)return {loss:0,principal:0,capex:0,aiCap:0};
+ const {c,p,stress,roll,ret,trend}=ctx,b=f.base,m=f.meta,q=s.q;
+ const scale=Math.pow(1.025,q/4),demand=Math.exp(s.gap*m.domestic)*(1-c.exportLoss*stress*(1-m.domestic));
+ const opLoss=(b.revenue/m.period)*scale*Math.max(0,1-demand)*m.fallThrough;
+ const normalizeShare=c.incomeRecovery*(1-Math.exp(-q/8));
+ const normalOcf=(b.ocf/m.period)*(1-normalizeShare)+(b.netIncome/m.period+b.capex/m.period*.25)*normalizeShare;
+ const payoff=Math.max(0,f.aiK-b.aiK)*.12*ret/4;
+ const OCF=normalOcf*scale-opLoss+payoff;
+ const extra=b.extraPayments/m.period+Math.max(0,f.debt-b.debt)*.04/4+f.debt*(c.fundingFreeze*stress*.025)*(1-p.liquidity*.5)/4;
+ const initialCap=b.capex/m.period,runway=f.cash/Math.max(.0001,initialCap+extra-OCF);
+ const voluntary=runway<8?.35:runway<16?.15:0;
+ const aiPlan=initialCap*m.aiShare*trend*(c.aiInvestment/1.6),otherCap=initialCap*(1-m.aiShare);
+ const aiCap=aiPlan*ctx.investmentFactor*(1-.45*voluntary);
+ const capex=otherCap+aiCap;
+ // On cash stress, cancel adjustable spend before borrowing; committed investment remains.
+ const due=Math.min(f.debt,f.maturities[q]||0),rollDebt=due*roll;
+ const leverageHead=Math.max(0,Math.max(0,f.equity)*(.8-.5*p.debtLimit)-Math.max(0,f.debt-due+rollDebt));
+ const fundingNeed=Math.max(0,capex+extra+due-OCF-f.cash*.3);
+ const newNet=Math.min(fundingNeed,capex*.65*(1-p.debtLimit),leverageHead)*roll;
+ const newDebt=rollDebt+newNet;
+ f.maturities[Math.min(120,q+12)]+=newDebt;
+ const dep=f.aiK/20;
+ const desiredImpair=(1-ret)*stress*.5,impairIncrease=Math.max(0,desiredImpair-f.impairLevel);
+ const impairment=f.aiK*impairIncrease,otherImpair=f.otherA*m.investmentShare*impairIncrease*.3;
+ f.impairLevel=Math.max(f.impairLevel,desiredImpair);
+ const ni=b.netIncome/m.period*scale-opLoss+payoff-(extra-b.extraPayments/m.period)-Math.max(0,dep-b.aiK/20)-impairment-otherImpair;
+ const netOp=OCF-extra;
+ f.cash+=netOp-capex-due+newDebt;f.debt+=newDebt-due;
+ f.aiK+=aiCap-dep-impairment;
+ // Cash/accrual bridge is explicit. It is NOT extra cash or an assumed profit.
+ f.otherA+=otherCap+(ni-netOp+dep+impairment);
+ f.equity+=ni;
+ let saleBook=0,saleCash=0;
+ if(f.cash<0){saleBook=Math.min(Math.max(0,f.otherA)*.12,-f.cash/.65);saleCash=saleBook*.65;f.otherA-=saleBook;f.cash+=saleCash;f.equity-=saleBook-saleCash;}
+ if(f.cash<0&&f.cash> -1e-12){f.otherA+=f.cash;f.cash=0;}
+ let gap=Math.max(0,-f.cash),loss=0,principal=0;
+ if(gap>1e-12){
+  const missedPrincipal=Math.min(due,gap);f.debt+=missedPrincipal;f.cash+=missedPrincipal;
+  if(f.cash<0){f.otherL+=-f.cash;f.cash=0;}
+  f.alive=false;f.firstGap=q;principal=f.debt;loss=principal*(.45+.25*stress);
+  addEvent(s,'bad',f.name+'触发模型支付缺口','本季缺口'+(gap*10000).toFixed(0)+'亿元；该公司停止继续外推。这是条件测试，不是现实破产判断。');
+ }
+ if(f.equity<=0&&f.firstInsolvent===null){f.firstInsolvent=q;addEvent(s,'bad',f.name+'模型净资产转负','净资产与支付缺口是两条独立条件，不把资本支出或股价跌幅直接当亏损。');}
+ f.last={ocf:OCF,capex,interest:extra,due,newDebt,shortfall:gap,netIncome:ni,saleCash};f.cumLoss+=loss;
+ return {loss,principal,capex,aiCap};
+}
+function setPolicy(state,policy){const s=clone(state),p=normalize(policy,POLICY_FIELDS);if(JSON.stringify(p)!==JSON.stringify(s.policy)){s.policy=p;s.policyHistory.push({q:s.q,policy:clone(p)});}return s;}
+function step(state,policy){
+ const s=clone(state);if(s.q>=60)return s;
+ if(policy){const p=normalize(policy,POLICY_FIELDS);if(JSON.stringify(p)!==JSON.stringify(s.policy)){s.policy=p;s.policyHistory.push({q:s.q,policy:clone(p)});}}
+ s.q++;const q=s.q,c=s.config,p=s.policy,m=DATA.macro,stress=envelope(q,c),ret=1-(1-c.aiReturn)*stress;
+ const yBase=m.gdp*Math.pow(1.04,q/4),trend=Math.pow(1.1,Math.min(q,16)/4),roll=clamp(1-c.fundingFreeze*stress*(1-.75*p.liquidity)-s.creditGap*.5,0,1);
+ const remainingBudget=Math.max(0,.4*yBase-s.publicDebt),budget={left:Math.min(remainingBudget,yBase*.025)};
+ const take=amount=>{const v=Math.min(budget.left,Math.max(0,amount));budget.left-=v;return v;};
+ const fiscalInterest=Math.max(0,s.publicDebt)*(.025+.03*Math.max(0,s.publicDebt/yBase-.15))/4;
+ const interestPaid=take(fiscalInterest);s.arrears+=fiscalInterest-interestPaid;
+ const uOld=s.U/(s.E+s.U),trigger=clamp((uOld-m.unemployment)/.04+stress*.15,0,1);
+ const transfers=take(p.transfers*yBase/4*trigger),training=take(p.training*yBase/4*(stress>0?1:.25));
+ const aiPlan=c.aiInvestment*trend/4,aiActual=aiPlan*(1-.6*p.capexCut)*(1-.65*s.creditGap)*(.75+.25*roll);
+ const actualInvestment=Math.max(0,aiActual);s.investment=actualInvestment;s.cumInvestment+=actualInvestment;
+ const adoptRate=.025*(.35+.65*Math.sqrt(aiPlan>0?actualInvestment/aiPlan:0));
+ const da=(1-s.adoption)*adoptRate;s.adoption+=da;
+ let firmLoss=0,firmDefaults=0,firmAIInvestment=0;
+ const investmentFactor=aiPlan>0?actualInvestment/aiPlan:0;
+ for(const f of s.firms){const v=firmStep(f,s,{c,p,stress,roll,ret,trend,investmentFactor});firmLoss+=v.loss;firmDefaults+=v.principal;firmAIInvestment+=v.aiCap;}
+ // Distinct debt buckets: named firms, other AI projects, LGFVs, remaining loans.
+ const aiHaz=clamp(stress*Math.max(0,1-ret)*.012+(1-roll)*.025+Math.max(0,-s.gap)*.02,0,.25);
+ const lgHaz=clamp(c.landLoss*stress*.012+(1-roll)*.018+Math.max(0,-s.gap)*.015,0,.25);
+ const aiDef=s.aiDebt*aiHaz,lgDef=s.lgfvDebt*lgHaz,aiLGD=.4+.25*stress,lgLGD=.4+.15*stress;
+ const aiLoss=aiDef*aiLGD,lgLoss=lgDef*lgLGD;
+ const aiNew=Math.max(0,actualInvestment-firmAIInvestment)*.45*(1-p.debtLimit)*roll;
+ const lgNew=s.lgfvDebt*.006*roll;
+ s.aiDebt=Math.max(0,s.aiDebt-aiDef+aiNew);s.lgfvDebt=Math.max(0,s.lgfvDebt-lgDef+lgNew);
+ const plannedOther=q>=4&&q<12?Math.min(c.otherLoss/8,s.otherShockRemaining):0;
+ const inducedOther=s.otherLoans*Math.max(0,-s.gap)*.004;
+ const otherLoss=Math.min(s.otherLoans*.6,plannedOther+inducedOther),otherDef=otherLoss/.6;
+ const externalOtherLoss=Math.min(plannedOther,otherLoss);
+ s.otherShockRemaining=Math.max(0,s.otherShockRemaining-externalOtherLoss);s.otherExogenousLoss+=externalOtherLoss;
+ const otherGrowth=s.otherLoans*(.03/4*(1-s.creditGap)-s.creditGap*.025);
+ s.otherLoans=Math.max(0,s.otherLoans-otherDef+otherGrowth);
+ s.firmLoans=sum(s.firms.filter(f=>f.alive).map(f=>f.debt))*.55;
+ const lgGuarantee=take(lgLoss*.08*p.localAid/4);
+ const bankLoss=aiLoss*.65+lgLoss*.55+otherLoss+firmLoss*.55-lgGuarantee;
+ s.losses.ai+=aiLoss;s.losses.lgfv+=lgLoss;s.losses.other+=otherLoss;s.losses.firms+=firmLoss;
+ s.creditLosses+=aiLoss+lgLoss+otherLoss+firmLoss;s.bankLosses+=bankLoss;s.publicGuarantees+=lgGuarantee;
+ s.totalDefaulted+=aiDef+lgDef+otherDef+firmDefaults;s.totalNewLending+=aiNew+lgNew+Math.max(0,otherGrowth);
+ s.loans=s.otherLoans+s.firmLoans+s.aiDebt*.65+s.lgfvDebt*.55;
+ const profit=m.bankProfitHalfYear/2*.6*Math.exp(1.5*s.gap)*(1-.4*s.creditGap);
+ s.bankCapital+=profit-bankLoss;
+ s.bankRWA=c.bankRWA*(s.loans/m.loans)*(1+.05*c.fundingFreeze*stress);
+ const recap=take(Math.min(p.recap/4,Math.max(0,s.bankRWA*.12-s.bankCapital)));
+ s.bankCapital+=recap;s.publicAssets+=recap;
+ s.car=s.bankCapital/Math.max(.01,s.bankRWA);
+ const capitalGap=clamp(1-s.car/.12,0,1);
+ s.creditGap=clamp(.8*capitalGap+.12*c.fundingFreeze*stress*(1-p.liquidity*.8),0,.98);
+ // Fiscal shortfall is incremental relative to baseline, not total fiscal deficit.
+ const taxLoss=m.localRevenue*Math.max(0,1-Math.exp(s.gap))/4;
+ const landNetLoss=m.landRevenue*c.landLoss*stress*.4/4;
+ const extraLocalInterest=Math.max(0,s.localDebt-m.localDebt)*m.localRate/4;
+ const localShortfall=taxLoss+landNetLoss+extraLocalInterest;
+ const localAid=take(Math.min(p.localAid/4,localShortfall));
+ const residual=Math.max(0,localShortfall-localAid),localBorrow=residual*(.35+.55*p.liquidity);
+ s.localDebt+=localBorrow;
+ const spendingCut=residual-localBorrow;
+ s.localCut=clamp(spendingCut/(m.localRevenue/4),0,1);s.localPressure=localShortfall;
+ const spending=interestPaid+transfers+training+lgGuarantee+recap+localAid;
+ s.publicDebt+=spending;s.publicOutlays+=spending;
+ // Venture equity is NOT bank lending. Each cohort's remaining invested principal can be lost only once.
+ const vcTrend=Math.pow(1+c.vcGrowth,Math.min(q,16)/4);
+ const vcNew=c.vcAnnual/4*vcTrend*Math.max(.05,roll)*(1-p.capexCut*.6)*(1-s.creditGap);
+ const vcFail=clamp(stress*Math.max(0,1-ret)*.04+(1-roll)*.04,0,.4),vcLoss=s.vcOutstanding*vcFail;
+ s.vcOutstanding+=vcNew-vcLoss;s.vcCumulative+=vcNew;s.vcLoss+=vcLoss;
+ // Fixed population 100, with unemployment exits explicitly retained in N.
+ const grossAI=s.E*.35*c.replacement*da,cyclical=s.E*(Math.max(0,-s.gap)*.003+s.creditGap*.003+s.localCut*.003);
+ const separations=Math.min(s.E,s.E*.006+grossAI+cyclical);
+ let E=s.E-separations,U=s.U+separations,N=s.N;
+ const trainLag=q>2?(s.history[q-2]?.training||0):0;
+ const trainHiring=Math.min(U,trainLag/(yBase*.5/100)*.25);
+ const organic=U*.11*Math.exp(s.gap*2)*(1-.65*s.creditGap);
+ const aiCreated=grossAI*c.newJobs;
+ const hires=Math.min(U,organic+aiCreated+trainHiring);E+=hires;U-=hires;
+ const exits=Math.max(0,U-s.U0)*.018,reentry=Math.min(Math.max(0,N-s.N0),Math.max(0,N-s.N0)*.025+trainHiring*.1);
+ U+=reentry-exits;N+=exits-reentry;
+ s.E=E;s.U=U;s.N=N;s.displaced+=grossAI;s.createdJobs+=Math.min(aiCreated,hires);
+ s.hours=clamp(1+Math.min(0,s.gap)*.20-s.creditGap*.035,.4,1.1);
+ const wageFactor=E/s.E0*s.hours*Math.exp(.15*s.gap);
+ const shiftedIncome=Math.min(.15,Math.max(0,s.displaced-s.createdJobs)/s.E0)*.5;
+ const redistributionRecovery=shiftedIncome*c.highMPC;
+ s.consumption=Math.max(.05,1+(.5*.85*(wageFactor-1)+redistributionRecovery+transfers*4/yBase*.9)/.55);
+ s.scar=Math.max(0,s.scar*.997+Math.max(0,U/(E+U)-m.unemployment)*.0005);
+ const external=-.16*c.exportLoss*stress;
+ const consumption=.55*(s.consumption-1);
+ const investment=1.2*(actualInvestment-aiPlan)*4/yBase;
+ const fiscal=-spendingCut*4/yBase+training*4/yBase;
+ const credit=-.12*s.creditGap;
+ const productivity=(s.adoption-.05)*Math.max(0,ret)*.035;
+ const target=external+consumption+investment+fiscal+credit+productivity-s.scar;
+ const noise=(random(c.seed,q)-.5)*.0003*stress;
+ s.gap=c.persistence*s.gap+(1-c.persistence)*target+noise;
+ s.gdpIndex=100*Math.pow(1.04,q/4)*Math.exp(s.gap);
+ const previousYear=q>=4?s.history[q-4].gdp:100/Math.pow(1.04,(4-q)/4);
+ s.gdpGrowth=s.gdpIndex/previousYear-1;
+ s.productivity=productivity;
+ s.stockIndex=100*Math.exp(2*s.gap-.4*c.fundingFreeze*stress-.25*(1-ret)*stress);
+ s.peakJobless=Math.max(s.peakJobless,s.U/(s.E+s.U));
+ s.last={external,consumption,investment,fiscal,credit,productivity,loss:bankLoss,recap,transfers,training,localAid,guarantee:lgGuarantee,bankProfit:profit,unfunded:fiscalInterest-interestPaid,stress,roll,ret,aiLoss,lgLoss,otherLoss,vcNew,vcLoss,spendingCut,localBorrow,firmAIInvestment,externalOtherLoss};
+ if(q===4)addEvent(s,'warn','外部冲击开始','需求、融资与资产回收同时变化；政策从实际传导改变结果，不直接修改曲线。');
+ if(s.history.at(-1).car>=12&&s.car<.12)addEvent(s,'bad','银行资本低于模型目标','资本比率降到'+(s.car*100).toFixed(1)+'%；信用供给开始受到资本约束。12%是模型目标，不是统一法定标准。');
+ if(s.bankCapital<0&&s.history.at(-1).car>=0)addEvent(s,'bad','极端压力：模型银行资本耗尽','这是给定敞口和损失的条件结果；需要更大注资或重组。当前版本不模拟存款挤兑和货币危机。');
+ if(s.history.at(-1).unemployment<10&&s.U/(s.E+s.U)>=.1)addEvent(s,'bad','合成样本失业率超过10%','消费与招聘形成持续反馈；同时观察就业人口比，避免退出求职掩盖问题。');
+ if(recap>.001)addEvent(s,'policy','银行资本补充',(recap).toFixed(2)+'万亿元实际拨付，同时计入公共融资及持有的金融资产。');
+ if(q%4===0)addEvent(s,'info','年度观察','产出较无冲击基线'+((Math.exp(s.gap)-1)*100).toFixed(1)+'%，就业人口比'+s.E.toFixed(1)+'%，累计新增公共融资'+s.publicDebt.toFixed(1)+'万亿元。');
+ s.history.push({...snapshot(s),training});
+ const errors=audit(s);if(errors.length)throw new Error(errors.join('; '));
+ return s;
+}
+function audit(s){
+ const e=[];if(Math.abs(s.E+s.U+s.N-100)>1e-7)e.push('人口恒等式错误');
+ if(Math.min(s.E,s.U,s.N)<-1e-8)e.push('负人口');
+ for(const f of s.firms){const a=f.cash+f.aiK+f.otherA,l=f.debt+f.otherL+f.mezz+f.equity;if(Math.abs(a-l)>1e-7)e.push(f.name+'资产负债不平');if(f.cash<-.000001||f.debt<-.000001||f.aiK<-.000001||f.otherA<-.000001||f.otherL<-.000001)e.push(f.name+'资产债务负值');}
+ if(s.otherExogenousLoss>s.config.otherLoss+1e-8)e.push('外生损失重复计入');
+ if(s.vcLoss>s.vcCumulative+1e-8)e.push('股权损失超过已投本金');
+ if(Math.abs(s.creditLosses-sum(Object.values(s.losses)))>1e-7)e.push('损失重复计数');
+ const walk=(x,path)=>{if(typeof x==='number'&&!Number.isFinite(x))e.push('非有限值:'+path);else if(x&&typeof x==='object')for(const [k,v] of Object.entries(x))if(k!=='history')walk(v,path+'.'+k);};walk(s,'state');return e;
+}
+function run(config,policy,quarters=40){let s=create(config,policy);for(let i=0;i<clamp(quarters,0,60);i++)s=step(s);return s;}
+function metrics(s){const h=s.history,gaps=h.map(x=>x.gap),worst=Math.min(...gaps),trough=gaps.indexOf(worst);let recovered=null;for(let i=trough+1;i<h.length-3;i++){if(h.slice(i,i+4).every(x=>x.gap> -1)){recovered=i;break;}}
+ return {gdpGap:h.at(-1).gap,worstGap:worst,peakUnemployment:Math.max(...h.map(x=>x.unemployment)),employment:s.E,creditLoss:s.creditLosses,bankLoss:s.bankLosses,publicDebt:s.publicDebt,publicAssets:s.publicAssets,localDebt:s.localDebt,adoption:s.adoption*100,companiesInGap:s.firms.filter(f=>!f.alive).length,recovery:worst> -1?0:recovered===null?null:(recovered-trough)/4};}
+function compare(config,quarters=40){return Object.entries(PRESETS).map(([id,p])=>{const state=run(config,policyFor(id),quarters);return {id,name:p.name,state,metrics:metrics(state)};});}
+function exportGame(s){return {schema:'china-stress-save',version:VERSION,config:s.config,initialPolicy:s.initialPolicy,policyHistory:s.policyHistory,quarter:s.q};}
+function importGame(raw){if(!raw||raw.schema!=='china-stress-save'||raw.version!==VERSION||!Number.isInteger(raw.quarter)||raw.quarter<0||raw.quarter>60)throw new Error('存档格式或版本不匹配');let s=create(raw.config,raw.initialPolicy);const schedule=Array.isArray(raw.policyHistory)?raw.policyHistory:[];for(let q=0;q<raw.quarter;q++){const a=schedule.filter(x=>x&&x.q===q).at(-1);s=step(s,a?.policy);}const current=schedule.filter(x=>x&&x.q===raw.quarter).at(-1);if(current)s=setPolicy(s,current.policy);return s;}
+return {VERSION,DATA,CONFIG_FIELDS,POLICY_FIELDS,PRESETS,SCENARIOS,configFor,policyFor,normalize,create,setPolicy,step,run,compare,audit,metrics,exportGame,importGame,date,clone};
+});
+</script><script>(function(){'use strict';
+const E=window.ChinaEngine,D=E.DATA,$=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=(n,d=1)=>Number(n).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d}),sgn=(n,d=1)=>(n>0?'+':'')+fmt(n,d),pct=(n,d=1)=>fmt(n*100,d)+'%',T=(n,d=2)=>fmt(n,d)+'万亿元',Y=(n,d=0)=>fmt(n*10000,d)+'亿元';
+const COLORS={teal:'#68d9ba',blue:'#8ab6f5',amber:'#efbb74',red:'#ef8a8c',purple:'#baa8e7',gray:'#698094'};
+const STORAGE='china-stress-cn-0.1.0';
+let state=E.create(E.configFor('combined'),E.policyFor('none')),scenario='combined',horizon=40,branch=null,timer=null,toastTimer=null,selectedNode='jobs',selectedFirm='alibaba',reference=null,comparison=null;
+function report(err){pause();const msg=err&&err.message||String(err);$('errorBox').textContent='运行异常：'+msg;$('errorBox').classList.add('visible');$('auditBadge').textContent='检测到错误';$('auditBadge').style.color=COLORS.red;console.error(err);}
+window.addEventListener('error',e=>report(e.error||e.message));window.addEventListener('unhandledrejection',e=>report(e.reason));
+function toast(text){$('toast').textContent=text;$('toast').style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',3300);}
+function valueText(k,v,f){if(f.unit==='%'||f.unit==='GDP%')return (k==='initialEmployment'?fmt(v,0):fmt(v*100,f.step<.001?2:f.step<.01?1:0))+(f.unit==='GDP%'?'% GDP':'%');return fmt(v, f.step<1?f.step<.1?2:1:0)+(f.unit?' '+f.unit:'');}
+function makeField(k,f,type,v){const id=type+'_'+k;return `<label class="field" for="${id}"><span class="field-heading"><span>${esc(f.label)}</span><output id="${id}_out" for="${id}">${esc(valueText(k,v,f))}</output></span><input id="${id}" data-field="${k}" data-kind="${type}" type="${k==='seed'?'number':'range'}" min="${f.min}" max="${f.max}" step="${f.step}" value="${v}"><span class="field-help">${esc(f.help)}</span></label>`;}
+function initFields(){
+ $('policyPreset').innerHTML=Object.entries(E.PRESETS).map(([k,v])=>`<option value="${k}">${esc(v.name)}</option>`).join('')+'<option value="custom">自定义组合</option>';
+ const main=['exportLoss','aiReturn','fundingFreeze','landLoss','otherLoss'];
+ $('mainConfigFields').innerHTML=main.map(k=>makeField(k,E.CONFIG_FIELDS[k],'c',state.config[k])).join('');
+ $('advancedConfigFields').innerHTML=Object.entries(E.CONFIG_FIELDS).filter(([k])=>!main.includes(k)).map(([k,v])=>makeField(k,v,'c',state.config[k])).join('');
+ $('policyFields').innerHTML=Object.entries(E.POLICY_FIELDS).map(([k,v])=>makeField(k,v,'p',state.policy[k])).join('');
+ document.querySelectorAll('[data-field]').forEach(el=>el.addEventListener('input',()=>{const k=el.dataset.field,f=(el.dataset.kind==='p'?E.POLICY_FIELDS:E.CONFIG_FIELDS)[k];$(el.id+'_out').textContent=valueText(k,Number(el.value),f);if(el.dataset.kind==='p'){ $('policyPreset').value='custom';$('policyStatus').textContent='滑块已修改；点击应用才影响后续季度。';$('policyStatus').classList.add('dirty');}else{$('applyConfigBtn').textContent='假设已修改 · 重新开始';}}));
+ fillPolicy(state.policy);fillConfig(state.config);
+}
+function readFields(kind,fields){const o={};for(const k of Object.keys(fields))o[k]=Number($(kind+'_'+k).value);return E.normalize(o,fields);}
+function fillConfig(c){for(const [k,f]of Object.entries(E.CONFIG_FIELDS)){const e=$('c_'+k);if(e){e.value=c[k];$('c_'+k+'_out').textContent=valueText(k,c[k],f);}}$('applyConfigBtn').textContent='使用这些假设重新开始';}
+function policyName(p){const id=Object.keys(E.PRESETS).find(k=>JSON.stringify(E.policyFor(k))===JSON.stringify(p));return id?E.PRESETS[id].name:'自定义组合';}
+function fillPolicy(p){for(const[k,f]of Object.entries(E.POLICY_FIELDS)){$('p_'+k).value=p[k];$('p_'+k+'_out').textContent=valueText(k,p[k],f);}const id=Object.keys(E.PRESETS).find(k=>JSON.stringify(E.policyFor(k))===JSON.stringify(p))||'custom';$('policyPreset').value=id;$('policyDescription').textContent=E.PRESETS[id]?.desc||'自行组合规则，结果仍受预算、执行滞后和融资能力约束。';$('policyStatus').textContent='已应用：'+policyName(p)+' · 从下一季度结算';$('policyStatus').classList.remove('dirty');}
+function reset(c,p,id){pause();state=E.create(c,p);scenario=id||'custom';reference=null;comparison=null;fillConfig(state.config);fillPolicy(state.policy);$('errorBox').classList.remove('visible');render();renderScenarios();$('comparisonResult').className='empty';$('comparisonResult').textContent='初始条件已更新，请重新计算政策对照。';$('compareChart').innerHTML='';$('compareLegend').innerHTML='';}
+function pause(){clearInterval(timer);timer=null;$('playBtn').textContent='自动演化';$('playBtn').setAttribute('aria-pressed','false');}
+function advance(){try{if(state.q>=horizon){pause();toast('已到本轮终点；可以延长到十五年或返回分支。');return;}state=E.step(state);render();if(state.q>=horizon)pause();}catch(e){report(e);}}
+function play(){if(timer){pause();return;}if(state.q>=horizon){toast('已到终点，请重开或延长。');return;}timer=setInterval(advance,850);$('playBtn').textContent='暂停';$('playBtn').setAttribute('aria-pressed','true');advance();}
+function runEnd(){pause();const b=$('runBtn');b.disabled=true;b.textContent='推演中…';setTimeout(()=>{try{while(state.q<horizon)state=E.step(state);render();toast('演化完成，政策对照可以从同一起点重跑。');}catch(e){report(e);}finally{b.disabled=false;b.textContent=horizon===40?'推演十年':'推演十五年';}},40);}
+function ensureReference(){if(!reference)reference=E.run(state.config,E.policyFor('none'),horizon);return reference;}
+function renderScenarios(){$('scenarioStrip').innerHTML=Object.entries(E.SCENARIOS).map(([k,v])=>`<button data-scenario="${k}" class="${scenario===k?'selected':''}" title="${esc(v.desc)}">${esc(v.name)}</button>`).join('');document.querySelectorAll('[data-scenario]').forEach(b=>b.onclick=()=>{reset(E.configFor(b.dataset.scenario),E.policyFor('none'),b.dataset.scenario);toast(E.SCENARIOS[b.dataset.scenario].desc);});}
+function metric(label,value,sub,kind=''){return `<div class="metric"><span class="metric-label">${label}</span><strong class="${kind}">${value}</strong><small>${sub}</small></div>`;}
+function renderMetrics(){const x=state.history.at(-1),inc=state.publicDebt+state.localDebt-D.macro.localDebt;
+ $('metrics').innerHTML=metric('产出相对基线',sgn(x.gap)+'%','同比增速 '+sgn(state.gdpGrowth*100)+'%',x.gap< -1?'negative':x.gap>0?'positive':'')+metric('就业人口比',fmt(state.E)+'%','固定人口100人 · 非官方预测',state.E<state.E0-2?'negative':'')+metric('银行资本比率',fmt(state.car*100)+'%','模型目标12% · 绝对资本是假设',state.car<.12?'negative':'')+metric('累计信用损失',fmt(state.creditLosses,1),'万亿元 · 银行承担 '+fmt(state.bankLosses,1),state.creditLosses>10?'negative':'')+metric('新增公共融资',fmt(inc,1),'万亿元 · 含本轮地方增量债务');
+}
+const NODE_NAMES={firms:'平台与公司',ai:'AI项目与具身',bank:'银行与信贷',jobs:'就业与转岗',demand:'消费与订单',local:'地方财政'};
+function nodeValues(){const gap=state.history.at(-1).gap,n=state.firms.filter(f=>!f.alive).length;return {
+ firms:{value:n+' / 4',sub:'样本触发模型支付缺口',risk:n>=2?'bad':n?'warn':'',detail:`<strong>平台与公司。</strong>四家样本可动用资金合计${Y(state.firms.reduce((a,f)=>a+f.cash,0))}，${n}家触发条件支付缺口。不是全国倒闭比例；不把财报未知的字节放进合计。点击下方企业表可检查现金、债务和净资产。`},
+ ai:{value:fmt(state.vcLoss,2)+' 万亿',sub:'具身股权本金累计损失',risk:state.vcLoss/Math.max(.01,state.vcCumulative)>.5?'bad':state.vcLoss>.05?'warn':'',detail:`<strong>AI项目与具身。</strong>其他AI债务信用损失${T(state.losses.ai)}；具身股权投入累计${T(state.vcCumulative)}、损失${T(state.vcLoss)}，两者不相加作为银行坏账。全国AI投资起点${T(state.config.aiInvestment)}/年是可调假设。技术采用${pct(state.adoption)}，商业回报差也可能继续替代岗位。`},
+ bank:{value:fmt(state.car*100,1)+'%',sub:'资本比率 · 模型目标12%',risk:state.car<.08?'bad':state.car<.12?'warn':'',detail:`<strong>银行与信贷。</strong>模型资本${T(state.bankCapital)}，风险加权资产${T(state.bankRWA)}；累计银行损失${T(state.bankLosses)}。初始资本由官方15.26%乘上假设RWA得到，不是公开绝对资本总额。信贷缺口${pct(state.creditGap)}；流动性支持不能冲销已经损失的本金。`},
+ jobs:{value:fmt(state.E,1)+' / 100',sub:'仍在就业的合成人口',risk:state.U/(state.E+state.U)>.12?'bad':state.E<state.E0-1?'warn':'',detail:`<strong>就业与转岗。</strong>每100人：就业${fmt(state.E)}，求职失业${fmt(state.U)}，未参与${fmt(state.N)}。技术累计直接替代${fmt(state.displaced)}个岗位、直接新增${fmt(state.createdJobs)}个岗位；两者是流量累计，不等于净失业人数。工时指数${fmt(state.hours*100)}，转岗政策有两季滞后。`},
+ demand:{value:fmt(state.consumption*100,1),sub:'消费指数 · 起点100',risk:state.consumption<.85?'bad':state.consumption<.97?'warn':'',detail:`<strong>消费与订单。</strong>消费相对起点${sgn((state.consumption-1)*100)}%；产出相对无冲击基线${sgn(gap)}%。普通收入的边际消费倾向默认85%，高收入新增收入消费比例${pct(state.config.highMPC)}。这是分配假设，不将个别高收入群体的储蓄率视为全国统计。`},
+ local:{value:fmt(state.localDebt,1)+' 万亿',sub:'法定地方债 + 模型增量',risk:state.localCut>.1?'bad':state.localCut>.025?'warn':'',detail:`<strong>地方财政。</strong>法定地方债从${T(D.macro.localDebt)}升至${T(state.localDebt)}；本季压力缺口${T(state.localPressure)}。土地毛收入只按40%可支配比例传导。政策额外公共融资${T(state.publicDebt)}，其中注资取得金融资产${T(state.publicAssets)}。城投债务与地方债单列，不把它们再加到全国贷款上。`}
+ };}
+function icon(type,x,y){const shapes={firms:'M2 25V5H27V25M9 25V17H20V25M7 10H11M18 10H22',ai:'M7 8H23V24H7ZM12 8V3M18 8V3M3 12H7M23 12H27M12 15H13M18 15H19M12 20H18',bank:'M2 10L15 2L28 10ZM5 13V25M12 13V25M19 13V25M26 13V25M2 28H29',jobs:'M15 11A5 5 0 1 0 15 1A5 5 0 1 0 15 11M5 28V20A10 8 0 0 1 25 20V28M10 21V28M20 21V28',demand:'M2 4H6L10 21H25L29 9H7M12 28H13M23 28H24',local:'M2 12L15 2L28 12M5 13V28H25V13M12 28V19H18V28M10 14H11M19 14H20'};return `<path d="${shapes[type]}" transform="translate(${x},${y})" fill="none" stroke="#83a6b8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`;}
+function renderMap(){const v=nodeValues(),positions={firms:[25,25],ai:[335,25],bank:[645,25],jobs:[25,285],demand:[335,285],local:[645,285]},severity=state.creditGap>.2||state.history.at(-1).gap< -10?'bad':state.q>=4?'warn':'';
+ let html=`<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#718c9b"/></marker></defs>`;
+ const edges=[['M255 75H328','借款 / 订单',278,62],['M565 75H638','项目损失',581,62],['M760 140V278','财政与担保',771,215],['M638 335H572','地方支出',581,322],['M328 335H262','收入与消费',268,322],['M140 278V145','工资与招聘',45,216],['M450 142V278','技术替代',462,260],['M643 122L524 191H270L225 143','信贷回流',528,180],['M450 280V225H207L158 143','订单反馈',303,246]];
+ edges.forEach(([path,label,x,y])=>{html+=`<path class="map-edge ${state.q>=4?'pulse':''}" d="${path}"/><text class="edge-label" x="${x}" y="${y}">${label}</text>`;});
+ for(const[id,[x,y]]of Object.entries(positions)){const n=v[id];html+=`<g class="map-node ${n.risk} ${id===selectedNode?'selected':''}" data-node="${id}" tabindex="0" role="button" aria-label="${NODE_NAMES[id]}，${esc(n.value)}"><rect class="node-body" x="${x}" y="${y}" width="230" height="115" rx="10"/>${icon(id,x+15,y+16)}<text class="node-title" x="${x+57}" y="${y+31}">${NODE_NAMES[id]}</text><text class="node-value" x="${x+17}" y="${y+71}">${n.value}</text><text class="node-sub" x="${x+17}" y="${y+94}">${n.sub}</text></g>`;}
+ $('societyMap').innerHTML=html;$('nodeDetail').innerHTML=v[selectedNode].detail;
+ document.querySelectorAll('[data-node]').forEach(n=>{n.onclick=()=>{selectedNode=n.dataset.node;renderMap();};n.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectedNode=n.dataset.node;renderMap();}};});
+ $('phaseLabel').className='phase '+severity;$('phaseLabel').textContent=state.q<4?'冲击前':severity==='bad'?'系统压力扩大':state.last.stress<.4?'冲击逐步消退':'多环节承压';
+}
+function renderStory(){const x=state.history.at(-1),n=state.firms.filter(f=>!f.alive).length;let text,detail;
+ if(state.q===0){text='先选择一个不利情景，再逐季推进。你控制政策，不能直接指定失业率、股价或危机结局。外部冲击从Q4开始；“极端联合压力”会额外施加30万亿元非AI银行损失。';detail='默认多重冲击包含5万亿元非AI额外损失。它是压力输入，不是AI引致损失的结论。';}
+ else{text=`本季产出较无冲击基线${x.gap<0?'低':'高'}${fmt(Math.abs(x.gap))}%，同比${state.gdpGrowth<0?'下降':'增长'}${fmt(Math.abs(state.gdpGrowth*100))}%。每100人中${fmt(state.E)}人就业、${fmt(state.U)}人仍在找工作，消费指数为${fmt(state.consumption*100)}。`;
+ detail=`累计信用损失${T(state.creditLosses)}：其他行业${T(state.losses.other)}、城投${T(state.losses.lgfv)}、其他AI${T(state.losses.ai)}、样本公司${T(state.losses.firms)}。`;
+ detail+=` 其他行业中${T(state.otherExogenousLoss)}是手工施加的外生损失。`;
+ if(state.car<.12)detail+=' 银行资本不足开始压缩信用供给。';
+ if(state.bankCapital<0)detail+=' 模型银行资本已耗尽：后续仅表示无重组方案下的压力延续，不是正常金融制度的可验证预测。';
+ if(n)detail+=` ${n}家样本出现条件支付缺口，但这不是现实破产预报。`;
+ if(state.last.recap+state.last.transfers+state.last.training+state.last.localAid>.001)detail+=` 本季注资、就业与地方支持实际拨付${T(state.last.recap+state.last.transfers+state.last.training+state.last.localAid)}。`;
+ }
+ $('story').innerHTML=`<p>${esc(text)}</p><p class="muted">${esc(detail)}</p>`;$('storyQuarter').textContent=E.date(state.q);
+}
+function renderLabor(){const u=state.U/(state.E+state.U),vals=[['就业 / 总人口',fmt(state.E)+'%'],['失业 / 劳动力',pct(u)],['劳动参与率',fmt(state.E+state.U)+'%'],['未参与 / 总人口',fmt(state.N)+'%']];$('laborMetrics').innerHTML=vals.map(([l,v])=>`<div class="labor-metric"><span>${l}</span><strong>${v}</strong></div>`).join('');const e=Math.round(state.E),uN=Math.round(state.U);$('peopleGrid').innerHTML=Array.from({length:100},(_,i)=>`<i class="person ${i<e?'e':i<e+uN?'u':'n'}"></i>`).join('');}
+const chartRecords=new Map();
+function chart(id,series,opt={}){const svg=$(id),W=id==='compareChart'?1000:520,H=id==='compareChart'?280:232,L=46,R=16,top=18,B=30,range=series.flatMap(s=>s.data.map(x=>x.v)).filter(Number.isFinite);if(!range.length){svg.innerHTML='';return;}
+ let min=opt.min===undefined?Math.min(...range):opt.min,max=opt.max===undefined?Math.max(...range):opt.max;const pad=Math.max(.4,(max-min)*.15);if(opt.min===undefined)min-=pad;if(opt.max===undefined)max+=pad;if(max-min<1e-6)max=min+1;
+ const maxQ=Math.max(4,state.q,...series.flatMap(s=>s.data.map(x=>x.q))),X=q=>L+(W-L-R)*q/maxQ,Y=v=>H-B-(H-B-top)*(v-min)/(max-min);let h='';
+ for(let i=0;i<=4;i++){const val=min+(max-min)*i/4,y=Y(val);h+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${y}" y2="${y}"/><text class="axis-label" text-anchor="end" x="${L-8}" y="${y+3}">${fmt(val,Math.abs(max-min)<8?1:0)}</text>`;}
+ for(let i=0;i<=4;i++){const q=Math.round(maxQ*i/4),x=X(q);h+=`<text class="axis-label" text-anchor="middle" x="${x}" y="${H-8}">${q===0?'起点':q+'季'}</text>`;}
+ series.forEach(s=>{const d=s.data.map((p,i)=>(i?'L':'M')+X(p.q).toFixed(2)+' '+Y(p.v).toFixed(2)).join(' ');h+=`<path fill="none" stroke="${s.color}" stroke-width="${s.dash?1.6:2.3}" ${s.dash?'stroke-dasharray="5 5"':''} d="${d}"/>`;const p=s.data.at(-1);if(p)h+=`<circle cx="${X(p.q)}" cy="${Y(p.v)}" r="${s.dash?2:3}" fill="${s.color}"/>`;});
+ h+=`<rect x="${L}" y="${top}" width="${W-L-R}" height="${H-B-top}" fill="transparent"/>`;svg.innerHTML=h;chartRecords.set(id,{series,maxQ,L,R,W,H});
+}
+function charts(){const h=state.history,r=ensureReference().history.filter(x=>x.q<=state.q),ser=(name,k,color,arr=h,dash=false)=>({name,color,dash,data:arr.map(x=>({q:x.q,v:typeof k==='function'?k(x):x[k]}))});
+ chart('gdpChart',[ser('当前产出','gdp',COLORS.teal),ser('无冲击基线','baseline',COLORS.gray,h,true),ser('同冲击不干预','gdp',COLORS.blue,r,true)]);
+ chart('jobsChart',[ser('就业人数',x=>x.employment/state.E0*100,COLORS.teal),ser('消费','consumption',COLORS.amber)]);
+ chart('lossChart',[ser('总信用损失','loss',COLORS.red),ser('其他行业','lossOther',COLORS.amber),ser('城投','lossLGFV',COLORS.blue),ser('其他AI','lossAI',COLORS.teal)],{min:0});
+ chart('fiscalChart',[ser('政策公共融资','publicDebt',COLORS.amber),ser('取得金融资产','publicAssets',COLORS.teal),ser('地方新增债务',x=>x.localDebt-D.macro.localDebt,COLORS.blue)],{min:0});
+}
+function showChartTip(e,id){const r=chartRecords.get(id);if(!r)return;const b=$(id).getBoundingClientRect(),x=(e.clientX-b.left)/b.width*r.W,q=Math.max(0,Math.min(r.maxQ,Math.round((x-r.L)/(r.W-r.L-r.R)*r.maxQ)));let text=`<strong>${E.date(q)} · Q${q}</strong>`;r.series.forEach(s=>{const p=s.data.find(x=>x.q===q);if(p)text+=`<div><span style="color:${s.color}">${esc(s.name)}</span>　${fmt(p.v,2)}</div>`;});const tip=$('chartTooltip');tip.innerHTML=text;tip.style.display='block';tip.style.left=Math.max(8,Math.min(window.innerWidth-235,e.clientX+15))+'px';tip.style.top=Math.max(8,Math.min(window.innerHeight-160,e.clientY+12))+'px';}
+function renderEvents(){$('eventLog').innerHTML=state.events.slice().reverse().map(e=>`<div class="event ${e.type}"><time>${E.date(e.q).replace(' ','<br>')}</time><div><strong>${esc(e.title)}</strong><p>${esc(e.text)}</p></div></div>`).join('');}
+function renderCompanies(){$('firmTable').innerHTML=state.firms.map(f=>`<tr class="firm-row" data-firm="${f.id}"><td>${esc(f.name)}<small>${D.firms.find(x=>x.id===f.id).tag}</small></td><td>${fmt(f.cash*10000,0)}</td><td>${fmt(f.debt*10000,0)}</td><td class="${f.equity<0?'negative':''}">${fmt(f.equity*10000,0)}</td><td class="${f.last.ocf<0?'negative':''}">${state.q?fmt(f.last.ocf*10000,0):'—'}</td><td>${state.q?fmt(f.last.capex*10000,0):'—'}</td><td><span class="status-pill ${f.alive?'':'bad'}">${f.alive?'未触发支付缺口':'Q'+f.firstGap+' 支付缺口'}</span>${f.firstInsolvent!==null?'<small class="negative">Q'+f.firstInsolvent+' 净资产转负</small>':''}</td></tr>`).join('');
+ $('firmDetails').innerHTML=state.firms.map(f=>`<div class="firm-detail" id="detail-${f.id}"><h3>${esc(f.name)}</h3><p>本季到期本金 ${Y(f.last.due||0)}<br>实际新增/续借 ${Y(f.last.newDebt||0)}<br>另列必要付款 ${Y(f.last.interest||0)}<br>账面恒等式误差 ${fmt(Math.abs(f.cash+f.aiK+f.otherA-f.debt-f.otherL-f.mezz-f.equity)*10000,6)}亿元</p><a href="${D.sources.find(x=>x.id===f.id).url}" target="_blank" rel="noopener noreferrer">原始财报 ↗</a>${!f.alive?'<p class="negative">触发后暂停演算；账面未直接全额清零。</p>':''}</div>`).join('');
+ document.querySelectorAll('[data-firm]').forEach(r=>r.onclick=()=>{selectedFirm=r.dataset.firm;$('detail-'+selectedFirm).scrollIntoView({behavior:'smooth',block:'center'});});
+}
+function renderAudit(){const errors=E.audit(state);$('auditBadge').textContent=errors.length?'校验失败':'现金 / 权益 / 人口检查通过';$('auditBadge').style.color=errors.length?COLORS.red:'';$('auditDetails').innerHTML=`人口 E + U + N = ${fmt(state.E+state.U+state.N,8)}<br>四家公司 A − L − Z − E 最大误差：${fmt(Math.max(...state.firms.map(f=>Math.abs(f.cash+f.aiK+f.otherA-f.debt-f.otherL-f.mezz-f.equity))),10)}万亿元<br>股权损失 ≤ 累计投入：${state.vcLoss<=state.vcCumulative?'通过':'失败'}<br>信用损失分项求和：${errors.length?'检查异常':'通过'}<br>随机种子：${state.config.seed}<br><span class="footnote">数值一致不等于经济机制已经验证。${esc(errors.join('；'))}</span>`;}
+function render(){const q=state.q;$('dateLabel').textContent=E.date(q);$('qLabel').textContent=(q===0?'初始状态':'条件演化')+` · Q${q} / ${horizon}`;$('progressBar').style.width=(q/horizon*100)+'%';$('stepBtn').disabled=q>=horizon;$('playBtn').disabled=q>=horizon;renderMetrics();renderMap();renderStory();renderLabor();charts();renderEvents();renderCompanies();renderAudit();$('restoreBtn').disabled=!branch;$('branchStatus').textContent=branch?`已保存：${E.date(branch.q)} · ${policyName(branch.policy)}`:'尚未保存分支';}
+function tab(id,scroll=false){document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));document.querySelectorAll('.tab-panel').forEach(e=>e.classList.toggle('active',e.id==='tab-'+id));if(scroll)document.querySelector('.tabs').scrollIntoView({behavior:'smooth',block:'start'});}
+function renderComparison(){pause();tab('comparison',true);$('comparisonResult').className='empty';$('comparisonResult').textContent='使用同一冲击与种子计算六条路径…';$('compareBtn').disabled=true;setTimeout(()=>{try{comparison=E.compare(state.config,horizon);$('comparisonResult').className='';$('comparisonResult').innerHTML=`<div class="table-scroll"><table><thead><tr><th>${horizon/4}年后的结果</th><th>产出偏离基线</th><th>最深产出缺口</th><th>峰值失业率¹</th><th>信用损失</th><th>新增公共融资²</th><th>技术采用</th><th>样本支付缺口</th><th>恢复时间³</th></tr></thead><tbody>${comparison.map(x=>{const m=x.metrics;return `<tr><td>${x.name}</td><td class="${m.gdpGap<0?'negative':'positive'}">${sgn(m.gdpGap)}%</td><td>${sgn(m.worstGap)}%</td><td>${fmt(m.peakUnemployment)}%</td><td>${fmt(m.creditLoss,1)}</td><td>${fmt(m.publicDebt+m.localDebt-D.macro.localDebt,1)}</td><td>${fmt(m.adoption)}%</td><td>${m.companiesInGap}/4</td><td>${m.recovery===null?'期内未恢复':m.recovery===0?'未显著偏离':fmt(m.recovery,2)+'年'}</td></tr>`;}).join('')}</tbody></table></div><p class="footnote">金额：万亿元。¹ 合成样本，不是官方全国失业率预测。² 政策公共融资＋地方增量债务，非最终财政损失。³ 从最深低谷到连续四季产出缺口小于1%；期内未恢复不等于永远萧条。政策组合比较不能拆成单项因果效应。</p>`;
+ const colors=[COLORS.gray,COLORS.amber,COLORS.blue,COLORS.purple,COLORS.teal,COLORS.red];chart('compareChart',comparison.map((x,i)=>({name:x.name,color:colors[i],data:x.state.history.map(h=>({q:h.q,v:h.gap}))})));$('compareLegend').innerHTML=comparison.map((x,i)=>`<span class="key"><i style="display:inline-block;width:12px;height:2px;background:${colors[i]}"></i>${esc(x.name)}</span>`).join('');toast('六条路径已计算，当前游戏进度未改变。');}catch(e){report(e);}finally{$('compareBtn').disabled=false;}},40);}
+function sensitivity(){pause();$('sensitivityResult').textContent='计算9组参数…';$('sensitivityBtn').disabled=true;setTimeout(()=>{try{const ps=[.5,.75,.9],hs=[8,16,32],runs=[];for(const p of ps)for(const h of hs){const c={...state.config,persistence:p,shockHalfLife:h},s=E.run(c,state.policy,horizon);runs.push({p,h,m:E.metrics(s)});}let html='<div class="table-scroll"><table><thead><tr><th>需求持续系数</th><th>半衰期（季）</th><th>期末产出偏离</th><th>峰值失业率</th><th>信用损失（万亿）</th><th>恢复时间</th></tr></thead><tbody>';for(const x of runs)html+=`<tr><td>${x.p}</td><td>${x.h}</td><td>${sgn(x.m.gdpGap)}%</td><td>${fmt(x.m.peakUnemployment)}%</td><td>${fmt(x.m.creditLoss)}</td><td>${x.m.recovery===null?'期内未恢复':x.m.recovery===0?'未显著偏离':fmt(x.m.recovery,2)+'年'}</td></tr>`;html+='</tbody></table></div><p class="footnote">全部使用当前政策：'+esc(policyName(state.policy))+'。范围是人选参数网格，不表示各情景有相同概率。</p>';$('sensitivityResult').className='';$('sensitivityResult').innerHTML=html;}catch(e){report(e);}finally{$('sensitivityBtn').disabled=false;}},40);}
+function renderSources(){const m=D.macro;$('dataSummary').innerHTML=`<div class="data-kpis"><div>法定地方债 · 2026/09<strong>${fmt(m.localDebt,2)}</strong>万亿元 / 财政部</div><div>人民币贷款 · 2026/09<strong>${fmt(m.loans,2)}</strong>万亿元 / 人民银行</div><div>GDP尺度 · 2025<strong>${fmt(m.gdp,2)}</strong>万亿元 / 国家统计局</div><div>银行资本比率 · 2026/06<strong>${fmt(m.bankCAR*100,2)}%</strong>比率是真实数据，RWA另设</div></div><p class="help">${D.notes.map(esc).join('<br>')}</p>`;
+ $('sourceList').innerHTML=D.sources.map(x=>`<article class="source-card"><div class="source-meta">${esc(x.kind)}<span>${esc(x.date)}</span></div><div><h3><a href="${x.url}" target="_blank" rel="noopener noreferrer">${esc(x.name)} ↗</a></h3><p>${esc(x.facts)}</p></div></article>`).join('');
+ $('rawCompanyData').innerHTML=`<div class="table-scroll"><table><thead><tr><th>2026年6月底 / 亿元</th><th>资产</th><th>负债</th><th>夹层权益</th><th>总权益</th><th>资金池</th><th>借款债券</th><th>流动债务</th><th>经营现金流</th><th>购建支出</th><th>流量期间</th></tr></thead><tbody>${D.firms.map(f=>`<tr><td>${f.name}</td>${['assets','liabilities','mezzanine','equity','liquid','debt','shortDebt','ocf','capex'].map(k=>`<td>${fmt(f[k],2)}</td>`).join('')}<td>${f.periodQuarters===1?'第二季度':'上半年'}</td></tr>`).join('')}</tbody></table></div><p class="help">${D.firms.map(f=>'<strong>'+f.name+'：</strong>'+esc(f.liquidNote)).join('<br>')}</p><p class="footnote">净资产为总权益，含少数股东权益。阿里夹层权益单独列示。腾讯资金池口径更宽，不做简单排名。四家公司未来AI占比、收入弹性、资本寿命均为假设，详见完整模型。</p>`;
+ $('assumptionsTable').innerHTML='<h3>可修改假设的完整目录</h3><div class="table-scroll"><table><thead><tr><th>参数</th><th>默认值</th><th>解释</th></tr></thead><tbody>'+Object.entries(E.CONFIG_FIELDS).map(([k,f])=>`<tr><td>${f.label}</td><td>${esc(valueText(k,f.value,f))}</td><td style="text-align:left;white-space:normal;min-width:260px">${esc(f.help)}</td></tr>`).join('')+'</tbody></table></div><p class="help">完整固定系数、源代码和假设说明见 <a href="docs/MODEL.md">MODEL.md</a>；数据说明见 <a href="docs/DATA.md">DATA.md</a>。</p>';
+}
+function download(name,text,type){const blob=new Blob(['\uFEFF'+text],{type:type||'text/plain;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);}
+function csv(){const keys=['q','gdp','baseline','gap','growth','unemployment','employment','participation','nonparticipation','hours','consumption','car','creditGap','loans','loss','bankLoss','lossAI','lossLGFV','lossOther','lossOtherExogenous','lossFirms','localDebt','publicDebt','publicAssets','vc','vcLoss','investment','adoption','stock'];let text=keys.join(',')+'\n';for(const h of state.history)text+=keys.map(k=>Number.isFinite(h[k])?h[k]:'').join(',')+'\n';download('china-stress-Q'+state.q+'.csv',text,'text/csv;charset=utf-8');}
+function load(raw){const s=E.importGame(raw);pause();state=s;scenario='custom';horizon=Math.max(40,Math.ceil(state.q/4)*4);if(horizon>40)horizon=60;reference=null;fillConfig(state.config);fillPolicy(state.policy);renderScenarios();render();toast('存档已从参数和政策记录重演，不执行外部代码。');}
+function bind(){
+ document.addEventListener('pointerdown',e=>{const menu=document.querySelector('.more-menu');if(menu.open&&!menu.contains(e.target))menu.open=false;});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelector('.more-menu').open=false;});
+ $('policyJump').onclick=()=>document.querySelector('.policy-panel').scrollIntoView({behavior:'smooth',block:'start'});
+ $('stepBtn').onclick=()=>{pause();advance();};$('playBtn').onclick=play;$('runBtn').onclick=runEnd;$('finishBtn').onclick=()=>{document.querySelector('.more-menu').open=false;runEnd();};$('resetBtn').onclick=()=>reset(state.config,state.policy,scenario);
+ $('policyPreset').onchange=e=>{const id=e.target.value;if(id==='custom')return;fillPolicy(E.policyFor(id));$('policyStatus').textContent='已选择 '+E.PRESETS[id].name+'；点击应用后生效。';$('policyStatus').classList.add('dirty');};
+ $('applyPolicyBtn').onclick=()=>{state=E.setPolicy(state,readFields('p',E.POLICY_FIELDS));fillPolicy(state.policy);render();toast('政策已应用，下一季开始结算。');};
+ $('applyConfigBtn').onclick=()=>reset(readFields('c',E.CONFIG_FIELDS),state.policy,'custom');
+ $('branchBtn').onclick=()=>{pause();branch=E.clone(state);render();toast('已保存 '+E.date(state.q)+' 的分支起点。');};
+ $('restoreBtn').onclick=()=>{if(!branch)return;pause();state=E.clone(branch);reference=null;fillConfig(state.config);fillPolicy(state.policy);scenario='custom';renderScenarios();render();toast('已返回分支起点，后续可改用另一政策。');};
+ $('saveBtn').onclick=()=>{try{localStorage.setItem(STORAGE,JSON.stringify(E.exportGame(state)));toast('进度保存在此浏览器，不上传个人信息。');}catch(e){toast('浏览器禁止保存，请导出JSON。');}};
+ $('loadBtn').onclick=()=>{try{const s=localStorage.getItem(STORAGE);if(!s){toast('此浏览器没有本版存档。');return;}load(JSON.parse(s));}catch(e){toast('读取失败：'+e.message);}};
+ $('exportBtn').onclick=()=>download('china-stress-Q'+state.q+'.json',JSON.stringify(E.exportGame(state),null,2),'application/json');$('csvBtn').onclick=csv;
+ $('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;if(f.size>1024*1024){toast('存档超过1MB，拒绝载入。');e.target.value='';return;}try{load(JSON.parse((await f.text()).replace(/^\uFEFF/,'')));}catch(err){toast('导入失败：'+err.message);}e.target.value='';};
+ $('extendBtn').onclick=()=>{horizon=60;reference=null;$('runBtn').textContent='推演十五年';render();toast('已延长到Q60；可继续自动播放或按季度推进。');};
+ $('compareTopBtn').onclick=renderComparison;$('compareBtn').onclick=renderComparison;$('sensitivityBtn').onclick=sensitivity;
+ document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>tab(b.dataset.tab));document.querySelectorAll('[data-tabgo]').forEach(b=>b.onclick=()=>tab(b.dataset.tabgo,true));
+ ['gdpChart','jobsChart','lossChart','fiscalChart','compareChart'].forEach(id=>{$(id).addEventListener('mousemove',e=>showChartTip(e,id));$(id).addEventListener('mouseleave',()=>$('chartTooltip').style.display='none');});
+}
+try{initFields();bind();renderSources();renderScenarios();render();window.ChinaSandbox={version:E.VERSION,getState:()=>E.clone(state),step:advance,runEnd,reset:(id='combined')=>reset(E.configFor(id),E.policyFor('none'),id),setPolicy:id=>{state=E.setPolicy(state,E.policyFor(id));fillPolicy(state.policy);render();},compare:()=>E.compare(state.config,horizon),pause,load};}catch(e){report(e);}
+})();
+</script>
+</body></html>

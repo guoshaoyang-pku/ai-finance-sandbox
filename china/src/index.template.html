@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1420"><meta name="description" content="以公开财报与宏观统计为起点，模拟中国AI投资、地方债、信用和就业在不同监管下的十年压力情景。条件推演，不是预测。">
+<title>中国 AI 压力沙盘 · 社会如何演化</title>
+<style>/*STYLE*/</style>
+</head>
+<body>
+<header class="masthead"><a class="brand" href="#"><span class="brand-mark" aria-hidden="true">∿</span><span><strong>中国 AI 压力沙盘</strong><small>CHINA / FINANCE & SOCIETY</small></span></a><div class="head-links"><a href="../">美国版 ↗</a><button class="plain" data-tabgo="sources">数据与边界</button><span class="version">cn-0.1.0</span></div></header>
+<div class="notice"><span class="tag fact">真实起点</span> 公开财报 + 宏观统计 <span class="notice-sep">/</span> <span class="tag assume">假设传导</span> 可修改敞口、冲击和政策 <span class="notice-sep">/</span> <strong>这是压力测试，不是经济或公司破产预测。</strong></div>
+<div class="toolbar"><div class="time-block"><strong id="dateLabel">2026 Q4</strong><small id="qLabel">初始状态 · Q0 / 40</small></div><div class="toolbar-actions"><button class="primary" id="stepBtn">下一季度 <span>→</span></button><button id="playBtn">自动演化</button><button id="runBtn">推演十年</button><button id="resetBtn" class="quiet">重开</button><details class="more-menu"><summary>存档 / 分支</summary><div><button id="finishBtn">一键推演到终点</button><button id="branchBtn">保存分支起点</button><button id="restoreBtn" disabled>返回分支起点</button><button id="saveBtn">保存浏览器进度</button><button id="loadBtn">读取浏览器进度</button><button id="exportBtn">导出情景 JSON</button><button id="importBtn">导入情景 JSON</button><button id="csvBtn">导出季度 CSV</button></div></details><input id="importFile" type="file" accept=".json,application/json" hidden></div><div id="auditBadge" class="audit-badge">正在启动…</div></div><div class="progress"><i id="progressBar"></i></div>
+<noscript><div class="error visible">需要 JavaScript。请用浏览器打开此页，而不是禁止脚本的附件预览。</div></noscript><div id="errorBox" class="error" role="alert"></div>
+<main>
+<section class="intro"><div><span class="eyebrow">下行情景 / 十年演化</span><h1>当投入没有回报，<br class="mobile-break">风险会传到哪里？</h1><p>从企业资金链，到银行、地方财政和就业。改变规则，观察代价落在谁身上。</p></div><button id="compareTopBtn" class="outline">同一冲击，对比六种政策 ↗</button></section>
+<div class="scenario-strip" id="scenarioStrip" aria-label="初始情景"></div>
+<div class="workspace">
+<div class="main-column">
+<section class="metrics" id="metrics" aria-label="本季核心指标"></section>
+<section class="panel society-panel"><div class="panel-heading"><div><span class="eyebrow">01 / 经济与社会</span><h2>同一张网络，不同的承受者</h2></div><span id="phaseLabel" class="phase">冲击前</span></div><div class="network-scroll"><svg id="societyMap" class="society-map" viewBox="0 0 900 420" role="img" aria-label="企业、银行、地方财政和就业的风险传导图"></svg></div><div id="nodeDetail" class="node-detail" aria-live="polite"></div><div class="map-legend"><span><i class="dot green"></i>压力较低</span><span><i class="dot amber"></i>承压</span><span><i class="dot red"></i>严重承压</span><span>颜色由模型状态决定，不是现实评级。</span></div></section>
+<section class="panel story-panel"><div class="story-head"><span class="eyebrow">这一季发生了什么</span><span id="storyQuarter"></span></div><div id="story"></div></section>
+<section class="panel employment-panel"><div class="panel-heading"><div><span class="eyebrow">02 / 就业与分配</span><h2>失业率下降，也可能是人不再找工作</h2></div></div><div class="labor-metrics" id="laborMetrics"></div><div id="peopleGrid" class="people-grid" aria-hidden="true"></div><div class="map-legend"><span><i class="dot green"></i>就业 E</span><span><i class="dot amber"></i>求职失业 U</span><span><i class="dot gray"></i>未参与 N</span><span>每格约1人，始终 E + U + N = 100。</span></div><p class="footnote">固定100人的合成样本；初始就业人口比65%是假设，5.2%失业率为统计锚。不推算全国失业人数；未就业也不等于被迫失业。</p></section>
+<div class="chart-grid">
+<section class="panel chart-panel"><div class="panel-heading"><h2>产出路径</h2><span class="subtle">起点 = 100</span></div><svg id="gdpChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="经济产出与无冲击基线"></svg><div class="chart-legend"><span class="key teal">当前情景</span><span class="key gray dashed">无冲击基线</span><span class="key blue dashed">同冲击，不追加干预</span></div><p class="footnote">低于基线不等于GDP负增长。基线年增4%是假设。</p></section>
+<section class="panel chart-panel"><div class="panel-heading"><h2>就业与消费</h2><span class="subtle">起点 = 100</span></div><svg id="jobsChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="就业人数及消费相对起点变化"></svg><div class="chart-legend"><span class="key teal">就业人数</span><span class="key amber">消费</span></div><p class="footnote">高收入群体的消费偏好可调；不是由平均储蓄率直接估计。</p></section>
+<section class="panel chart-panel"><div class="panel-heading"><h2>信用损失从哪里来</h2><span class="subtle">累计 · 万亿元</span></div><svg id="lossChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="信用损失来源分解"></svg><div class="chart-legend"><span class="key red">总信用损失</span><span class="key amber">其他行业</span><span class="key blue">城投</span><span class="key teal">其他AI</span></div><p class="footnote">含外生施加的非AI损失，不能全归因于AI。股权损失另算。</p></section>
+<section class="panel chart-panel"><div class="panel-heading"><h2>公共部门承担的代价</h2><span class="subtle">新增 · 万亿元</span></div><svg id="fiscalChart" class="chart" viewBox="0 0 520 232" role="img" aria-label="政策新增公共融资、取得金融资产和地方债增量"></svg><div class="chart-legend"><span class="key amber">政策公共融资</span><span class="key teal">取得金融资产</span><span class="key blue">地方增量债务</span></div><p class="footnote">政策支出≠最终损失；这里只计本轮压力新增融资，不是全部国债。</p></section>
+</div>
+<section class="panel"><div class="panel-heading"><h2>实际结算记录</h2><span class="subtle">不预写危机剧情</span></div><div id="eventLog" class="events" aria-live="polite"></div></section>
+</div>
+<aside class="sidebar">
+<section class="panel policy-panel"><span class="eyebrow">03 / 监管与财政</span><h2>改变下一季，而不是改历史</h2><label class="select-label" for="policyPreset">政策组合</label><select id="policyPreset"></select><p id="policyDescription" class="help"></p><div id="policyFields"></div><button id="applyPolicyBtn" class="primary full">应用到后续季度</button><div id="policyStatus" class="policy-status">当前：不追加干预</div><p class="footnote">限投只影响可调整部分；流动性不修复坏账；注资、补贴和财政支持都要融资。</p></section>
+<section class="panel settings-panel"><span class="eyebrow">04 / 外部压力</span><h2>哪些是你施加的假设？</h2><div id="mainConfigFields"></div><details><summary>敞口、分配与恢复速度</summary><div id="advancedConfigFields"></div></details><button id="applyConfigBtn" class="outline full">使用这些假设重新开始</button><p class="footnote">改初始假设会回到Q0。政策滑块则只改变后续季度。</p></section>
+<section class="panel compact"><h2>分支实验</h2><p class="help">推进到某一季 → 保存分支 → 采用救助 → 返回分支改成限投。相同种子下，外部扰动完全相同。</p><div id="branchStatus" class="subtle">尚未保存分支</div><button id="extendBtn" class="quiet full">延长到十五年</button></section>
+</aside>
+</div>
+<nav class="tabs" aria-label="研究面板"><button data-tab="companies" class="active">企业与账目</button><button data-tab="comparison">政策对照</button><button data-tab="model">模型与检验</button><button data-tab="sources">数据来源</button></nav>
+<section id="tab-companies" class="tab-panel active"><div class="panel"><div class="panel-heading"><div><span class="eyebrow">四家可核验样本</span><h2>现金不够还钱，与净资产归零分开看</h2></div><span class="tag assume">未来为条件推演</span></div><div class="callout">字节未披露可核验的完整资产负债表与经营现金流，本版不虚构其现金、净资产和破产时间。样本不会被当成全国企业全集。</div><div class="table-scroll"><table><thead><tr><th>公司</th><th>模拟资金池</th><th>模拟债务</th><th>模拟净资产</th><th>本季经营现金流</th><th>本季购建支出</th><th>模型状态</th></tr></thead><tbody id="firmTable"></tbody></table></div><p class="footnote">金额：亿元。初始资金池先乘可动用比例；购建支出不全属于AI。支付缺口触发后暂停该公司后续演算，不猜测法律重组。到期分摊为假设，日期不是真实违约预测。</p><div id="firmDetails" class="firm-details"></div><details class="source-details"><summary>展开四家公司原始数据、期间与口径</summary><div id="rawCompanyData"></div></details></div></section>
+<section id="tab-comparison" class="tab-panel"><div class="panel"><div class="panel-heading"><div><span class="eyebrow">同一随机种子 / 同一起点</span><h2>没有免费的政策</h2></div><button id="compareBtn" class="primary">重算六种政策</button></div><p class="help">从Q0开始，各政策同时遭遇完全相同的冲击。比较产出、就业、信用损失、财政融资与技术采用，不用单一“胜利分”掩盖取舍。</p><div id="comparisonResult" class="empty">点击重算；不会覆盖你正在玩的分支。</div><svg id="compareChart" class="chart comparison-chart" viewBox="0 0 1000 280" role="img" aria-label="六种政策的产出缺口对比"></svg><div id="compareLegend" class="chart-legend"></div><div class="divider"></div><div class="panel-heading"><h2>恢复速度到底有多不确定？</h2><button id="sensitivityBtn">扫描两个关键假设</button></div><p class="help">对“需求持续系数”和“冲击半衰期”做九种组合，保持当前政策不变。这里只是敏感性范围，不是概率分布或置信区间。</p><div id="sensitivityResult" class="empty">模型系数没有历史估计，必须同时看参数变化。</div></div></section>
+<section id="tab-model" class="tab-panel"><div class="panel"><div class="panel-heading"><h2>公开算法，不预设中国必然崩盘</h2><a href="docs/MODEL.md">完整模型 ↗</a></div><div class="model-columns"><div><h3>公司账</h3><pre>现金′ = 现金 + 经营现金流
+       − 投入 − 另列付息/租赁 − 到期本金
+       + 实际借款 + 出售资产回款
+
+净资产′ = 净资产 + 净利润 − 处置损失
+资本支出：先从现金转为资产，不直接扣权益。
+支付缺口 ≠ 净资产归零 ≠ 法律破产。</pre><h3>社会账</h3><pre>初始银行贷款 = 样本公司银行敞口
+             + 其他AI银行敞口
+             + 城投银行敞口 + 其他贷款
+
+信用损失 = 首次违约本金 × 未回收比例
+银行资本′ = 资本 + 留存利润 − 新损失 + 注资
+股权亏损不直接当成贷款坏账。</pre><h3>就业与需求</h3><pre>E + U + N = 100，所有季度保持。
+裁员：E → U；招聘：U → E
+退出：U → N；重新参与：N → U
+消费受就业、工时、分配和补贴影响。
+产出受消费、外需、投资、信贷和生产率影响。</pre></div><div><h3>本轮数值检查</h3><div id="auditDetails" class="audit-details"></div><h3>不能由这个游戏推断什么</h3><p class="help">不是统计识别出的中国宏观模型，没有估计危机概率。实名公司只用于现金和资产负债压力样本；违约损失率、债务期限、AI占比等均为假设。<br><br>初始时点混合：公司2026年6月，宏观存量2026年9月，GDP与财政流量2025年。资产值不按真实季度滚动补齐；2026Q4是合成模拟起点。<br><br>银行绝对资本、城投规模、全国AI投资与债务拆分不假装有完整审计数据。GDP、消费、股价均是代理指标，不含通胀、汇率、人口老龄化、完整税制或存款挤兑。<br><br>宏观传导是简化反馈模型，不是全经济每笔交易的存量—流量一致清算系统。严重危机后的国家级重组、汇率与资本管制未覆盖，极端尾部结果只能理解为压力失控的信号。</p><div class="callout warning">十万亿、百万亿的其他银行损失可以人为施加，但不能把结果说成“AI必然造成了这些损失”。</div><h3>三个不可混加的量</h3><p class="help">股票和基金估值下降；银行或债券最终本金损失；未来不可取消的支出承诺。地方债和城投相关贷款也不能与全国贷款总量再相加。</p></div></div></div></section>
+<section id="tab-sources" class="tab-panel"><div class="panel"><div class="panel-heading"><div><span class="eyebrow">查证日期 2026-11-01</span><h2>真实起点，不等于真实预测</h2></div><a href="data/baseline.json">原始数据 JSON ↗</a></div><div id="dataSummary"></div><div id="sourceList"></div><div class="callout warning">第三方具身融资统计仅作量级参考。模型累计0.2万亿元、年度新增0.16万亿元为工作假设，不宣称全部到账；地方基金、母基金和子基金不重复计入。</div><div id="assumptionsTable"></div></div></section>
+<footer><span>中国压力版 cn-0.1.0 · 单文件运行，无外部脚本依赖</span><span>公开模型 / 可复现 / 不构成投资建议</span></footer>
+</main>
+<button id="policyJump" class="policy-jump">调整政策 ↑</button><div id="toast" class="toast" role="status"></div><div id="chartTooltip" class="chart-tooltip"></div>
+<script>window.ChinaData=/*DATA*/;</script><script>/*ENGINE*/</script><script>/*APP*/</script>
+</body></html>

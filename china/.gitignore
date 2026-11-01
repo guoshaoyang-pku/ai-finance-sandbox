@@ -1,0 +1,4 @@
+tests/browser-results/
+tests/live-results/
+tests/screenshots/
+*.log
