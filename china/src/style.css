@@ -6,3 +6,6 @@
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .policy-jump{display:none}@media(max-width:600px){.policy-jump{display:block;position:fixed;right:13px;bottom:13px;z-index:25;border-color:#79b69e;background:#20483de8;color:#c4efdf;font-size:11px;box-shadow:0 5px 20px #0005;padding:9px 13px}.toast{bottom:65px}}
+
+/* Monthly timing controls */
+.timing-banner{display:flex;gap:10px 24px;flex-wrap:wrap;border:1px solid #416768;border-radius:9px;background:#15333766;padding:12px 16px;margin:12px 0 18px;font-size:12px}.timing-banner strong{color:var(--teal,#68d9ba)}.timing-banner span{color:#9eb5c4;font-size:11px}.timing-banner a{margin-left:12px}.toolbar select{background:#152435;color:#dce9f4;border:1px solid #31475a;border-radius:7px;padding:9px;font:inherit;max-width:74px}.timing-panel h2{margin-bottom:12px}@media(max-width:600px){.toolbar select{font-size:11px;padding:7px 4px;max-width:56px}.timing-banner{gap:5px;padding:10px 12px}.timing-banner a{margin-left:0;display:block;margin-top:5px}}

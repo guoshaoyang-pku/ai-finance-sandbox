@@ -96,4 +96,4 @@ node tests/cli_smoke.js
 
 ## 中国 AI 压力沙盘
 
-新增 [中国压力版](https://guoshaoyang-pku.github.io/ai-finance-sandbox/china/?v=cn-0.1.0)：公开初始财报与宏观统计、十至十五年条件演化、六种政策对照；参数与事实分开，不是经济或企业破产预测。代码和资料位于 `china/`。原美国版保持独立。
+新增 [中国压力版](https://guoshaoyang-pku.github.io/ai-finance-sandbox/china/?v=cn-0.2.0)：公开初始财报与宏观统计、月度结算、三至十五年条件演化、六种政策对照；参数与事实分开，不是经济或企业破产预测。代码和资料位于 `china/`。原美国版保持独立。

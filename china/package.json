@@ -1,1 +1,14 @@
-{"name":"china-ai-stress-sandbox","version":"0.1.0","private":true,"description":"Real initial data, explicit conditional assumptions; no economic forecasts.","scripts":{"build":"node build.cjs","test":"node --test tests/engine.test.cjs","serve":"python3 -m http.server 8766"},"engines":{"node":">=18"}}
+{
+  "name": "china-ai-stress-sandbox",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Real initial data, explicit conditional assumptions; no economic forecasts.",
+  "scripts": {
+    "build": "node build.cjs",
+    "test": "node --test tests/engine.test.cjs",
+    "serve": "python3 -m http.server 8766"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

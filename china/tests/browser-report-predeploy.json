@@ -1,13 +1,25 @@
 {
-  "url": "local predeployment server",
-  "version": "cn-0.1.0",
+  "url": "local HTTP predeployment server",
+  "version": "cn-0.2.0",
   "checks": [
     {
       "name": "runtime version",
       "passed": true
     },
     {
-      "name": "initial quarter",
+      "name": "visible monthly controls",
+      "passed": true
+    },
+    {
+      "name": "default 3x response",
+      "passed": true
+    },
+    {
+      "name": "default 36 month horizon",
+      "passed": true
+    },
+    {
+      "name": "initial month",
       "passed": true
     },
     {
@@ -27,7 +39,15 @@
       "passed": true
     },
     {
-      "name": "quarter advances",
+      "name": "month advances",
+      "passed": true
+    },
+    {
+      "name": "shock starts first month",
+      "passed": true
+    },
+    {
+      "name": "monthly calendar",
       "passed": true
     },
     {
@@ -43,7 +63,7 @@
       "passed": true
     },
     {
-      "name": "policy next-quarter settlement",
+      "name": "policy next-month settlement",
       "passed": true
     },
     {
@@ -75,7 +95,7 @@
       "passed": true
     },
     {
-      "name": "ten-year simulation",
+      "name": "three-year monthly simulation",
       "passed": true
     },
     {
@@ -119,11 +139,19 @@
       "passed": true
     },
     {
+      "name": "three response speeds",
+      "passed": true
+    },
+    {
+      "name": "speed comparison does not rewrite history",
+      "passed": true
+    },
+    {
       "name": "JSON export",
       "passed": true
     },
     {
-      "name": "CSV has 41 quarters",
+      "name": "CSV has 37 months",
       "passed": true
     },
     {
@@ -167,7 +195,15 @@
       "passed": true
     },
     {
+      "name": "10-year extension",
+      "passed": true
+    },
+    {
       "name": "15-year extension",
+      "passed": true
+    },
+    {
+      "name": "month 180 calendar",
       "passed": true
     },
     {
@@ -176,6 +212,6 @@
     }
   ],
   "errors": [],
-  "passed": 43,
+  "passed": 52,
   "ok": true
 }
